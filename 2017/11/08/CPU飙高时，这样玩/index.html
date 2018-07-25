@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>CPU飙高了，这样玩 | Update</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#8e7cc3">
+    
+    
+    <meta name="keywords" content="Linux,Tomcat">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?fd3edcc6b9c13c8c7a7104967c14b59d"></script>
+
+
+    
+    <meta name="keywords" content="Linux,Tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU飙高了，这样玩">
+<meta property="og:url" content="http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/index.html">
+<meta property="og:site_name" content="Update">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C02.jpg">
+<meta property="og:updated_time" content="2018-07-25T03:35:00.012Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CPU飙高了，这样玩">
+<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C02.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/msofficexp.png">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">陈 武</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/2017/08/25/路上/"  >
+                    <i class="icon icon-lg icon-globe"></i>
+                    <span>旅行</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="http://118.24.112.225:8000"  >
+                    <i class="icon icon-lg icon-exchange"></i>
+                    <span>资源</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:969310256@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/UpdateCw/" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">CPU飙高了，这样玩</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#服务CPU飙高了"><span class="post-toc-number">1.</span> <span class="post-toc-text">服务CPU飙高了</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-CPU飙高时，这样玩"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">CPU飙高了，这样玩</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2017-11-08 17:03:02" datetime="2017-11-08T09:03:02.000Z"  itemprop="datePublished">2017-11-08</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/现网/">现网</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">4</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C02.jpg"><br><a id="more"></a></p>
+<h2 id="服务CPU飙高了"><a href="#服务CPU飙高了" class="headerlink" title="服务CPU飙高了"></a>服务CPU飙高了</h2><blockquote>
+<p>项目运行时，JVM占用的CPU飙高，跟我们预期的不符，CPU在干什么呢？是什么让CPU如此忙碌呢？让我们来一次来追踪一下。</p>
+</blockquote>
+<p>1、查找JVM进程ID：ps aux |grep java</p>
+<p>2、根据pid查找占用CPU较高的线程：ps -mp pid -o THREAD,tid,time<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[xxxxxxxxx-22027 ~]$ ps -mp 10605 -o THREAD,tid,time</span><br><span class="line">USER     %CPU PRI SCNT WCHAN  USER SYSTEM   TID     TIME</span><br><span class="line">root      697   -    - -         -      -     - 41-23:49:14</span><br><span class="line">root      0.0  19    - futex_    -      - 10605 00:00:00</span><br><span class="line">root      0.0  19    - futex_    -      - 10606 00:05:15</span><br><span class="line">root      0.0  19    - poll_s    -      - 10607 00:00:03</span><br><span class="line">root     99.6  33    - ?         -      - 10608 5-23:54:02</span><br><span class="line">root     99.6  33    - ?         -      - 10609 6-00:01:38</span><br><span class="line">root     99.6  33    - ?         -      - 10610 6-00:00:17</span><br><span class="line">root     99.6  33    - ?         -      - 10611 6-00:01:01</span><br><span class="line">root     99.6  33    - ?         -      - 10612 5-23:58:03</span><br><span class="line">root     99.6  33    - ?         -      - 10613 5-23:54:01</span><br><span class="line">root     99.6  33    - ?         -      - 10614 5-23:54:51</span><br></pre></td></tr></table></figure></p>
+<p>3、利用tid转换成16进制的数字：printf “%x\n” tid<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[xxxxxxxxx-22027 ~]$ printf "%x\n" 10608</span><br><span class="line">2970</span><br></pre></td></tr></table></figure></p>
+<p>4、使用jstack命令，查询线程信息，从而定位到具体线程和代码：jstack pid | grep 16进制数字 -A 30<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">checking <span class="title">pid</span><span class="params">(<span class="number">10605</span>)</span></span></span><br><span class="line"><span class="function">******************************************************************* ThreadId</span>=<span class="number">0</span> **************************************************************************</span><br><span class="line"><span class="number">2017</span>-<span class="number">11</span>-<span class="number">08</span> <span class="number">11</span>:<span class="number">54</span>:<span class="number">54</span></span><br><span class="line"><span class="function">Full thread dump Java <span class="title">HotSpot</span><span class="params">(TM)</span> 64-Bit Server <span class="title">VM</span> <span class="params">(<span class="number">24.55</span>-b03 mixed mode)</span>:</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">"Attach Listener" daemon prio</span>=<span class="number">10</span> tid=<span class="number">0x00007ffa98002000</span> nid=<span class="number">0x28e29</span> waiting on condition [<span class="number">0x0000000000000000</span>]</span><br><span class="line"> java.lang.Thread.State: RUNNABLE</span><br><span class="line"></span><br><span class="line"><span class="string">"scheduler-10"</span> prio=<span class="number">10</span> tid=<span class="number">0x00007ffa7000e000</span> nid=<span class="number">0x28c99</span> waiting on condition [<span class="number">0x00007ff9bbfbf000</span>]</span><br><span class="line"> java.lang.Thread.State: WAITING (parking)</span><br><span class="line">at sun.misc.Unsafe.park(Native Method)</span><br><span class="line">- parking to wait <span class="keyword">for</span>  &lt;<span class="number">0x00000000cc91c8c0</span>&gt; (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)</span><br><span class="line">at java.util.concurrent.locks.LockSupport.park(LockSupport.java:<span class="number">186</span>)</span><br><span class="line">at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:<span class="number">2043</span>)</span><br><span class="line">at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:<span class="number">1085</span>)</span><br><span class="line">at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:<span class="number">807</span>)</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:<span class="number">1068</span>)</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1130</span>)</span><br><span class="line">at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">615</span>)</span><br><span class="line">at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br></pre></td></tr></table></figure></p>
+<p>可直接查出原因。<br>觉得以上操作麻烦的话，可直接执行此脚本。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/bash</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span> 当JVM占用CPU特别高时，查看CPU正在做什么</span><br><span class="line"><span class="meta">#</span> 可输入两个参数：1、pid Java进程ID，必须参数  2、打印线程ID上下文行数，可选参数，默认打印10行</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"></span><br><span class="line">pid=$1</span><br><span class="line"></span><br><span class="line">if test -z $pid</span><br><span class="line">then</span><br><span class="line">echo "pid can not be null!"</span><br><span class="line">exit</span><br><span class="line">else</span><br><span class="line">echo "checking pid($pid)"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if test -z "$(jps -l | cut -d '' -f 1 | grep $pid)"</span><br><span class="line">then</span><br><span class="line">echo "process of $pid is not exists"</span><br><span class="line">exit</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">lineNum=$2</span><br><span class="line">if test -z $lineNum</span><br><span class="line">then</span><br><span class="line">  lineNum=10</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">jstack $pid &gt;&gt; "$pid".bak</span><br><span class="line"></span><br><span class="line">ps -mp $pid -o THREAD,tid,time | sort -k2r | awk '&#123;if ($1 !="USER" &amp;&amp; $2 != "0.0" &amp;&amp; $8 !="-") print $8;&#125;' | xargs printf "%x\n" &gt;&gt; "$pid".tmp</span><br><span class="line"></span><br><span class="line">tidArray="$( cat $pid.tmp)"</span><br><span class="line"></span><br><span class="line">for tid in $tidArray</span><br><span class="line">do</span><br><span class="line">  echo "******************************************************************* ThreadId=$tid **************************************************************************"</span><br><span class="line">  cat "$pid".bak | grep $tid -A $lineNum</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">rm -rf $pid.bak</span><br><span class="line">rm -rf $pid.tmp</span><br></pre></td></tr></table></figure></p>
+<p>本文转自 简书【<a href="http://www.jianshu.com/p/90579ec3113f】" target="_blank" rel="noopener">http://www.jianshu.com/p/90579ec3113f】</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-07-25T03:35:00.012Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+</span>
+
+
+        
+        原文链接：<a href="/2017/11/08/CPU飙高时，这样玩/" target="_blank" rel="external">http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://www.updatecg.xin'">
+            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <a>陈 武</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tomcat/">Tomcat</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/&title=《CPU飙高了，这样玩》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/&title=《CPU飙高了，这样玩》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CPU飙高了，这样玩》 — Update&url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/01/01/2017年即将结束2018年又将如何/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：2017年即将结束2018年又将如何
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/10/27/SpringBoot 【 第三章 】定时管理/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：SpringBoot 【 第三章 】定时管理">下一篇：SpringBoot 【 第三章 】定时管理</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="http://ov84jkku0.bkt.clouddn.com/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
+            appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
+            avatar: "monsterid",
+            placeholder: "欢迎建议留言...",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议|蜀ICP备17018847号</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/&title=《CPU飙高了，这样玩》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/&title=《CPU飙高了，这样玩》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《CPU飙高了，这样玩》 — Update&url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/11/08/CPU飙高时，这样玩/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACHElEQVR42u3ay26FMAwFwPv/P023lSrosZ1WIhlWFeKGDAvXj3w+8XV9uyb371au/qp5YWBgvJZxPV53z9xtJd/oz/vJ87dUDAyMAxjJ61eF4OST5XvDwMDA6AXB5809szEwMDBWMZIStFrcVvEYGBinMfJ0Lel05SVutehdUItjYGC8kNFb+n/+/pP5BgYGxqsYV/HqBeheOljYFQYGxtaMPMDlaVmeXM6PaGBgYJzA6B2teA6LPfYIhoGBcSQjb7H1mv45O0o3MTAwDmD02vTV0FlduVD6YmBgHMCoJnDJoLE3+GwWyRgYGFszegPLZlev+FEmb8fAwNiJser4V96e6236lzIbAwNja8b8uMNzKKyWpr0Ph4GBcSZjEmqrq/XGmVGCiIGBsQUjGRnmKWDvycl9DAyMExjVblU1NVxVvkatNwwMjAMY1TiWYHorl0MtBgbGMYxJ2M1TwN4IIfo0GBgYWzN6xyaqTbde4TofLWBgYOzBqKZ91aCcNP0n5S4GBsY5jCSN6x2nqK6QBOXCYQsMDIxNGXnxOdlWNUsdzWMxMDBey7iKV29skAf06ggTAwPjBEav6Za31Xot/t5qGBgYezMmm1u1iV5rDwMD4zRGvqE8OctTxvw/wO2vMDAwMIqvyccGyz4cBgYGRnyoqzeSnARuDAyMcxhJETtp9CefI08TMTAwTmP0Qt48fXxO/qpFMgYGxqaML4xUk2GIdVx6AAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- map -->
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2017/8");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "陈 武");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 从不停止Update %c  © Chen Wu  http://www.updatecg.xin \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>
+<script>
+var myChart = echarts.init(document.getElementById('echartID'));
+
+var data = [
+		 {name: '成都', value: 90},
+		 {name: '新都桥', value: 30},
+		 {name: '折多山', value: 30},
+		 {name: '雅安', value: 58},
+		 {name: '简阳', value: 58},
+		 {name: '牛背山', value: 30},
+		 {name: '康定', value: 90},
+		 {name: '泸定', value: 58},
+
+];
+var geoCoordMap = {
+		'成都':[104.06,30.67],
+		'新都桥':[101.49,30.04],
+		'折多山':[101.48,30.06],
+		'雅安':[102.97,29.97],
+		'简阳':[104.53,30.38],
+		'牛背山':[102.3,29.75],
+		'康定':[101.9,30.04],
+		'泸定':[102.23,29.9],
+
+};
+
+var convertData = function (data) {
+		var res = [];
+		for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+						res.push({
+								name: data[i].name,
+								value: geoCoord.concat(data[i].value)
+						});
+				}
+		}
+		return res;
+};
+
+option = {
+		title: {
+				text: '路上',
+				subtext: '',
+				left: 'center',
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		tooltip : {
+				trigger: 'item'
+		},
+		legend: {
+				orient: 'vertical',
+				y: 'bottom',
+				x:'right',
+				data:['pm2.5'],
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		geo: {
+				map: '四川',
+				label: {
+						emphasis: {
+								show: false
+						}
+				},
+				roam: true,
+				itemStyle: {
+						normal: {
+								areaColor: '#323c48',
+								borderColor: '#111'
+						},
+						emphasis: {
+								areaColor: '#2a333d'
+						}
+				}
+		},
+		series : [
+				{
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: convertData(
+								data.sort(function (a, b) {
+
+						}).slice(0, 8)),
+						symbolSize: function (val) {
+								return val[2] / 10;
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+								brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						label: {
+								normal: {
+										formatter: '{b}',
+										position: 'right',
+										show: true
+								}
+						},
+						itemStyle: {
+								normal: {
+										color: '#f4e925',
+										shadowBlur: 10,
+										shadowColor: '#333'
+								}
+						},
+						zlevel: 1
+				}
+		]
+};
+// 使用刚指定的配置项和数据显示图表。
+
+myChart.setOption(option);
+
+</script>
+
+</body>
+</html>

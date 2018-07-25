@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>线程安全 | Update</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#8e7cc3">
+    
+    
+    <meta name="keywords" content="Java,线程安全">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?fd3edcc6b9c13c8c7a7104967c14b59d"></script>
+
+
+    
+    <meta name="keywords" content="Java,线程安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程安全">
+<meta property="og:url" content="http://www.updatecg.xin/2017/09/17/线程安全/index.html">
+<meta property="og:site_name" content="Update">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC02C01.jpg">
+<meta property="og:updated_time" content="2018-07-25T03:35:00.026Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线程安全">
+<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC02C01.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/msofficexp.png">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">陈 武</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/2017/08/25/路上/"  >
+                    <i class="icon icon-lg icon-globe"></i>
+                    <span>旅行</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="http://118.24.112.225:8000"  >
+                    <i class="icon icon-lg icon-exchange"></i>
+                    <span>资源</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:969310256@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/UpdateCw/" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">线程安全</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程安全体现在哪里"><span class="post-toc-number">1.</span> <span class="post-toc-text">线程安全体现在哪里</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#多线程三个核心概念"><span class="post-toc-number">2.</span> <span class="post-toc-text">多线程三个核心概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原子性"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">原子性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#可见性"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">可见性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#顺序性"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">顺序性</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Java如何解决多线程并发问题"><span class="post-toc-number">3.</span> <span class="post-toc-text">Java如何解决多线程并发问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Java如何保证原子性"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Java如何保证原子性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#锁和同步"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">锁和同步</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Java如何保证可见性"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Java如何保证可见性</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Java如何保证顺序性"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Java如何保证顺序性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#happens-before原则（先行发生原则）"><span class="post-toc-number">3.3.1.</span> <span class="post-toc-text">happens-before原则（先行发生原则）</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#volatile适用场景"><span class="post-toc-number">4.</span> <span class="post-toc-text">volatile适用场景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程安全十万个为什么"><span class="post-toc-number">5.</span> <span class="post-toc-text">线程安全十万个为什么</span></a></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-线程安全"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">线程安全</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2017-09-17 20:27:02" datetime="2017-09-17T12:27:02.000Z"  itemprop="datePublished">2017-09-17</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/闲时/">闲时</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">8</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC02C01.jpg"></p>
+<a id="more"></a>
+<h2 id="线程安全体现在哪里"><a href="#线程安全体现在哪里" class="headerlink" title="线程安全体现在哪里"></a>线程安全体现在哪里</h2><blockquote>
+<p>多线程编程有三大特点，原子性、可见性、顺序性。本篇文章结合这三个特点出发，结合实例volatile如何实现可见性、一定程序上保证顺序性，同实例synchronized如何同时保证可见性和原子性，最后最弊volatile和synchronized的适用场景。</p>
+</blockquote>
+<h2 id="多线程三个核心概念"><a href="#多线程三个核心概念" class="headerlink" title="多线程三个核心概念"></a>多线程三个核心概念</h2><h3 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h3><p>即一个操作或者多个操作，要么全部执行并且执行的过程不会被任何因素打断，要么就都不执行。原子性就像数据库里面的事务一样，他们是一个团队，同生共死。</p>
+<p>一个很经典的例子就是银行账户转账问题：比如A和B同时向C转账10万元。如果转账操作不具有原子性，A在向C转账时，读取了C的余额为20万，然后加上转账的10万，计算出此时应该有30万，但还未来及将30万写回C的账户，此时B的转账请求过来了，B发现C的余额为20万，然后将其加10万并写回。然后A的转账操作继续——将30万写回C的余额。这种情况下C的最终余额为30万，而非预期的40万。</p>
+<h3 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h3><p>当多个线程并发访问共享变量时，一个线程对共享变量的修改，其它线程能够立即看到。可见性问题是好多人忽略或者理解错误的一点。</p>
+<p>CPU从主内存中读数据的效率相对来说不高，现在主流的计算机中，都有几级缓存。每个线程读取共享变量时，都会将该变量加载进其对应CPU的高速缓存里，修改该变量后，CPU会立即更新该缓存，但并不一定会立即将其写回主内存（实际上写回主内存的时间不可预期）。此时其它线程（尤其是不在同一个CPU上执行的线程）访问该变量时，从主内存中读到的就是旧的数据，而非第一个线程更新后的数据。</p>
+<h3 id="顺序性"><a href="#顺序性" class="headerlink" title="顺序性"></a>顺序性</h3><p>程序执行的顺序按照代码的先后顺序执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> started = <span class="keyword">false</span>; <span class="comment">// 语句1</span></span><br><span class="line"><span class="keyword">long</span> counter = <span class="number">0L</span>; <span class="comment">// 语句2</span></span><br><span class="line">counter = <span class="number">1</span>; <span class="comment">// 语句3</span></span><br><span class="line">started = <span class="keyword">true</span>; <span class="comment">// 语句4</span></span><br></pre></td></tr></table></figure>
+<p>从代码顺序上看，上面四条语句应该依次执行，但实际上JVM真正在执行这段代码时，并不保证它们一定完全按照此顺序执行。</p>
+<p>处理器为了提高程序整体的执行效率，可能会对代码进行优化，其中的一项优化方式就是调整代码顺序，按照更高效的顺序执行代码。</p>
+<p>讲到这里，有人要着急了——什么，CPU不按照我的代码顺序执行代码，那怎么保证得到我们想要的效果呢？实际上，大家大可放心，CPU虽然并不保证完全按照代码顺序执行，但它会保证程序最终的执行结果和代码顺序执行时的结果一致。</p>
+<h2 id="Java如何解决多线程并发问题"><a href="#Java如何解决多线程并发问题" class="headerlink" title="Java如何解决多线程并发问题"></a>Java如何解决多线程并发问题</h2><h3 id="Java如何保证原子性"><a href="#Java如何保证原子性" class="headerlink" title="Java如何保证原子性"></a>Java如何保证原子性</h3><h4 id="锁和同步"><a href="#锁和同步" class="headerlink" title="锁和同步"></a>锁和同步</h4><p>常用的保证Java操作原子性的工具是锁和同步方法（或者同步代码块）。使用锁，可以保证同一时间只有一个线程能拿到锁，也就保证了同一时间只有一个线程能执行申请锁和释放锁之间的代码。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLock</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  lock.lock();</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">int</span> j = i;</span><br><span class="line">    i = j + <span class="number">1</span>;</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>与锁类似的是同步方法或者同步代码块。使用非静态同步方法时，锁住的是当前实例；使用静态同步方法时，锁住的是该类的Class对象；使用静态代码块时，锁住的是synchronized关键字后面括号内的对象。下面是同步代码块示例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLock</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">synchronized</span> (anyObject)&#123;</span><br><span class="line">    <span class="keyword">int</span> j = i;</span><br><span class="line">    i = j + <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>无论使用锁还是synchronized，本质都是一样，通过锁来实现资源的排它性，从而实际目标代码段同一时间只会被一个线程执行，进而保证了目标代码段的原子性。这是一种以牺牲性能为代价的方法。</p>
+<h3 id="Java如何保证可见性"><a href="#Java如何保证可见性" class="headerlink" title="Java如何保证可见性"></a>Java如何保证可见性</h3><p>Java提供了volatile关键字来保证可见性。当使用volatile修饰某个变量时，它会保证对该变量的修改会立即被更新到内存中，并且将其它缓存中对该变量的缓存设置成无效，因此其它线程需要读取该值时必须从主内存中读取，从而得到最新的值。</p>
+<h3 id="Java如何保证顺序性"><a href="#Java如何保证顺序性" class="headerlink" title="Java如何保证顺序性"></a>Java如何保证顺序性</h3><p>Java中可通过volatile在一定程序上保证顺序性，另外还可以通过synchronized和锁来保证顺序性。</p>
+<p>synchronized和锁保证顺序性的原理和保证原子性一样，都是通过保证同一时间只会有一个线程执行目标代码段来实现的。</p>
+<p>除了从应用层面保证目标代码段执行的顺序性外，JVM还通过被称为happens-before原则隐式地保证顺序性。两个操作的执行顺序只要可以通过happens-before推导出来，则JVM会保证其顺序性，反之JVM对其顺序性不作任何保证，可对其进行任意必要的重新排序以获取高效率。</p>
+<h4 id="happens-before原则（先行发生原则）"><a href="#happens-before原则（先行发生原则）" class="headerlink" title="happens-before原则（先行发生原则）"></a>happens-before原则（先行发生原则）</h4><ul>
+<li>传递规则：如果操作1在操作2前面，而操作2在操作3前面，则操作1肯定会在操作3前发生。该规则说明了happens-before原则具有传递性</li>
+<li>锁定规则：一个unlock操作肯定会在后面对同一个锁的lock操作前发生。这个很好理解，锁只有被释放了才会被再次获取</li>
+<li>volatile变量规则：对一个被volatile修饰的写操作先发生于后面对该变量的读操作</li>
+<li>程序次序规则：一个线程内，按照代码顺序执行</li>
+<li>线程启动规则：Thread对象的start()方法先发生于此线程的其它动作<br>*　线程终结原则：线程的终止检测后发生于线程中其它的所有操作</li>
+<li>线程中断规则： 对线程interrupt()方法的调用先发生于对该中断异常的获取</li>
+<li>对象终结规则：一个对象构造先于它的finalize发生</li>
+</ul>
+<h2 id="volatile适用场景"><a href="#volatile适用场景" class="headerlink" title="volatile适用场景"></a>volatile适用场景</h2><p>volatile适用于不需要保证原子性，但却需要保证可见性的场景。一种典型的使用场景是用它修饰用于停止线程的状态标记。如下所示<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> isRunning = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">start</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">new</span> Thread( () -&gt; &#123;</span><br><span class="line">    <span class="keyword">while</span>(isRunning) &#123;</span><br><span class="line">      someOperation();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;).start();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stop</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">  isRunning = <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在这种实现方式下，即使其它线程通过调用stop()方法将isRunning设置为false，循环也不一定会立即结束。可以通过volatile关键字，保证while循环及时得到isRunning最新的状态从而及时停止循环，结束线程。</p>
+<h2 id="线程安全十万个为什么"><a href="#线程安全十万个为什么" class="headerlink" title="线程安全十万个为什么"></a>线程安全十万个为什么</h2><ul>
+<li>【问】：平时项目中使用锁和synchronized比较多，而很少使用volatile，难道就没有保证可见性？</li>
+<li>【答】：锁和synchronized即可以保证原子性，也可以保证可见性。都是通过保证同一时间只有一个线程执行目标代码段来实现的。</li>
+</ul>
+<ul>
+<li>【问】：锁和synchronized为何能保证可见性？</li>
+<li>【答】：根据!JDK 7的Java中对concurrent包的说明，一个线程的写结果保证对另外线程的读操作可见，只要该写操作可以由happen-before原则推断出在读操作之前发生。</li>
+</ul>
+<ul>
+<li>【问】：既然锁和synchronized即可保证原子性也可保证可见性，为何还需要volatile？</li>
+<li>【答】：synchronized和锁需要通过操作系统来仲裁谁获得锁，开销比较高，而volatile开销小很多。因此在只需要保证可见性的条件下，使用volatile的性能要比使用锁和synchronized高得多。</li>
+</ul>
+<ul>
+<li>【问】：还有没有别的办法保证线程安全</li>
+<li>【答】：有。尽可能避免引起非线程安全的条件——共享变量。如果能从设计上避免共享变量的使用，即可避免非线程安全的发生，也就无须通过锁或者synchronized以及volatile解决原子性、可见性和顺序性的问题。</li>
+</ul>
+<ul>
+<li>【问】：synchronized即可修饰非静态方式，也可修饰静态方法，还可修饰代码块，有何区别</li>
+<li>【答】：synchronized修饰非静态同步方法时，锁住的是当前实例；synchronized修饰静态同步方法时，锁住的是该类的Class对象；synchronized修饰静态代码块时，锁住的是synchronized关键字后面括号内的对象。</li>
+</ul>
+<p>本文转载来自 <a href="http://www.jasongj.com/java/thread_safe/" target="_blank" rel="noopener">[http://www.jasongj.com/java/thread_safe/]</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-07-25T03:35:00.026Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+</span>
+
+
+        
+        原文链接：<a href="/2017/09/17/线程安全/" target="_blank" rel="external">http://www.updatecg.xin/2017/09/17/线程安全/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://www.updatecg.xin'">
+            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <a>陈 武</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Java/">Java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/线程安全/">线程安全</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/17/线程安全/&title=《线程安全》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/09/17/线程安全/&title=《线程安全》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/09/17/线程安全/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《线程安全》 — Update&url=http://www.updatecg.xin/2017/09/17/线程安全/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/09/17/线程安全/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/09/23/mongo索引优化/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：monggo索引优化
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/09/17/java设计模式-单例模式/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：【Java设计模式 细节一】单例模式">下一篇：【Java设计模式 细节一】单例模式</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="http://ov84jkku0.bkt.clouddn.com/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
+            appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
+            avatar: "monsterid",
+            placeholder: "欢迎建议留言...",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议|蜀ICP备17018847号</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/17/线程安全/&title=《线程安全》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/09/17/线程安全/&title=《线程安全》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/09/17/线程安全/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《线程安全》 — Update&url=http://www.updatecg.xin/2017/09/17/线程安全/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/09/17/线程安全/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACIklEQVR42u3aQW7DMAwEwPz/0+kDWie7lFMg0ugUBLKt8UEmRT4e8Xj+Gr//v5qf3Lm9ajgwMDC+lvF8OfI5sxdxhamfi4GBcQAj2QrbB7cbd/Lcy/8xMDAwRkFeC8PAwMC4i/E6Zc1nJmAMDAyMNoltGe3GvZQ8Y2BgbM3ID8v+//dH6hsYGBhfxXiW4xPlhPaqP+6DgYGxNaM9Sls51p+luHkQiYGBcQ4j3/7aJok26KwbxTAwMI5htDPzIPL1svKQcem7gYGBsQVjPYltl57PefNaMTAwNmW0D24Ty/VXkKTTGBgYJzDuOiBrGynyEHD4/jAwMDZirG+pdxUPcvZlaIiBgbEdY7a49VJle5xXHLdhYGAcyahP78pEdFbO/OP+GBgYBzCK462Fhc7KADekshgYGF/LyC9r2yk+cdx2GRpiYGAcwGgLjfkWnOz3+YHdo/0mYGBgbMGYBX8r5YRZu1j0dAwMjK0Zr0O0PB1NHtk2cLTpMQYGxq6MdhEJu36LZTIcNVtgYGBsyri3zStPffOU9XI+BgbGAYyVBHJ9EbNrMTAwTmA8yzErTOZzcuqbLwYGBsZGjJXD/fxYv11K3WyBgYFxAGPWSJGUNmdtGcNmDgwMjAMY7cY3CxzbckJdwsTAwMAYBXxtKDlMUzEwMDBGRcrkzu0Ko/oGBgbGpoy8JSIvDKyUJ4eVWAwMjE0Zt215cVKa4POVYGBgbM34AWfhS6lAs+zhAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- map -->
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2017/8");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "陈 武");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 从不停止Update %c  © Chen Wu  http://www.updatecg.xin \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>
+<script>
+var myChart = echarts.init(document.getElementById('echartID'));
+
+var data = [
+		 {name: '成都', value: 90},
+		 {name: '新都桥', value: 30},
+		 {name: '折多山', value: 30},
+		 {name: '雅安', value: 58},
+		 {name: '简阳', value: 58},
+		 {name: '牛背山', value: 30},
+		 {name: '康定', value: 90},
+		 {name: '泸定', value: 58},
+
+];
+var geoCoordMap = {
+		'成都':[104.06,30.67],
+		'新都桥':[101.49,30.04],
+		'折多山':[101.48,30.06],
+		'雅安':[102.97,29.97],
+		'简阳':[104.53,30.38],
+		'牛背山':[102.3,29.75],
+		'康定':[101.9,30.04],
+		'泸定':[102.23,29.9],
+
+};
+
+var convertData = function (data) {
+		var res = [];
+		for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+						res.push({
+								name: data[i].name,
+								value: geoCoord.concat(data[i].value)
+						});
+				}
+		}
+		return res;
+};
+
+option = {
+		title: {
+				text: '路上',
+				subtext: '',
+				left: 'center',
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		tooltip : {
+				trigger: 'item'
+		},
+		legend: {
+				orient: 'vertical',
+				y: 'bottom',
+				x:'right',
+				data:['pm2.5'],
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		geo: {
+				map: '四川',
+				label: {
+						emphasis: {
+								show: false
+						}
+				},
+				roam: true,
+				itemStyle: {
+						normal: {
+								areaColor: '#323c48',
+								borderColor: '#111'
+						},
+						emphasis: {
+								areaColor: '#2a333d'
+						}
+				}
+		},
+		series : [
+				{
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: convertData(
+								data.sort(function (a, b) {
+
+						}).slice(0, 8)),
+						symbolSize: function (val) {
+								return val[2] / 10;
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+								brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						label: {
+								normal: {
+										formatter: '{b}',
+										position: 'right',
+										show: true
+								}
+						},
+						itemStyle: {
+								normal: {
+										color: '#f4e925',
+										shadowBlur: 10,
+										shadowColor: '#333'
+								}
+						},
+						zlevel: 1
+				}
+		]
+};
+// 使用刚指定的配置项和数据显示图表。
+
+myChart.setOption(option);
+
+</script>
+
+</body>
+</html>

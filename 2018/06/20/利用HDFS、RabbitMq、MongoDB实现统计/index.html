@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>利用HDFS、RabbitMQ、MongoDB实现统计 | Update</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#8e7cc3">
+    
+    
+    <meta name="keywords" content="Hadoop,RabbitMQ">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?fd3edcc6b9c13c8c7a7104967c14b59d"></script>
+
+
+    
+    <meta name="keywords" content="Hadoop,RabbitMQ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用HDFS、RabbitMQ、MongoDB实现统计">
+<meta property="og:url" content="http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/index.html">
+<meta property="og:site_name" content="Update">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC02C03A.jpg">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/fenxi.png">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/Statistics.png">
+<meta property="og:updated_time" content="2018-07-25T03:35:00.023Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用HDFS、RabbitMQ、MongoDB实现统计">
+<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC02C03A.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/msofficexp.png">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">陈 武</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/2017/08/25/路上/"  >
+                    <i class="icon icon-lg icon-globe"></i>
+                    <span>旅行</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="http://118.24.112.225:8000"  >
+                    <i class="icon icon-lg icon-exchange"></i>
+                    <span>资源</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:969310256@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/UpdateCw/" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">利用HDFS、RabbitMQ、MongoDB实现统计</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#业务分析"><span class="post-toc-number">1.</span> <span class="post-toc-text">业务分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#架构设计"><span class="post-toc-number">2.</span> <span class="post-toc-text">架构设计</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#环境部署"><span class="post-toc-number">3.</span> <span class="post-toc-text">环境部署</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#部分代码"><span class="post-toc-number">4.</span> <span class="post-toc-text">部分代码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#客户端收集数据"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">客户端收集数据</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#定时将缓存的字符流刷新到文件"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">定时将缓存的字符流刷新到文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#文件上传到hdfs-并通过mq发送"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">文件上传到hdfs,并通过mq发送</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#mq服务端监听到hdfs进行处理"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">mq服务端监听到hdfs进行处理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#数据入mongo"><span class="post-toc-number">4.5.</span> <span class="post-toc-text">数据入mongo</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#聚合分析"><span class="post-toc-number">4.6.</span> <span class="post-toc-text">聚合分析</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#展示"><span class="post-toc-number">4.7.</span> <span class="post-toc-text">展示</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-利用HDFS、RabbitMq、MongoDB实现统计"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">利用HDFS、RabbitMQ、MongoDB实现统计</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2018-06-20 09:50:02" datetime="2018-06-20T01:50:02.000Z"  itemprop="datePublished">2018-06-20</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/闲时/">闲时</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">5</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC02C03A.jpg"><br><a id="more"></a></p>
+<h2 id="业务分析"><a href="#业务分析" class="headerlink" title="业务分析"></a>业务分析</h2><blockquote>
+<p>IPTV行业桌面数据分析，分析用户行为数据。每天数据量可达3000万。统计用户访问量（PV）、UV（独立用户）、VV（视频播放次数）、<br>DAU（日活）、WAU（周活）、MAU（月活）、月开机率、点击次数、排行榜数据等等。</p>
+</blockquote>
+<h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/fenxi.png"></p>
+<ul>
+<li>client上报数据存入缓存中</li>
+<li>定时将缓存的字符流刷新到文件，并将文件上传到hdfs</li>
+<li>通过mq 客户端发送至服务端</li>
+<li>mq服务端监听到hdfs进行处理（ 将字节数组反序列化为实体Bean）</li>
+<li>将其实体Bean写入mongo数据库</li>
+<li>利用mongoDB聚合函数aggregate()查询（分库分表）</li>
+</ul>
+<h2 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h2><p>HADOOP环境搭建：<a href="http://www.updatecg.xin/2018/06/20/Hadoop%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">[Hadoop环境搭建地址]</a><br>RabbitMQ环境搭建：<a href="http://www.updatecg.xin/2018/06/19/RabbitMQ%E7%8E%AF%E5%A2%83/">[RabbitMQ环境搭建地址]</a></p>
+<h2 id="部分代码"><a href="#部分代码" class="headerlink" title="部分代码"></a>部分代码</h2><h3 id="客户端收集数据"><a href="#客户端收集数据" class="headerlink" title="客户端收集数据"></a>客户端收集数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/singleData/&#123;policyId&#125;"</span>)</span><br><span class="line"> <span class="function"><span class="keyword">public</span> ResponseData <span class="title">postSingleData</span><span class="params">(@PathVariable(<span class="string">"policyId"</span>)</span> String policyId, HttpServletRequest resuest) </span>&#123;</span><br><span class="line">     ResponseData response = getResponseData();</span><br><span class="line">     <span class="keyword">try</span> &#123;</span><br><span class="line">         ServletInputStream inputStream = resuest.getInputStream();</span><br><span class="line"></span><br><span class="line">         StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">         BufferedReader bufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(inputStream, <span class="string">"utf-8"</span>));</span><br><span class="line">         String data = <span class="keyword">null</span>;</span><br><span class="line">         <span class="keyword">while</span> ((data = bufferedReader.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">             sb.append(data);</span><br><span class="line">             sb.append(<span class="string">"\n"</span>);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">if</span> (sb.length() &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">             <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"请提供提交数据"</span>);</span><br><span class="line">         &#125;</span><br><span class="line">         DataStr s = <span class="keyword">new</span> DataStr(policyId, sb);</span><br><span class="line">         service.receiveNewData(s);</span><br><span class="line">     &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">         response.setCode(<span class="number">0</span>);</span><br><span class="line">         response.setMsg(e.getMessage());</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span> response;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="定时将缓存的字符流刷新到文件"><a href="#定时将缓存的字符流刷新到文件" class="headerlink" title="定时将缓存的字符流刷新到文件"></a>定时将缓存的字符流刷新到文件</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">flushData</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      Queue&lt;DataStr&gt; dataCache = DataPond.getDataCache();</span><br><span class="line">      DataStr dataIte = <span class="keyword">null</span>;</span><br><span class="line">      Integer size = dataCache.size();</span><br><span class="line">      logger.info(<span class="string">"There are ["</span> + size + <span class="string">"] of datas in queue"</span>);</span><br><span class="line">      <span class="keyword">while</span> (size &gt; <span class="number">0</span> &amp;&amp; (dataIte = dataCache.poll()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">          String policyId = dataIte.getPolicyId();</span><br><span class="line">          Map&lt;String, FileStruct&gt; fileCache = DataPond.getFileCache();</span><br><span class="line">          FileStruct fileStruct = fileCache.get(policyId);</span><br><span class="line">          <span class="keyword">if</span> (fileStruct == <span class="keyword">null</span>) &#123;</span><br><span class="line">              fileStruct = <span class="keyword">new</span> FileStruct(policyId);</span><br><span class="line">              fileCache.put(policyId, fileStruct);</span><br><span class="line">          &#125;</span><br><span class="line">          fileStruct.write(dataIte.getData().toString());</span><br><span class="line">          fileStruct.write(<span class="string">"\n"</span>);</span><br><span class="line">          size--;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件上传到hdfs-并通过mq发送"><a href="#文件上传到hdfs-并通过mq发送" class="headerlink" title="文件上传到hdfs,并通过mq发送"></a>文件上传到hdfs,并通过mq发送</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">uploadFilesAndSendToMQ</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">       <span class="comment">/* 遍历文件 */</span></span><br><span class="line">       Map&lt;String, FileStruct&gt; fileCache = DataPond.getFileCache();</span><br><span class="line"></span><br><span class="line">       Set&lt;String&gt; keySet = fileCache.keySet();</span><br><span class="line">       <span class="keyword">for</span> (String key : keySet) &#123;</span><br><span class="line">           FileStruct fs = fileCache.get(key);</span><br><span class="line">           <span class="comment">/* 标记是否可以被flush，并上传hdfs */</span></span><br><span class="line">           Boolean shallBeFlush = <span class="keyword">false</span>;</span><br><span class="line">           <span class="keyword">if</span> (fs.getFielSize() &gt;= SystemChangeableConstant.MAX_FILESIZE) &#123;</span><br><span class="line">               shallBeFlush = <span class="keyword">true</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (System.currentTimeMillis() - fs.getLastUpdateTime() &gt;= SystemChangeableConstant.MAX_FILE_NOACTION_TIMESPAN) &#123;</span><br><span class="line">               shallBeFlush = <span class="keyword">true</span>;</span><br><span class="line">           &#125;</span><br><span class="line">           <span class="keyword">if</span> (shallBeFlush) &#123;</span><br><span class="line">               <span class="keyword">if</span> (!hdfsUtil.isOpened()) &#123;</span><br><span class="line">                   <span class="comment">//TODO 临时获取hadoop环境变量</span></span><br><span class="line">                   System.setProperty(<span class="string">"hadoop.home.dir"</span>, <span class="string">"D:\\hadoop-2.6.5"</span>);</span><br><span class="line">                   hdfsUtil.open();</span><br><span class="line">               &#125;</span><br><span class="line">               logger.info(<span class="string">"File of policy ["</span> + key + <span class="string">"] is full and will send out!"</span>);</span><br><span class="line">               fs.flush();</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   transferFileToDfs(fs);</span><br><span class="line">                   logger.info(<span class="string">"File of policy ["</span> + key + <span class="string">"] send to hdfs success"</span>);</span><br><span class="line">               &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                   logger.error(<span class="string">"File of policy ["</span> + key + <span class="string">"] send to hdfs fail as "</span> + e.getMessage());</span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">try</span> &#123;</span><br><span class="line">                   sendToMq(fs);</span><br><span class="line">                   logger.info(<span class="string">"File of policy ["</span> + key + <span class="string">"] send to MQ success"</span>);</span><br><span class="line">               &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                   logger.error(<span class="string">"File of policy ["</span> + key + <span class="string">"] send to MQ fail as "</span> + e.getMessage());</span><br><span class="line">               &#125;</span><br><span class="line">               fileCache.remove(key);</span><br><span class="line">               fs.destroy();</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       hdfsUtil.close();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="mq服务端监听到hdfs进行处理"><a href="#mq服务端监听到hdfs进行处理" class="headerlink" title="mq服务端监听到hdfs进行处理"></a>mq服务端监听到hdfs进行处理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 提取command放入线程对象 */</span></span><br><span class="line">  Consumer consumer = <span class="keyword">new</span> DefaultConsumer(channel) &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">          logger.info(<span class="string">"Router ["</span> + SystemConstant.NEW_FILE_QUEUE + <span class="string">"] received new file"</span>);</span><br><span class="line">          FileStruct fileStruct = (FileStruct) SerializingUtil.deserialize(body);</span><br><span class="line">          factory.createNewTask(fileStruct);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  channel.basicConsume(SystemConstant.NEW_FILE_QUEUE, <span class="keyword">true</span>, consumer);</span><br></pre></td></tr></table></figure>
+<h3 id="数据入mongo"><a href="#数据入mongo" class="headerlink" title="数据入mongo"></a>数据入mongo</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">for</span> (HashMap aMap : parsedDatas) &#123;</span><br><span class="line">    <span class="comment">// 预置的默认时间列</span></span><br><span class="line">    aMap.put(DataTable.DEFAUL_TTIMECOLUMN, now);</span><br><span class="line"></span><br><span class="line">    dataTable.genId(aMap);</span><br><span class="line">    String tableName = dataTable.getSplitTableName(aMap);</span><br><span class="line">    Document doc = <span class="keyword">new</span> Document(aMap);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dataTable.hasIdentify()) &#123;</span><br><span class="line">        mongoConnector.insertSingle(tableName, doc);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        List&lt;Document&gt; list = tableToDatasMap.get(tableName);</span><br><span class="line">        <span class="keyword">if</span> (list == <span class="keyword">null</span>) &#123;</span><br><span class="line">            list = <span class="keyword">new</span> ArrayList&lt;Document&gt;(parsedDatas.size() / <span class="number">2</span>);</span><br><span class="line">            tableToDatasMap.put(tableName, list);</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(doc);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (String key : tableToDatasMap.keySet()) &#123;</span><br><span class="line">    mongoConnector.insert(key, tableToDatasMap.get(key));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="聚合分析"><a href="#聚合分析" class="headerlink" title="聚合分析"></a>聚合分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;Map&lt;String, Object&gt;&gt; getExhibitionCount(Date start , Date end ) <span class="keyword">throws</span> ParseException &#123;</span><br><span class="line">     List&lt;Map&lt;String, Object&gt;&gt; map = <span class="keyword">new</span> ArrayList&lt;Map&lt;String, Object&gt;&gt;();</span><br><span class="line">      <span class="comment">//获取区间日期天数</span></span><br><span class="line">     <span class="keyword">int</span> days = differentDaysByMillisecond(start, end);</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; days + <span class="number">1</span> ; i++)&#123;</span><br><span class="line">         Aggregation aggregation = <span class="keyword">null</span>;</span><br><span class="line">         aggregation = Aggregation.newAggregation(</span><br><span class="line">                 Aggregation.group(<span class="string">"templateCode"</span>,<span class="string">"columnId"</span>,<span class="string">"positionId"</span>).sum(<span class="string">"duration"</span>).as(<span class="string">"duration"</span>),</span><br><span class="line">                 Aggregation.project(<span class="string">"templateCode"</span>,<span class="string">"columnId"</span>,<span class="string">"positionId"</span>,<span class="string">"duration"</span>)</span><br><span class="line">         );</span><br><span class="line">         String tableName = <span class="keyword">this</span>.getTableName(start);</span><br><span class="line">         AggregationResults&lt;HashMap&gt; aggregate = mongoTemplate.aggregate(aggregation, tableName, HashMap.class);</span><br><span class="line">         <span class="comment">//key 日期  value 当天数据</span></span><br><span class="line">         List&lt;HashMap&gt; mappedResults = aggregate.getMappedResults();</span><br><span class="line">         System.out.print(<span class="string">"处理后数据："</span> + mappedResults);</span><br><span class="line">         <span class="keyword">for</span> (Map adCountDtoMap:mappedResults) &#123;</span><br><span class="line">             String json = JsonUtils.obj2Str(adCountDtoMap);</span><br><span class="line">             AdCountDto adCountDto = JsonUtils.str2Obj(json, AdCountDto.class);</span><br><span class="line">             adCountDto.setDate(dateFormatCheck.format(<span class="keyword">new</span> Date()));</span><br><span class="line">             createIndex(COL_NAME);</span><br><span class="line">             mongoTemplate.insert(adCountDto,COL_NAME);</span><br><span class="line">         &#125;</span><br><span class="line">         start = dataPlus(start ,<span class="number">1</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> map;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p><img src="http://ov84jkku0.bkt.clouddn.com/Statistics.png"></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-07-25T03:35:00.023Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+</span>
+
+
+        
+        原文链接：<a href="/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/" target="_blank" rel="external">http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://www.updatecg.xin'">
+            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <a>陈 武</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hadoop/">Hadoop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RabbitMQ/">RabbitMQ</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/06/20/Hadoop环境搭建/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：Hadoop环境搭建
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/06/19/RabbitMQ环境/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：RabbitMQ环境">下一篇：RabbitMQ环境</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="http://ov84jkku0.bkt.clouddn.com/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
+            appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
+            avatar: "monsterid",
+            placeholder: "欢迎建议留言...",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议|蜀ICP备17018847号</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACr0lEQVR42u3aQW7CQAwF0Nz/0nRbiRL87TGi0suqKiGZl0XGfPu6ysfj1/H8//v/VD69/1b9nOaBh4eHN1j68/F86Tnp/sqvzn915qs14+Hh4W3z7pfVeynfLyt9uJX14OHh4X0nr76IdKuosPHw8PD+Fy99Wd9fufJpvazHw8PD+zyvXtTOSfcbQ513OGvBw8PDK/PqscL3/L3S38PDw8Mbd9Xrm0R9sCBtgD0GBx4eHt4Gr1fOplFs75z0Xi/Px8PDwzvKq/yMnwcEaVDbG8nCw8PD+wxvO3TotazSbwUhBR4eHt6Ylzbpe6MAaVlcAZe+i4eHh7fA6wWs6UhB2uavLL1SjuPh4eHt8YLEd/AIgtf3oHl2pbsWHh4eXsibv7LT4LVXuPdKdjw8PLw9Xq+V1Rucqoca6aP/4154eHh4C7y0nO01z+Z36TXJ8PDw8PZ49yVsPRSoj732NoBeiIyHh4e3x0sbTr3ppjRWOHBlPDw8vAVeGuymL/00sEjPjMtrPDw8vAFv8uJOS97KQ5yEs39cDQ8PD2+Z1xuxugbHpDFWinTx8PDwlnmlH/ODKLb+acoLhq7w8PDwxrzKC7qyeaSBQn3soFlM4+Hh4X2E1yteg+ZTWLgfCzXw8PDwlnnpEFUaK6QDWwe+i4eHh7fGqyxxu7mVRiFxGIGHh4d3lFePa+e3TB9NGgG/2ffw8PDwDvF6mB4sbXqlAQceHh7eHu/UEEBv6elQV/2+h2cc8PDw8Kpv2gPldRr+ThjpRoKHh4c34U1+8PdaX6cGBeKZMjw8PLyjvDQ4mJTCadOrt4Hh4eHhfRuv2cgPH006cHBsY8DDw8M7yqsXu/XgoP744g0GDw8Pb403GWzqtc3S4jsupvHw8PDWeOlIUzDPNQ5q6222A6MDeHh4eO95PyZ0jaq/4RrnAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- map -->
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2017/8");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "陈 武");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 从不停止Update %c  © Chen Wu  http://www.updatecg.xin \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>
+<script>
+var myChart = echarts.init(document.getElementById('echartID'));
+
+var data = [
+		 {name: '成都', value: 90},
+		 {name: '新都桥', value: 30},
+		 {name: '折多山', value: 30},
+		 {name: '雅安', value: 58},
+		 {name: '简阳', value: 58},
+		 {name: '牛背山', value: 30},
+		 {name: '康定', value: 90},
+		 {name: '泸定', value: 58},
+
+];
+var geoCoordMap = {
+		'成都':[104.06,30.67],
+		'新都桥':[101.49,30.04],
+		'折多山':[101.48,30.06],
+		'雅安':[102.97,29.97],
+		'简阳':[104.53,30.38],
+		'牛背山':[102.3,29.75],
+		'康定':[101.9,30.04],
+		'泸定':[102.23,29.9],
+
+};
+
+var convertData = function (data) {
+		var res = [];
+		for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+						res.push({
+								name: data[i].name,
+								value: geoCoord.concat(data[i].value)
+						});
+				}
+		}
+		return res;
+};
+
+option = {
+		title: {
+				text: '路上',
+				subtext: '',
+				left: 'center',
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		tooltip : {
+				trigger: 'item'
+		},
+		legend: {
+				orient: 'vertical',
+				y: 'bottom',
+				x:'right',
+				data:['pm2.5'],
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		geo: {
+				map: '四川',
+				label: {
+						emphasis: {
+								show: false
+						}
+				},
+				roam: true,
+				itemStyle: {
+						normal: {
+								areaColor: '#323c48',
+								borderColor: '#111'
+						},
+						emphasis: {
+								areaColor: '#2a333d'
+						}
+				}
+		},
+		series : [
+				{
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: convertData(
+								data.sort(function (a, b) {
+
+						}).slice(0, 8)),
+						symbolSize: function (val) {
+								return val[2] / 10;
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+								brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						label: {
+								normal: {
+										formatter: '{b}',
+										position: 'right',
+										show: true
+								}
+						},
+						itemStyle: {
+								normal: {
+										color: '#f4e925',
+										shadowBlur: 10,
+										shadowColor: '#333'
+								}
+						},
+						zlevel: 1
+				}
+		]
+};
+// 使用刚指定的配置项和数据显示图表。
+
+myChart.setOption(option);
+
+</script>
+
+</body>
+</html>

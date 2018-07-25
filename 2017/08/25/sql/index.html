@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Tomcat调优 | Update</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#8e7cc3">
+    
+    
+    <meta name="keywords" content="Tomcat">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?fd3edcc6b9c13c8c7a7104967c14b59d"></script>
+
+
+    
+    <meta name="keywords" content="Tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat调优">
+<meta property="og:url" content="http://www.updatecg.xin/2017/08/25/sql/index.html">
+<meta property="og:site_name" content="Update">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C19.jpg">
+<meta property="og:updated_time" content="2018-07-25T03:35:00.022Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat调优">
+<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C19.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/msofficexp.png">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">陈 武</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/2017/08/25/路上/"  >
+                    <i class="icon icon-lg icon-globe"></i>
+                    <span>旅行</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="http://118.24.112.225:8000"  >
+                    <i class="icon icon-lg icon-exchange"></i>
+                    <span>资源</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:969310256@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/UpdateCw/" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Tomcat调优</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#外部调优"><span class="post-toc-number">1.</span> <span class="post-toc-text">外部调优</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#内部调优"><span class="post-toc-number">2.</span> <span class="post-toc-text">内部调优</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#NIO"><span class="post-toc-number">3.</span> <span class="post-toc-text">NIO</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#禁止DNS查找"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">禁止DNS查找</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#线程调整"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">线程调整</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#加速JSP的编译"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">加速JSP的编译</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#附录"><span class="post-toc-number">4.</span> <span class="post-toc-text">附录</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#server-xml"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">server.xml</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-sql"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Tomcat调优</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2017-08-25 11:59:02" datetime="2017-08-25T03:59:02.000Z"  itemprop="datePublished">2017-08-25</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/闲时/">闲时</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">7</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C19.jpg"></p>
+<a id="more"></a>
+<h1 id="外部调优"><a href="#外部调优" class="headerlink" title="外部调优"></a>外部调优</h1><p>JAVA虚拟机（JVM）性能优化，可以通过以下两个参数来设置虚拟机使用内存的大小，-Xms&lt;size&gt;（JVM初始化堆的大小）和-Xmx&lt;size&gt;（JVM堆的最大值）。<br>这两个值的大小一般根据需要进行设置。初始化堆的大小执行了虚拟机在启动时向系统申请的内存的大小。一般而言，这个参数不重要。但是有的应用程序在大负载的情况下会急剧地占用更多的内存，此时这个参数就是显得非常重要，如果虚拟机启动时设置使用的内存比较小而在这种情况下有许多对象进行初始化，虚拟机就必须重复地增加内存来满足使用。由于这种原因，我们一般把-Xms和-Xmx设为一样大，而堆的最大值受限于系统使用的物理内存。一般使用数据量较大的应用程序会使用持久对象，内存使用有可能迅速地增长。当应用程序需要的内存超出堆的最大值时虚拟机就会提示内存溢出，并且导致应用服务崩溃。因此一般建议堆的最大值设置为可用内存的最大值的80%。</p>
+<p>Tomcat默认可以使用的内存为128MB，在较大型的应用项目中，这点内存是不够的，需要调大。</p>
+<p>Windows下，在文件{tomcat_home}/bin/catalina.bat，Unix下，在文件{tomcat_home}/bin/catalina.sh的前面，增加如下设置：<br>JAVA_OPTS=&#39;-Xms【初始化内存大小】-Xmx【可以使用的最大内存】&#39;<br>需要把这个两个参数值调大。例如：JAVA_OPTS=&#39;-Xms256m -Xmx512m&#39;，表示初始化内存为256MB，可以使用的最大内存为512MB。</p>
+<p>另外需要考虑的是Java提供的垃圾回收机制。虚拟机的堆大小决定了虚拟机花费在收集垃圾上的时间和频度。收集垃圾可以接受的速度与应用有关，应该通过分析实际的垃圾收集的时间和频率来调整。如果堆的大小很大，那么完全垃圾收集就会很慢，但是频度会降低。如果你把堆的大小和内存的需要一致，完全收集就很快，但是会更加频繁。调整堆大小的的目的是最小化垃圾收集的时间，以在特定的时间内最大化处理客户的请求。在基准测试的时候，为保证最好的性能，要把堆的大小设大，保证垃圾收集不在整个基准测试的过程中出现，   如果系统花费很多的时间收集垃圾，请减小堆大小。一次完全的垃圾收集应该不超过3-5秒。如果垃圾收集成为瓶颈，那么需要指定代的大小，检查垃圾收集的详细输出，研究垃圾收集参数对性能的影响。一般说来，你应该使用物理内存的80%作为堆大小。当增加处理器时，记得增加内存，因为分配可以并行进行，而垃圾收集不是并行的。</p>
+<h1 id="内部调优"><a href="#内部调优" class="headerlink" title="内部调优"></a>内部调优</h1><h1 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h1><p>而NIO则是使用单线程(单个CPU)或者只使用少量的多线程(多CPU)来接受Socket，而由线程池来处理堵塞在pipe或者队列里的请求.这样的话，只要OS可以接受TCP的连接，web服务器就可以处理该请求。大大提高了web服务器的可伸缩性。<br><code><pre><br>&lt;Connector port=&quot;8080&quot;<br>    protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot;<br>    connectionTimeout=&quot;20000&quot;<br>    redirectPort=&quot;8443&quot; /&gt;<br></pre><br>启之后，进行测试，被打开nio配置，启动时的信息，如下：</code></p>
+<pre>
+2014-2-1 13:01:01 org.apache.tomcat.util.net.NioSelectorPool getSharedSelector
+信息: Using a shared selector for servlet write/read
+2014-2-1 13:01:01 org.apache.coyote.http11.Http11NioProtocol init
+信息: Initializing Coyote HTTP/1.1 on http-8080
+</pre>
+
+<h2 id="禁止DNS查找"><a href="#禁止DNS查找" class="headerlink" title="禁止DNS查找"></a>禁止DNS查找</h2><p>有时候我们的应用可能要记录客户端的信息，两种方式，一是记录客户端的数字IP地址，另一个是在DNS数据中查找真实的主机名。DNS查找会增加网络通信，以致造成了网络延迟。要消除这个延迟，我们可以禁掉DNS查找。这时我们的应用再调用getRemoteHost( )方法时，它就只会得到数字IP地址。这个配置是在Tomcat的serve.xml文件中，Connector对象的enableLookups属性</p>
+<p><pre><br>&lt;Connector<br>    className=&quot;org.apache.coyote.tomcat4.CoyoteConnector&quot;<br>    port=&quot;8080&quot;minProcessors=&quot;5&quot; maxProcessors=&quot;75&quot;<br>    enableLookups=&quot;true&quot; redirectPort=&quot;8443&quot;<br>    acceptCount=&quot;10&quot; debug=&quot;0&quot; connectionTimeout=&quot;20000&quot;<br>    useURIValidationHack=&quot;false&quot;<br>/&gt;<br></pre><br>在生产系统中，除非应用要得到所有客户端真实的主机名，这个通常是建议禁掉的。实在不行这样的工作我们可以在Tomcat的外面做。在一个流量较小的Servr这种修改的效果可能不是十分明显，但是对于某些站点来说，也许突然之间流量暴增也说不定呢，比如，前段时间的奥运票务网站，哈哈！</p>
+<h2 id="线程调整"><a href="#线程调整" class="headerlink" title="线程调整"></a>线程调整</h2><p>另一个影响性能的是Connector所使用的进程数。Tomcat使用一个线程池来提高请求响应的速度。Java中的一个线程单独同操作系统交互，并且有它自己的本地内存，以及同进程内的其他线程分享部分共享内存。<br>我们可以通过修改Connector对象的minProcessors和maxProcessors来控制线程数。这个数字也许在刚上线的时候进行了适当的设置，可是当用户数变多的时候我们就要增加配置数了。minProcessors值应该设置的足够大来处理最小负载。当用户变多的时候，Tomcat会分配更多的线程，不超过maxProcessors。上限也一定要设置的适当，以免使server的内存超过JVM的内存限制而挂掉。</p>
+<h2 id="加速JSP的编译"><a href="#加速JSP的编译" class="headerlink" title="加速JSP的编译"></a>加速JSP的编译</h2><p>第一次访问JSP的时候，它会被转换成Java servlet源码，然后编译成二进制代码。这个过程中，我们是可以控制所使用的编译器的。默认情况，Tomcat所使用的是和命令行上执行javac时同样的编译器。其实有更快的编译器的，我们可以利用这些来提高JSP的编译速度。</p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="server-xml"><a href="#server-xml" class="headerlink" title="server.xml"></a>server.xml</h2><p>在tomcat配置文件server.xml中的配置中，和连接数相关的参数有：<br>_ minProcessors：最小空闲连接线程数，用于提高系统处理性能，默认值为10<br>_ maxProcessors：最大连接线程数，即：并发处理的最大请求数，默认值为75</p>
+<ul>
+<li>acceptCount：允许的最大连接数，即等待队列，指定当所有可以使用的处理请求的线程数都被使用时，可以放到处理队列中的请求数，超过这个数的请求将不予处理。应大于等于maxProcessors，默认值为100，</li>
+</ul>
+<blockquote>
+<p>和最大连接数相关的参数为maxProcessors和acceptCount。如果要加大并发连接数应同时加大这两个参数。web server允许的最大连接数还受制于操作系统的内核参数设置，通常Windows是2000个左右，Linux是1000个左右。<br>_ enableLookups：是否反查域名，取值为：true或false。为了提高处理能力，应设置为false<br>_ connectionTimeout：网络连接超时，单位：毫秒。设置为0表示永不超时，这样设置有隐患的。通常可设置为30000毫秒。<br>_ maxThreads=&quot;500&quot; 表示最多同时处理500个连接<br>_ minSpareThreads=&quot;100&quot; 表示即使没有人使用也开这么多空线程等待</p>
+<ul>
+<li>maxSpareThreads=&quot;300&quot; 表示如果最多可以空75个线程，例如某时刻有80人访问，之后没有人访问了，则tomcat不会保留80个空线程，而是关闭5个空的。</li>
+</ul>
+</blockquote>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-07-25T03:35:00.022Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+</span>
+
+
+        
+        原文链接：<a href="/2017/08/25/sql/" target="_blank" rel="external">http://www.updatecg.xin/2017/08/25/sql/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://www.updatecg.xin'">
+            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <a>陈 武</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tomcat/">Tomcat</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/08/25/sql/&title=《Tomcat调优》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/08/25/sql/&title=《Tomcat调优》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/08/25/sql/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Tomcat调优》 — Update&url=http://www.updatecg.xin/2017/08/25/sql/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/08/25/sql/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/08/25/mongo ReadTimeOut/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：MongoDB 查询超时异常 SocketTimeoutException
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/08/25/防坑及填坑指南/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：防坑及填坑指南">下一篇：防坑及填坑指南</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="http://ov84jkku0.bkt.clouddn.com/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
+            appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
+            avatar: "monsterid",
+            placeholder: "欢迎建议留言...",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议|蜀ICP备17018847号</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/08/25/sql/&title=《Tomcat调优》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/08/25/sql/&title=《Tomcat调优》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/08/25/sql/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Tomcat调优》 — Update&url=http://www.updatecg.xin/2017/08/25/sql/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/08/25/sql/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK4AAACuCAAAAACKZ2kyAAAB00lEQVR42u3awY7DIAyE4bz/S6fXSlvIzBhbWennVGXZ9KMHhAdflzzur/H95O+c1V9X77w6Bly4cMvceztWc/ZvcBesGODChTvP3W80Cl2fo2yLy+dw4cJ9JTc70LgHJrhw4f4v7mpjWj1Rih+4cOG+k6sUP/sX7YlucXWgVoMLF26Bqx9K+j635Ltw4cKNuLc5KpFHfcCFC3eG616I7i9R9GuV0vfChQu3mVvZwvYlkFLGKNexP35XuHDhNnOzDcsNRLIGLwkNFy7cZm69YcK4DhGC14cABS5cuM3c7BojK3iynwAuXLiT3Ep4oTRk6CypLQMuXLgjXH2SEmG4pU4WxMCFC7eb68aa+uezRyW4cOFOcpWQtFK6VHqrpFoNLly4bdxTBYzRXBWVWHDhwp3kZocbPTDVyyo734ULF24z1/gHM+jMlvdQ/MCFC3eEm4UXbkOVu2yjdwwuXLiHuLc53HYrPfJQlgEXLtwZrj6ydopK2eMesODChXuW68ajSmHjFjlG0QUXLtxBrrsNZReu7g76EJjChQv3NVz9OraySOk2GC5cuC/jKk1U+sHIiFDhwoU7yM3CTSXsOLU8uHDhTnLtrSQqk7L5pXwXLly4CfcDqukp+IGcMw0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- map -->
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2017/8");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "陈 武");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 从不停止Update %c  © Chen Wu  http://www.updatecg.xin \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>
+<script>
+var myChart = echarts.init(document.getElementById('echartID'));
+
+var data = [
+		 {name: '成都', value: 90},
+		 {name: '新都桥', value: 30},
+		 {name: '折多山', value: 30},
+		 {name: '雅安', value: 58},
+		 {name: '简阳', value: 58},
+		 {name: '牛背山', value: 30},
+		 {name: '康定', value: 90},
+		 {name: '泸定', value: 58},
+
+];
+var geoCoordMap = {
+		'成都':[104.06,30.67],
+		'新都桥':[101.49,30.04],
+		'折多山':[101.48,30.06],
+		'雅安':[102.97,29.97],
+		'简阳':[104.53,30.38],
+		'牛背山':[102.3,29.75],
+		'康定':[101.9,30.04],
+		'泸定':[102.23,29.9],
+
+};
+
+var convertData = function (data) {
+		var res = [];
+		for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+						res.push({
+								name: data[i].name,
+								value: geoCoord.concat(data[i].value)
+						});
+				}
+		}
+		return res;
+};
+
+option = {
+		title: {
+				text: '路上',
+				subtext: '',
+				left: 'center',
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		tooltip : {
+				trigger: 'item'
+		},
+		legend: {
+				orient: 'vertical',
+				y: 'bottom',
+				x:'right',
+				data:['pm2.5'],
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		geo: {
+				map: '四川',
+				label: {
+						emphasis: {
+								show: false
+						}
+				},
+				roam: true,
+				itemStyle: {
+						normal: {
+								areaColor: '#323c48',
+								borderColor: '#111'
+						},
+						emphasis: {
+								areaColor: '#2a333d'
+						}
+				}
+		},
+		series : [
+				{
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: convertData(
+								data.sort(function (a, b) {
+
+						}).slice(0, 8)),
+						symbolSize: function (val) {
+								return val[2] / 10;
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+								brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						label: {
+								normal: {
+										formatter: '{b}',
+										position: 'right',
+										show: true
+								}
+						},
+						itemStyle: {
+								normal: {
+										color: '#f4e925',
+										shadowBlur: 10,
+										shadowColor: '#333'
+								}
+						},
+						zlevel: 1
+				}
+		]
+};
+// 使用刚指定的配置项和数据显示图表。
+
+myChart.setOption(option);
+
+</script>
+
+</body>
+</html>

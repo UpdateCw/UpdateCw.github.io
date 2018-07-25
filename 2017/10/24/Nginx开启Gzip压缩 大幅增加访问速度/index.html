@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>Nginx开启Gzip压缩 大幅增加访问速度 | Update</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#8e7cc3">
+    
+    
+    <meta name="keywords" content="Nginx">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?fd3edcc6b9c13c8c7a7104967c14b59d"></script>
+
+
+    
+    <meta name="keywords" content="Nginx">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx开启Gzip压缩 大幅增加访问速度">
+<meta property="og:url" content="http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/index.html">
+<meta property="og:site_name" content="Update">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C12.jpg">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720171024162143.png">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720171024162210.png">
+<meta property="og:updated_time" content="2018-07-25T03:35:00.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx开启Gzip压缩 大幅增加访问速度">
+<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C12.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/msofficexp.png">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">陈 武</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/about"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/2017/08/25/路上/"  >
+                    <i class="icon icon-lg icon-globe"></i>
+                    <span>旅行</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="http://118.24.112.225:8000"  >
+                    <i class="icon icon-lg icon-exchange"></i>
+                    <span>资源</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:969310256@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/UpdateCw/" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Nginx开启Gzip压缩 大幅增加访问速度</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#图片大小过大导致加速速度变慢"><span class="post-toc-number">1.</span> <span class="post-toc-text">图片大小过大导致加速速度变慢</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#修改nginx-conf"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">修改nginx.conf</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解释各行"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">解释各行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#wq保存退出，重新加载Nginx"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">wq保存退出，重新加载Nginx</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#验证是够开始Gzip"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">验证是够开始Gzip</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#对于Tomcat"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">对于Tomcat</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-Nginx开启Gzip压缩 大幅增加访问速度"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Nginx开启Gzip压缩 大幅增加访问速度</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2017-10-24 16:23:02" datetime="2017-10-24T08:23:02.000Z"  itemprop="datePublished">2017-10-24</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/闲时/">闲时</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C12.jpg"><br><a id="more"></a></p>
+<h2 id="图片大小过大导致加速速度变慢"><a href="#图片大小过大导致加速速度变慢" class="headerlink" title="图片大小过大导致加速速度变慢"></a>图片大小过大导致加速速度变慢</h2><blockquote>
+<p>Nginx打开Gzip</p>
+</blockquote>
+<h3 id="修改nginx-conf"><a href="#修改nginx-conf" class="headerlink" title="修改nginx.conf"></a>修改nginx.conf</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line">gzip_buffers 4 16k;</span><br><span class="line">#gzip_http_version 1.0;</span><br><span class="line">gzip_comp_level 2;</span><br><span class="line">gzip_types text/plain application/x-javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;</span><br><span class="line">gzip_vary off;</span><br><span class="line">gzip_disable "MSIE [1-6]\.";</span><br></pre></td></tr></table></figure>
+<h3 id="解释各行"><a href="#解释各行" class="headerlink" title="解释各行"></a>解释各行</h3><ul>
+<li>第1行：开启Gzip</li>
+<li>第2行：不压缩临界值，大于1K的才压缩，一般不用改</li>
+<li>buffer，就是，嗯，算了不解释了，不用改</li>
+<li>用了反向代理的话，末端通信是HTTP/1.0，有需求的应该也不用看我这科普文了；有这句的话注释了就行了，默认是HTTP/1.1</li>
+<li>压缩级别，1-10，数字越大压缩的越好，时间也越长，看心情随便改吧</li>
+<li>进行压缩的文件类型，缺啥补啥就行了，JavaScript有两种写法，最好都写上吧，总有人抱怨js文件没有压缩，其实多写一种格式就行了</li>
+<li>跟Squid等缓存服务有关，on的话会在Header里增加”Vary: Accept-Encoding”，我不需要这玩意，自己对照情况看着办吧</li>
+<li>IE6对Gzip不怎么友好，不给它Gzip了</li>
+</ul>
+<h3 id="wq保存退出，重新加载Nginx"><a href="#wq保存退出，重新加载Nginx" class="headerlink" title="wq保存退出，重新加载Nginx"></a>wq保存退出，重新加载Nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/nginx/sbin/nginx -s reload</span><br></pre></td></tr></table></figure>
+<h3 id="验证是够开始Gzip"><a href="#验证是够开始Gzip" class="headerlink" title="验证是够开始Gzip"></a>验证是够开始Gzip</h3><p>未开启Gzip<br>  <img src="http://ov84jkku0.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720171024162143.png" alt="jdk"><br>开启Gzip<br>  <img src="http://ov84jkku0.bkt.clouddn.com/QQ%E5%9B%BE%E7%89%8720171024162210.png" alt="jdk"></p>
+<ul>
+<li>如果出现了Content-encoding:gzip 则表示gzip以及压缩。图片1.4MB的图片已压缩至1.3MB.</li>
+<li>这里压缩的数据类型是json数据，所以需要将application/json 添加到gzip_types中</li>
+</ul>
+<h3 id="对于Tomcat"><a href="#对于Tomcat" class="headerlink" title="对于Tomcat"></a>对于Tomcat</h3><p>####修改server.xml<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span> <span class="attr">protocol</span>=<span class="string">"HTTP/1.1"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">compression</span>=<span class="string">"on"</span>  // 打开压缩功能 (<span class="attr">on</span>|<span class="attr">off</span>)</span></span><br><span class="line"><span class="tag">    <span class="attr">compressionMinSize</span>=<span class="string">"2048"</span> // 启用压缩的输出内容大小，这里面默认为<span class="attr">2KB</span></span></span><br><span class="line"><span class="tag">    <span class="attr">noCompressionUserAgents</span>=<span class="string">"gozilla, traviata"</span>  // 对于这里配置的浏览器，不启用压缩</span></span><br><span class="line"><span class="tag">    <span class="attr">compressableMimeType</span>=<span class="string">"text/html,text/xml,text/plain,text/css,application/javascript"</span> //对哪些文件类型启用压缩</span></span><br><span class="line"><span class="tag">    <span class="attr">useSendfile</span>=<span class="string">"false"</span> //<span class="attr">useSendfile</span>属性默认为<span class="attr">true</span>, 会禁用任何可能的压缩, 改成<span class="attr">false</span>就好了</span></span><br><span class="line"><span class="tag">/&gt;</span></span><br></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-07-25T03:35:00.011Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+</span>
+
+
+        
+        原文链接：<a href="/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/" target="_blank" rel="external">http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://www.updatecg.xin'">
+            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <a>陈 武</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/&title=《Nginx开启Gzip压缩 大幅增加访问速度》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/&title=《Nginx开启Gzip压缩 大幅增加访问速度》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx开启Gzip压缩 大幅增加访问速度》 — Update&url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/10/25/SpringBoot 【 第一章 】配置详解/" id="post-prev" class="post-nav-link">
+        <h4 class="title" >
+          上一篇：SpringBoot 【 第一章 】配置详解
+        </h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/10/12/Java多线程编程实战指南+设计模式篇/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：【第一阶段阅读总结】Java多线程编程实战指南+设计模式篇">下一篇：【第一阶段阅读总结】Java多线程编程实战指南+设计模式篇</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="http://ov84jkku0.bkt.clouddn.com/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
+            appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
+            avatar: "monsterid",
+            placeholder: "欢迎建议留言...",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议|蜀ICP备17018847号</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/&title=《Nginx开启Gzip压缩 大幅增加访问速度》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/&title=《Nginx开启Gzip压缩 大幅增加访问速度》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Nginx开启Gzip压缩 大幅增加访问速度》 — Update&url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2017/10/24/Nginx开启Gzip压缩 大幅增加访问速度/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACoUlEQVR42u3aQXLDMAgF0N7/0u0BUtsfEEkWzyuP6yp6yoxQgJ+f+Pp9ue7feX3eu78a5/CFh4eHN57660Tv7++f3FOr7+dzxsPDw9vmnZ1KLzDcL1YzeODh4eF9AS95Un0+WSY8PDy8b+blSYokkFyNfPUEDw8P79t4STKiipwc0KsjHMi14OHh4cW83tCfvV+p7+Hh4eGNq+rVUPE7vs6OjIeHh7fBmxSoJo0Fk4CULwceHh7eBu8+YXr/I/9U+vV+/Gp57PJ7w8PDwzvEy/9c3fpzWHmicbMXHh4e3gYvKepPyku94JGAoy8DDw8Pb5nXO0BXU655pKqyH7rJ8PDw8BZ4p5IFecmquvVXS2J4eHh4e7yklDWZdLWElqdxHxYFDw8Pb403KX3lB99qK8C8ExUPDw9vjzdJrVZbBM6W1h4WBQ8PD2+NN2+c6m3ik7AR/QzAw8PDewtvUqqfBJJqGSwKPHh4eHhrvGTjTlISpwpmVeRlqMDDw8P7EC/f4pP/SlIS8+M+Hh4e3jZvkmZNtumzrQOFFAkeHh7eGm8CyxcoSb9WD/cPx308PDy8Bd6kYD9PZPTeTw7ceHh4eO/hVZsDqkWyaumryrgcGQ8PD+8orzeh3kG8lwjupTbw8PDw9niTlqleaepUaiN/joeHh3eWN59WeS3jI3t+PcQ9PDw8vKO8XtNA70l1tMXvEA8PD2/Am5e1kuL9fPwkbfHPp+Ph4eEt8Hrbbi9I5EnhXhNYjsfDw8Ob8+abdb6h996sLjEeHh7ee3i9jXhSSOsV2/Jgg4eHh/cNvPwgmwebXvKinMzFw8PD+xDvPj3RK3f1mq7yJgY8PDy8PV6+0ecjTEpTp1IYeHh4eBu8/MN6rQPVMDNPHDc7tvDw8PCeeX+IctpPHVStygAAAABJRU5ErkJggg==" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- map -->
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2017/8");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "陈 武");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 从不停止Update %c  © Chen Wu  http://www.updatecg.xin \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>
+<script>
+var myChart = echarts.init(document.getElementById('echartID'));
+
+var data = [
+		 {name: '成都', value: 90},
+		 {name: '新都桥', value: 30},
+		 {name: '折多山', value: 30},
+		 {name: '雅安', value: 58},
+		 {name: '简阳', value: 58},
+		 {name: '牛背山', value: 30},
+		 {name: '康定', value: 90},
+		 {name: '泸定', value: 58},
+
+];
+var geoCoordMap = {
+		'成都':[104.06,30.67],
+		'新都桥':[101.49,30.04],
+		'折多山':[101.48,30.06],
+		'雅安':[102.97,29.97],
+		'简阳':[104.53,30.38],
+		'牛背山':[102.3,29.75],
+		'康定':[101.9,30.04],
+		'泸定':[102.23,29.9],
+
+};
+
+var convertData = function (data) {
+		var res = [];
+		for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+						res.push({
+								name: data[i].name,
+								value: geoCoord.concat(data[i].value)
+						});
+				}
+		}
+		return res;
+};
+
+option = {
+		title: {
+				text: '路上',
+				subtext: '',
+				left: 'center',
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		tooltip : {
+				trigger: 'item'
+		},
+		legend: {
+				orient: 'vertical',
+				y: 'bottom',
+				x:'right',
+				data:['pm2.5'],
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		geo: {
+				map: '四川',
+				label: {
+						emphasis: {
+								show: false
+						}
+				},
+				roam: true,
+				itemStyle: {
+						normal: {
+								areaColor: '#323c48',
+								borderColor: '#111'
+						},
+						emphasis: {
+								areaColor: '#2a333d'
+						}
+				}
+		},
+		series : [
+				{
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: convertData(
+								data.sort(function (a, b) {
+
+						}).slice(0, 8)),
+						symbolSize: function (val) {
+								return val[2] / 10;
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+								brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						label: {
+								normal: {
+										formatter: '{b}',
+										position: 'right',
+										show: true
+								}
+						},
+						itemStyle: {
+								normal: {
+										color: '#f4e925',
+										shadowBlur: 10,
+										shadowColor: '#333'
+								}
+						},
+						zlevel: 1
+				}
+		]
+};
+// 使用刚指定的配置项和数据显示图表。
+
+myChart.setOption(option);
+
+</script>
+
+</body>
+</html>
