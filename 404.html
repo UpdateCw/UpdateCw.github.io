@@ -166,7 +166,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Búsqueda">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -238,13 +238,10 @@
     
     <!-- Valine Comments -->
     <div class="comments vcomment" id="comments"></div>
-  <!--  <script src="http://ov84jkku0.bkt.clouddn.com/av-core-mini-0.6.4.js"></script>
-    <script src="http://ov84jkku0.bkt.clouddn.com/Valine.min.js"></script>
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src="http://ov84jkku0.bkt.clouddn.com/av-core-mini-0.6.4.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/valine/1.2.8/Valine.min.js"></script>-->
+  <!--   <script src="//unpkg.com/valine/dist/Valine.min.js"></script>-->
       <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-       <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+       <script src="//unpkg.com/valine@1.2.9/dist/Valine.min.js"></script>
     <!-- Valine Comments script -->
     <script>
         var GUEST_INFO = ['nick','mail','link'];
@@ -254,10 +251,10 @@
         new Valine({
             el: '#comments',
             notify: 'false' == 'true',
-            verify: 'true' == 'true',
+            verify: 'false' == 'true',
             appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
             appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
-            avatar: "monsterid",
+            avatar: "robohash",
             placeholder: "欢迎建议留言...",
             guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
             pageSize: "10",
