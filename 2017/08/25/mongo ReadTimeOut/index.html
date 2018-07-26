@@ -171,7 +171,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Búsqueda">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -286,7 +286,7 @@
     <div class="content">
         
 <span class="post-time">
-    Última actualización<time datetime="2018-07-25T03:35:00.018Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+    Last updated: <time datetime="2018-07-25T03:35:00.018Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
 </span>
 
 
@@ -421,11 +421,24 @@
             placeholder: "欢迎建议留言...",
             guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
             pageSize: "10",
-            visitor: true
+            visitor: false
         })
     </script>
     <!-- Valine Comments end -->
 
+
+
+var GUEST=["nick","mail","link"],
+guest="nick,mail,link";
+guest=guest.split(",").filter(function(e){return GUEST.indexOf(e)>-1}),
+new Valine({el:"#comments",
+verify:!0,
+notify:!1,
+appId:"Azk3tttDJmmnafzLIaYLr2HO-gzGzoHsz",
+appKey:"W4WEhpD2Jr7RNg5aKmMG4X5v",
+placeholder:"ヾﾉ≧∀≦)o 来啊！快活啊！",
+avatar:"mm",
+meta:guest,pageSize:"10",visitor:!0})
 
 
 
