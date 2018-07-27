@@ -171,7 +171,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Búsqueda">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -266,7 +266,7 @@
     <div class="content">
         
 <span class="post-time">
-    Última actualización<time datetime="2018-07-25T03:35:00.023Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+    Last updated: <time datetime="2018-07-25T03:35:00.023Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
 </span>
 
 
@@ -391,7 +391,7 @@
         new Valine({
             el: '#comments',
             notify: 'false' == 'true',
-            verify: 'false' == 'true',
+            verify: 'true' == 'true',
             appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
             appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
             avatar: "robohash",
@@ -642,8 +642,8 @@ if (window.console && window.console.log) {
 
 <script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
 <script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
-<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
 <script>
 var myChart = echarts.init(document.getElementById('echartID'));
 
