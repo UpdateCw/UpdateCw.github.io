@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta charset="utf-8">
+    
+    
+    
+    <title>SpringCloud 集合Gradle、Consul 部署至Docker | Update</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    
+    <meta name="theme-color" content="#8e7cc3">
+    
+    
+    <meta name="keywords" content="Docker,SpringCloud,Consul">
+    
+    
+
+    
+
+    <!-- Baidu Push -->
+<script>
+	(function(){
+		var bp = document.createElement('script');
+		var curProtocol = window.location.protocol.split(':')[0];
+		if (curProtocol === 'https') {
+			bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+		}
+		else {
+			bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+		}
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(bp, s);
+	})();
+
+	var _hmt = _hmt || [];
+</script>
+
+
+	<script src="//hm.baidu.com/hm.js?fd3edcc6b9c13c8c7a7104967c14b59d"></script>
+
+
+    
+    <meta name="keywords" content="Docker,SpringCloud,Consul">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud 集合Gradle、Consul 部署至Docker">
+<meta property="og:url" content="http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/index.html">
+<meta property="og:site_name" content="Update">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/dockers.gif">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/mvn.gif">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/dockerfile.gif">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/buildDockerfile.gif">
+<meta property="og:updated_time" content="2018-09-06T04:55:13.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringCloud 集合Gradle、Consul 部署至Docker">
+<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/dockers.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/msofficexp.png">
+    <link id="style" rel="stylesheet" href="/css/style.css?v=3.0">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+            
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+    <aside id="menu"  class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" >
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname" id="name">陈 武</h5>
+          
+            <div id="yiyanmotto" class="motto">&nbsp;</div>
+          
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+              <li class="waves-block waves-effect">
+                  <a href="/"  >
+                    <i class="icon icon-lg icon-home"></i>
+                    <span>主 页</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/archives"  >
+                    <i class="icon icon-lg icon-archives"></i>
+                    <span>归 档</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/categories"  >
+                    <i class="icon icon-lg icon-th-list"></i>
+                    <span>分 类</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/tags"  >
+                    <i class="icon icon-lg icon-tags"></i>
+                    <span>标 签</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/2017/10/01/chenwu/"  >
+                    <i class="icon icon-lg icon-smile-o"></i>
+                    <span>关 于</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="/2017/08/25/路上/"  >
+                    <i class="icon icon-lg icon-globe"></i>
+                    <span>旅行</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+              <li class="waves-block waves-effect">
+                  <a href="http://118.24.112.225:8000"  >
+                    <i class="icon icon-lg icon-exchange"></i>
+                    <span>资源</span><i class="icon icon-lg icon-caret-left"></i>
+                  </a>
+              </li>
+            
+      <div class="nav2">
+          
+              <a class="nav2item" data-title="Email" href="mailto:969310256@qq.com" target="_parent"title="Email" >
+                <i class="icon icon-lg icon-envelope-o envelope-o"></i>
+              </a>
+          
+              <a class="nav2item" data-title="Github" href="https://github.com/UpdateCw/" target="_blank"title="Github" >
+                <i class="icon icon-lg icon-github github"></i>
+              </a>
+          
+
+            </div>
+        
+      </ul>
+        
+    </div>
+  </div>
+ 
+</aside>
+
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">SpringCloud 集合Gradle、Consul 部署至Docker</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        <a href="../../atom.xml" target="_blank" class="header-icon waves-effect waves-circle waves-light" id="Rss">
+            <i class="icon icon-lg icon-rss"></i>
+        </a>
+    </div>
+</header>
+<header class="content-header post-header">
+    
+    
+    <div class="container fade-scale">
+        <div id="myheader">
+            <h1 class="title">
+                
+            </h1>
+            <h5 class="subtitle">
+                
+                
+            </h5>
+        </div>
+    </div>
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#此章节侧重于SpringCloud打包部署Docker"><span class="post-toc-number">1.</span> <span class="post-toc-text">此章节侧重于SpringCloud打包部署Docker</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第一步Gradle编译打包"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">第一步Gradle编译打包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第二步编写Dockerfile文件"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">第二步编写Dockerfile文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Dockerfile具体内容如下"><span class="post-toc-number">1.2.0.1.</span> <span class="post-toc-text">Dockerfile具体内容如下</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第三步利用Docker-bundle-f-编译"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">第三步利用Docker bundle -f .. 编译</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第四步查看镜像文件、运行文件"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">第四步查看镜像文件、运行文件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#测试地址-http-localhost-8089-swagger-ui-html"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">测试地址 http://localhost:8089/swagger-ui.html#!</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#虽服务启动成功-但是端口没有映射所以访问不到。"><span class="post-toc-number">1.4.1.1.</span> <span class="post-toc-text">虽服务启动成功,但是端口没有映射所以访问不到。</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#映射端口启动"><span class="post-toc-number">1.4.1.2.</span> <span class="post-toc-text">映射端口启动</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+   
+<article id="post-SpringCloud部署Docker之镜像文件"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">SpringCloud 集合Gradle、Consul 部署至Docker</h1>
+        <div class="post-meta">
+            <i class="icon icon-lg icon-calendar-o"></i>
+            发表于
+            <time class="post-time" title="2018-09-06 10:25:02" datetime="2018-09-06T02:25:02.000Z"  itemprop="datePublished">2018-09-06</time>
+
+            <br id="mybreak"/>
+            
+	<i class="icon icon-lg icon-folder-o"></i>
+	分类：<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/闲时/">闲时</a></li></ul>
+
+
+            <i>·</i>
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>次浏览
+</span>
+
+
+        </div>
+        <div class="post-count-custom">
+            <i class="icon icon-lg icon-comment-o"></i>
+            阅读本文可能花费您&nbsp;<span class="post-count">1</span>&nbsp;分钟
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><img src="http://ov84jkku0.bkt.clouddn.com/dockers.gif"><br><a id="more"></a></p>
+<blockquote>
+<p>自从接触了Docker发现自己已经深深的爱上了它。一个开源的轻量型容器。开发人员只需将应用程序及所依赖的运行环境打包到容器即可。大大的缩短开发时间、部署周期、简化开发环境。</p>
+</blockquote>
+<p><span style="color:red;font-size:20px">！！后面的文章能有用视频描述的会尽量用视频，让大家一目了然。避免不必要的坑。</span></p>
+<h1 id="此章节侧重于SpringCloud打包部署Docker"><a href="#此章节侧重于SpringCloud打包部署Docker" class="headerlink" title="此章节侧重于SpringCloud打包部署Docker"></a>此章节侧重于SpringCloud打包部署Docker</h1><h2 id="第一步Gradle编译打包"><a href="#第一步Gradle编译打包" class="headerlink" title="第一步Gradle编译打包"></a>第一步Gradle编译打包</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/mvn.gif"></p>
+<h2 id="第二步编写Dockerfile文件"><a href="#第二步编写Dockerfile文件" class="headerlink" title="第二步编写Dockerfile文件"></a>第二步编写Dockerfile文件</h2><blockquote>
+<p>利用脚本文件将jar生成images镜像文件。</p>
+</blockquote>
+<p><img src="http://ov84jkku0.bkt.clouddn.com/dockerfile.gif"></p>
+<h4 id="Dockerfile具体内容如下"><a href="#Dockerfile具体内容如下" class="headerlink" title="Dockerfile具体内容如下"></a>Dockerfile具体内容如下</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM frolvlad/alpine-oraclejdk8:slim</span><br><span class="line">VOLUME /tmp</span><br><span class="line">ADD app-api-service.jar app-api.jar</span><br><span class="line"><span class="meta">#</span>RUN bash -c 'touch /app-api.jar'</span><br><span class="line">ENTRYPOINT ["java","-Djava.security.egd=file:/app-api/./urandom","-jar","/app-api.jar"]</span><br></pre></td></tr></table></figure>
+<h2 id="第三步利用Docker-bundle-f-编译"><a href="#第三步利用Docker-bundle-f-编译" class="headerlink" title="第三步利用Docker bundle -f .. 编译"></a>第三步利用Docker bundle -f .. 编译</h2><blockquote>
+<p>将其第一步编译的jar包上传至服务</p>
+</blockquote>
+<p><img src="http://ov84jkku0.bkt.clouddn.com/buildDockerfile.gif"></p>
+<h2 id="第四步查看镜像文件、运行文件"><a href="#第四步查看镜像文件、运行文件" class="headerlink" title="第四步查看镜像文件、运行文件"></a>第四步查看镜像文件、运行文件</h2><h3 id="测试地址-http-localhost-8089-swagger-ui-html"><a href="#测试地址-http-localhost-8089-swagger-ui-html" class="headerlink" title="测试地址 http://localhost:8089/swagger-ui.html#!"></a>测试地址 <a href="http://localhost:8089/swagger-ui.html#" target="_blank" rel="noopener">http://localhost:8089/swagger-ui.html#</a>!</h3><h4 id="虽服务启动成功-但是端口没有映射所以访问不到。"><a href="#虽服务启动成功-但是端口没有映射所以访问不到。" class="headerlink" title="虽服务启动成功,但是端口没有映射所以访问不到。"></a>虽服务启动成功,但是端口没有映射所以访问不到。</h4><h4 id="映射端口启动"><a href="#映射端口启动" class="headerlink" title="映射端口启动"></a>映射端口启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_12_centos ~]# docker run -d -p 8089:8089 --name app-api 591d86ee1a90</span><br><span class="line">b0aaca48e8729f63e51c8b3853dce8b2b2a25d22eede08c486b41b5b5a52135b</span><br></pre></td></tr></table></figure>
+<p>一步一步的走。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    Last updated: <time datetime="2018-09-06T04:55:13.703Z" itemprop="dateUpdated">2018-09-06 12:55:13</time>
+</span>
+
+
+        
+        原文链接：<a href="/2018/09/06/SpringCloud部署Docker之镜像文件/" target="_blank" rel="external">http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/</a>
+        
+    </div>
+    <footer>
+        <div onclick="location.href='http://www.updatecg.xin'">
+            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <a>陈 武</a>
+        </div>
+    </footer>
+</blockquote>
+
+        
+    <div class="page-reward">
+        <nav class="myreward">
+            <a id="rewardBtn" href="javascript:;"><span>打&nbsp;赏</span><span>装成好像很多人打赏的样子</span></a>
+        </nav>
+    </div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Consul/">Consul</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SpringCloud/">SpringCloud</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/&title=《SpringCloud 集合Gradle、Consul 部署至Docker》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/&title=《SpringCloud 集合Gradle、Consul 部署至Docker》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringCloud 集合Gradle、Consul 部署至Docker》 — Update&url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/07/13/腾讯云IM支持JAVA Server/" id="post-next" class="post-nav-link">
+        <h4 class="title" data-hover="下一篇：腾讯云IM支持JAVA Server">下一篇：腾讯云IM支持JAVA Server</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+    
+
+    
+
+    
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+  <!--   <script src="//unpkg.com/valine/dist/Valine.min.js"></script>-->
+      <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+
+       <script src="//unpkg.com/valine@1.2.9/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'true' == 'true',
+            appId: "QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz",
+            appKey: "0b5xzRKTdodumxJJ1wYXcLWe",
+            avatar: "robohash",
+            placeholder: "欢迎建议留言...",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10",
+            visitor: false
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+</article>
+
+</div>
+
+        <footer class="footer">
+    <div class="footer-content">
+
+        <span id="RunTime" style="color:#a7a7a2;"></span>
+        <br/>
+
+        <span>
+            
+	<i class="icon icon-lg icon-user">
+<span id="busuanzi_container_site_uv" style='display:none'>
+       访问用户：<span id="busuanzi_value_site_uv"></span>
+    </span>人</i>
+    ·
+    <i class="icon icon-lg icon-eye">
+    <span id="busuanzi_container_site_pv" style='display:none'>
+      访问次数：<span id="busuanzi_value_site_pv"></span>
+    </span>次
+    </i>
+
+
+        </span>
+        <br/>
+
+        <span class="license">博客内容遵循 知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议 | 蜀ICP备17018847号</span>
+    </div>
+</footer>
+
+    </main>
+    
+        
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        <span>感谢您的鼓励支持！</span>
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
+                <span class="reward-toggle-item alipayPay">支付宝</span>
+            </div>
+        </label>
+        
+        <i class="icon icon-caret-up"></i>
+    </div>
+</div>
+
+
+    
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/&title=《SpringCloud 集合Gradle、Consul 部署至Docker》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/&title=《SpringCloud 集合Gradle、Consul 部署至Docker》 — Update&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringCloud 集合Gradle、Consul 部署至Docker》 — Update&url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/&via=http://www.updatecg.xin" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://www.updatecg.xin/2018/09/06/SpringCloud部署Docker之镜像文件/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p class="wechatshare">扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQW4bMRAEQP//0w7ik4FEUjeHEzlA7UlYCVzWGuDQPfz4iK/Pr+vPz9/vfL+ej/Do27ORL1x4eHh4R1N/dD3iJQ97PkL7+dGdF68ADw8Pb403KQbPR0vu5KR8BDw8PLyfwEvAyZ32icnT8fDw8H4mL4kV2hhivuHGw8PDexcvWYjPwJOYI5nPtawFDw8PL+ZNGmDv+vyP+nt4eHh4ZVd90hjLpzJpdL2YIR4eHt4Crz0K0BaMNoTNt+9FwcDDw8Nb4LXxwfNfJjHrPPjIG2l4eHh427x52NoWnjyQbV8xHh4e3javbTu1G/Tnd8625qO9Px4eHt4R71bYerZ8t4WkLk54eHh4C7y87ZRPtD041a7nOR4PDw9vg5f/878dUky24HWygoeHh3eJ126d20W8LQl5vPtwHDw8PLwF3jxomOCT1TvZRheJCx4eHt6YNz8Clb/FSYx7dowADw8Pb4931gybv442mEgK2IuKh4eHh3eJly/i87JxNs7hph8PDw9vjXerWXWGTDBJGfvLyHh4eHgLvCR+zQ9RTSaURwz5EQc8PDy8DV7eajpreuVb8yKczf9ueHh4eAu8vAxMNsft+GeHD0ZVDg8PDy/+Tbtdniz9+bPysvHiuXh4eHgLvLOpt0cK8mMEt8bHw8PDexevbS9NlvikABxm0nh4eHgLvOIYUxlYtCPkBxSKgBgPDw9vjTdpcU2iirp2tbPCw8PDu8qbPH5SHs4aY21AjIeHh7fBmyy7ebA7Odfw/AW1x8Xw8PDwbvHOGlf5Yn03/K0LAx4eHt4a72xRnmxwJ8cIij4XHh4e3n/FOysM+VY7epV4eHh4b+Ulk5hEwG3zLConeHh4eGu8ZIh2y3srwmhfFh4eHt4271YDLNl25xNto+H1/h4eHh7e7+sX4YjaTw+BZR4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <!-- waves按钮特效 -->
+<script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+
+<!-- 主题配置脚本 -->
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+</script>
+
+<!-- map -->
+
+<!-- jquery -->
+<script src="/js/jquery.min.js?v=3.0"></script>
+
+<!-- 搜索 -->
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item waves-block waves-effect" onclick="location.href='{path}'">
+    <div class="title ellipsis" title="{title}">{title}</div>
+</li>
+</template>
+
+
+<!-- main博客脚本 -->
+<script src="/js/main.min.js?v=3.0" ></script>
+
+<!-- 动画&配置 -->
+<script src="/js/script.min.js?v=3.0" ></script>
+
+<!-- 脚本管理 -->
+<script>
+
+if(window.innerWidth > 800){
+	/* 3D标题 */
+	$(".content-header").on("mousemove", threedee);
+
+	/* 底部追随鼠标 */
+	$(".footer").hover(2);
+
+	/* gotop键的涟漪 */
+	$("#gotop").hover(1);
+
+	/* 赞赏的粒子雨 */
+	$("#reward").hover(3);
+
+	/* 微信公众号的底部渲染 */
+	$("#wechat").hover(4);
+
+    /* 标题跳动 */
+    $(".archivestitle").bumpyText();
+
+	/* 图片点击放大 */
+	const postimg = jQuery(".post-content img:not(.github-emoji)");
+	postimg.on("click",function(){
+
+		mask.classList.add("in");
+		main.classList.add("Mask");
+		menu.classList.add("Mask");
+		var myimg = this.cloneNode(true);
+		myimg.classList.add("imgShow");
+
+		setTimeout(function(){
+			jQuery(myimg).animate({
+				opacity:"1"
+			},1000);
+		},0);
+
+		document.body.appendChild(myimg);
+
+		myimg.onclick=function(){
+			document.body.removeChild(myimg);
+			mask.classList.remove("in");
+			main.classList.remove("Mask");
+			menu.classList.remove("Mask");
+		};
+
+	});
+
+}
+
+/* 名字跳动 */
+$("#name").bumpyText();
+
+
+/* 网站运行时间 */
+setInterval(function () {
+	setTime("2017/8");
+}, 1000);
+
+/* 文章块的淡出 */
+postshow();
+
+/* 座右铭 */
+
+   getHitokoto();
+
+
+
+/* 粘贴提示 */
+G($(".post-content"), location.href, "陈 武");
+
+
+/* 控制台 */
+if (window.console && window.console.log) {
+	setTimeout(function () {
+		console.log("\n %c 从不停止Update %c  © Chen Wu  http://www.updatecg.xin \n\n", "color:#FFFFFB;background:#1abc9c;padding:5px 0;border-radius:.5rem 0 0 .5rem;", "color:#FFFFFB;background:#080808;padding:5px 0;border-radius:0 .5rem .5rem 0;");
+	}, 0);
+}
+
+</script>
+
+
+<!-- 公式渲染 -->
+
+
+
+<!-- 不蒜子 -->
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
+<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
+<script>
+var myChart = echarts.init(document.getElementById('echartID'));
+
+var data = [
+		 {name: '成都', value: 90},
+		 {name: '新都桥', value: 30},
+		 {name: '折多山', value: 30},
+		 {name: '雅安', value: 58},
+		 {name: '简阳', value: 58},
+		 {name: '牛背山', value: 30},
+		 {name: '康定', value: 90},
+		 {name: '泸定', value: 58},
+
+];
+var geoCoordMap = {
+		'成都':[104.06,30.67],
+		'新都桥':[101.49,30.04],
+		'折多山':[101.48,30.06],
+		'雅安':[102.97,29.97],
+		'简阳':[104.53,30.38],
+		'牛背山':[102.3,29.75],
+		'康定':[101.9,30.04],
+		'泸定':[102.23,29.9],
+
+};
+
+var convertData = function (data) {
+		var res = [];
+		for (var i = 0; i < data.length; i++) {
+				var geoCoord = geoCoordMap[data[i].name];
+				if (geoCoord) {
+						res.push({
+								name: data[i].name,
+								value: geoCoord.concat(data[i].value)
+						});
+				}
+		}
+		return res;
+};
+
+option = {
+		title: {
+				text: '路上',
+				subtext: '',
+				left: 'center',
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		tooltip : {
+				trigger: 'item'
+		},
+		legend: {
+				orient: 'vertical',
+				y: 'bottom',
+				x:'right',
+				data:['pm2.5'],
+				textStyle: {
+						color: '#fff'
+				}
+		},
+		geo: {
+				map: '四川',
+				label: {
+						emphasis: {
+								show: false
+						}
+				},
+				roam: true,
+				itemStyle: {
+						normal: {
+								areaColor: '#323c48',
+								borderColor: '#111'
+						},
+						emphasis: {
+								areaColor: '#2a333d'
+						}
+				}
+		},
+		series : [
+				{
+						type: 'effectScatter',
+						coordinateSystem: 'geo',
+						data: convertData(
+								data.sort(function (a, b) {
+
+						}).slice(0, 8)),
+						symbolSize: function (val) {
+								return val[2] / 10;
+						},
+						showEffectOn: 'render',
+						rippleEffect: {
+								brushType: 'stroke'
+						},
+						hoverAnimation: true,
+						label: {
+								normal: {
+										formatter: '{b}',
+										position: 'right',
+										show: true
+								}
+						},
+						itemStyle: {
+								normal: {
+										color: '#f4e925',
+										shadowBlur: 10,
+										shadowColor: '#333'
+								}
+						},
+						zlevel: 1
+				}
+		]
+};
+// 使用刚指定的配置项和数据显示图表。
+
+myChart.setOption(option);
+
+</script>
+
+</body>
+</html>
