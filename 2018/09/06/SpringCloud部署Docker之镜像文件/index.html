@@ -51,7 +51,8 @@
 <meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/mvn.gif">
 <meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/dockerfile.gif">
 <meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/buildDockerfile.gif">
-<meta property="og:updated_time" content="2018-09-06T04:55:13.703Z">
+<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/runApp.gif">
+<meta property="og:updated_time" content="2018-09-06T05:03:41.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringCloud 集合Gradle、Consul 部署至Docker">
 <meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/dockers.gif">
@@ -254,7 +255,8 @@
 <p>将其第一步编译的jar包上传至服务</p>
 </blockquote>
 <p><img src="http://ov84jkku0.bkt.clouddn.com/buildDockerfile.gif"></p>
-<h2 id="第四步查看镜像文件、运行文件"><a href="#第四步查看镜像文件、运行文件" class="headerlink" title="第四步查看镜像文件、运行文件"></a>第四步查看镜像文件、运行文件</h2><h3 id="测试地址-http-localhost-8089-swagger-ui-html"><a href="#测试地址-http-localhost-8089-swagger-ui-html" class="headerlink" title="测试地址 http://localhost:8089/swagger-ui.html#!"></a>测试地址 <a href="http://localhost:8089/swagger-ui.html#" target="_blank" rel="noopener">http://localhost:8089/swagger-ui.html#</a>!</h3><h4 id="虽服务启动成功-但是端口没有映射所以访问不到。"><a href="#虽服务启动成功-但是端口没有映射所以访问不到。" class="headerlink" title="虽服务启动成功,但是端口没有映射所以访问不到。"></a>虽服务启动成功,但是端口没有映射所以访问不到。</h4><h4 id="映射端口启动"><a href="#映射端口启动" class="headerlink" title="映射端口启动"></a>映射端口启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_12_centos ~]# docker run -d -p 8089:8089 --name app-api 591d86ee1a90</span><br><span class="line">b0aaca48e8729f63e51c8b3853dce8b2b2a25d22eede08c486b41b5b5a52135b</span><br></pre></td></tr></table></figure>
+<h2 id="第四步查看镜像文件、运行文件"><a href="#第四步查看镜像文件、运行文件" class="headerlink" title="第四步查看镜像文件、运行文件"></a>第四步查看镜像文件、运行文件</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/runApp.gif"></p>
+<h3 id="测试地址-http-localhost-8089-swagger-ui-html"><a href="#测试地址-http-localhost-8089-swagger-ui-html" class="headerlink" title="测试地址 http://localhost:8089/swagger-ui.html#!"></a>测试地址 <a href="http://localhost:8089/swagger-ui.html#" target="_blank" rel="noopener">http://localhost:8089/swagger-ui.html#</a>!</h3><h4 id="虽服务启动成功-但是端口没有映射所以访问不到。"><a href="#虽服务启动成功-但是端口没有映射所以访问不到。" class="headerlink" title="虽服务启动成功,但是端口没有映射所以访问不到。"></a>虽服务启动成功,但是端口没有映射所以访问不到。</h4><h4 id="映射端口启动"><a href="#映射端口启动" class="headerlink" title="映射端口启动"></a>映射端口启动</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@VM_0_12_centos ~]# docker run -d -p 8089:8089 --name app-api 591d86ee1a90</span><br><span class="line">b0aaca48e8729f63e51c8b3853dce8b2b2a25d22eede08c486b41b5b5a52135b</span><br></pre></td></tr></table></figure>
 <p>一步一步的走。</p>
 
         </div>
@@ -263,7 +265,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-09-06T04:55:13.703Z" itemprop="dateUpdated">2018-09-06 12:55:13</time>
+    Last updated: <time datetime="2018-09-06T05:03:41.099Z" itemprop="dateUpdated">2018-09-06 13:03:41</time>
 </span>
 
 

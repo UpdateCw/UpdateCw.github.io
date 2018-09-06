@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[SpringCloud 集合Gradle、Consul 部署至Docker]]></title>
     <url>%2F2018%2F09%2F06%2FSpringCloud%E9%83%A8%E7%BD%B2Docker%E4%B9%8B%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6%2F</url>
-    <content type="text"><![CDATA[自从接触了Docker发现自己已经深深的爱上了它。一个开源的轻量型容器。开发人员只需将应用程序及所依赖的运行环境打包到容器即可。大大的缩短开发时间、部署周期、简化开发环境。 ！！后面的文章能有用视频描述的会尽量用视频，让大家一目了然。避免不必要的坑。 此章节侧重于SpringCloud打包部署Docker第一步Gradle编译打包 第二步编写Dockerfile文件 利用脚本文件将jar生成images镜像文件。 Dockerfile具体内容如下12345FROM frolvlad/alpine-oraclejdk8:slimVOLUME /tmpADD app-api-service.jar app-api.jar#RUN bash -c 'touch /app-api.jar'ENTRYPOINT ["java","-Djava.security.egd=file:/app-api/./urandom","-jar","/app-api.jar"] 第三步利用Docker bundle -f .. 编译 将其第一步编译的jar包上传至服务 第四步查看镜像文件、运行文件测试地址 http://localhost:8089/swagger-ui.html#!虽服务启动成功,但是端口没有映射所以访问不到。映射端口启动12[root@VM_0_12_centos ~]# docker run -d -p 8089:8089 --name app-api 591d86ee1a90b0aaca48e8729f63e51c8b3853dce8b2b2a25d22eede08c486b41b5b5a52135b 一步一步的走。]]></content>
+    <content type="text"><![CDATA[自从接触了Docker发现自己已经深深的爱上了它。一个开源的轻量型容器。开发人员只需将应用程序及所依赖的运行环境打包到容器即可。大大的缩短开发时间、部署周期、简化开发环境。 ！！后面的文章能有用视频描述的会尽量用视频，让大家一目了然。避免不必要的坑。 此章节侧重于SpringCloud打包部署Docker第一步Gradle编译打包 第二步编写Dockerfile文件 利用脚本文件将jar生成images镜像文件。 Dockerfile具体内容如下12345FROM frolvlad/alpine-oraclejdk8:slimVOLUME /tmpADD app-api-service.jar app-api.jar#RUN bash -c 'touch /app-api.jar'ENTRYPOINT ["java","-Djava.security.egd=file:/app-api/./urandom","-jar","/app-api.jar"] 第三步利用Docker bundle -f .. 编译 将其第一步编译的jar包上传至服务 第四步查看镜像文件、运行文件 测试地址 http://localhost:8089/swagger-ui.html#!虽服务启动成功,但是端口没有映射所以访问不到。映射端口启动12[root@VM_0_12_centos ~]# docker run -d -p 8089:8089 --name app-api 591d86ee1a90b0aaca48e8729f63e51c8b3853dce8b2b2a25d22eede08c486b41b5b5a52135b 一步一步的走。]]></content>
       <categories>
         <category>闲时</category>
       </categories>
@@ -207,9 +207,9 @@
         <category>闲时</category>
       </categories>
       <tags>
-        <tag>SpringBoot</tag>
         <tag>Kafka</tag>
         <tag>ELK</tag>
+        <tag>SpringBoot</tag>
       </tags>
   </entry>
   <entry>
