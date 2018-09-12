@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.updatecg.xin/"/>
-  <updated>2018-09-07T06:13:58.358Z</updated>
+  <updated>2018-09-07T10:11:21.324Z</updated>
   <id>http://www.updatecg.xin/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://www.updatecg.xin/2018/09/07/SpringCloud%E6%9C%8D%E5%8A%A1%E5%A4%9A%E5%AE%9E%E4%BE%8B%E6%B3%A8%E5%85%A5Consul%E6%8C%82%E6%8E%89%E9%97%AE%E9%A2%98%20/"/>
     <id>http://www.updatecg.xin/2018/09/07/SpringCloud服务多实例注入Consul挂掉问题 /</id>
     <published>2018-09-07T05:25:02.000Z</published>
-    <updated>2018-09-07T06:13:58.358Z</updated>
+    <updated>2018-09-07T10:11:21.324Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://ov84jkku0.bkt.clouddn.com/consulId.gif"><br><a id="more"></a></p><blockquote><p>相信大家在使用SpringCloud服务的发现与注册，都会对Eureka、Zookeeper、Consul熟悉吧。18年7月份爆出了Eureka2.0不在对外开源的消息。相信会有一部分程序猿逐渐往Consul发展。这其中也包含小生我。</p></blockquote><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>SpringCloud+1.2.x时候最严重的一个问题，就是多实例注册的问题.</p><h2 id="原因概述"><a href="#原因概述" class="headerlink" title="原因概述"></a>原因概述</h2><p>主要原因是SpringCloud中Consul在注册的时候实例名采用了：服务名-端口号{spring.application.name}-{server.port}）的值，可以看到这个实例名如果不改变端口号的情况下，实例名都是相同的。由于Consul对实例唯一性的判断标准也有改变，在老版本的Consul中，对于实例名相同，但是服务地址不同，依然会认为是不同的实例。在Consul 1.2.x中，服务实例名成为了集群中的唯一标识。</p><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>通过配置 spring.cloud.consul.discovery.instance-id 参数来实例命令规则。利用随机数来控制实例名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.cloud.consul.discovery.instance-id=$&#123;spring.application.name&#125;-$&#123;random.int[10000,99999]&#125;</span><br></pre></td></tr></table></figure></p><h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/consulpic.png"></p><p><span style="color:red;font-size:16px">! ! ! 效果图中的错误不必关注，那是因为外网问题</span></p><h2 id="SpringCloud注入与注册类别简单介绍"><a href="#SpringCloud注入与注册类别简单介绍" class="headerlink" title="SpringCloud注入与注册类别简单介绍"></a>SpringCloud注入与注册类别简单介绍</h2><table><thead><tr><th>Feature</th><th>Consul</th><th>zookeeper</th><th>euerka</th></tr></thead><tbody><tr><td>服务健康检查</td><td>服务状态，内存，硬盘等</td><td>(弱)长连接，keepalive</td><td>可配支持</td></tr><tr><td>多数据中心</td><td>支持</td><td>—</td><td>—</td></tr><tr><td>kv存储服务</td><td>支持</td><td>支持</td><td>—</td></tr><tr><td>一致性</td><td>raft</td><td>paxos</td><td>—</td></tr><tr><td>cap</td><td>ca</td><td>cp</td><td>ap</td></tr><tr><td>使用接口(多语言能力)</td><td>支持http和dns</td><td>客户端</td><td>http（sidecar）</td></tr><tr><td>watch支持</td><td>全量/支持long polling</td><td>支持</td><td>支持 long polling/大部分增量</td></tr><tr><td>自身监控</td><td>metrics</td><td>—</td><td>metrics</td></tr><tr><td>安全</td><td>acl /https</td><td>acl</td><td>—</td></tr><tr><td>spring cloud集成</td><td>已支持</td><td>已支持</td><td>已支持</td></tr></tbody></table>]]></content>
     
@@ -450,9 +450,9 @@
     <link href="http://www.updatecg.xin/2017/10/01/chenwu/"/>
     <id>http://www.updatecg.xin/2017/10/01/chenwu/</id>
     <published>2017-09-30T16:00:00.000Z</published>
-    <updated>2018-07-26T02:17:24.154Z</updated>
+    <updated>2018-09-12T01:11:14.424Z</updated>
     
-    <content type="html"><![CDATA[<div class="card page-about-me flex-row"><br>     <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg"></a><br>     <div class="content flex-col"><br>         <p><strong>陈 武</strong></p><br>         <p>带着责任做事 带着稳重的心态处事</p><br>         <p>路漫漫兮。。。。</p><br>     </div><br> </div><pre><code>{  &quot;Name&quot;: &quot;ChenWu&quot;,  &quot;Age&quot;:&quot;24&quot;,  &quot;School&quot;:&quot;West Branch&quot;,  &quot;Address&quot;:&quot;ChengDu,China&quot;,  &quot;Email&quot;:&quot;chenwu_cg@126.com&quot;,  &quot;skill&quot;:[{    &quot;Spring-Cloud&quot;:&quot;40%&quot;,    &quot;Spring-Boot&quot;:&quot;60%&quot;,    &quot;Java&quot;:&quot;70%&quot;,    &quot;Linux&quot;:&quot;50%&quot;,    &quot;Docker&quot;:&quot;60%&quot;,    &quot;Mq&quot;:&quot;60%&quot;  }],  &quot;Blog&quot;:&quot;www.updatecg.xin&quot;}</code></pre>]]></content>
+    <content type="html"><![CDATA[<div class="card page-about-me flex-row"><br>     <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg"></a><br>     <div class="content flex-col"><br>         <p><strong>陈 武</strong></p><br>         <p>带着责任做事 带着稳重的心态处事</p><br>         <p>路漫漫兮。。。。</p><br>     </div><br> </div><p>{<br>  “Name”: “ChenWu”,<br>  “Age”:”24”,<br>  “School”:”West Branch”,<br>  “Address”:”ChengDu,China”,<br>  “Email”:”<a href="mailto:chenwu_cg@126.com" target="_blank" rel="noopener">chenwu_cg@126.com</a>“,<br>  “skill”:[{<br>    “Spring-Cloud”:”40%”,<br>    “Spring-Boot”:”60%”,<br>    “Java”:”70%”,<br>    “Linux”:”50%”,<br>    “Docker”:”60%”,<br>    “Mq”:”60%”<br>  }],<br>  “Blog”:”<a href="http://www.updatecg.xin&quot;">www.updatecg.xin&quot;</a><br>}</p><h3 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h3><div class="card page-about-me flex-row"><br>     <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="http://cn.gravatar.com/avatar/9922df889ae6b3dd2ce6e8bbcf1169e1?s=160&r=g"></a><br>     <div class="content flex-col"><br>         <p><strong>杨超</strong></p><br>         <p>木易博客</p><br>         <p><a href="http://yangxx.net/" target="_blank" rel="noopener">http://yangxx.net/</a></p><br>     </div><br> </div><br> <div class="card page-about-me flex-row"><br>      <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="http://ov84jkku0.bkt.clouddn.com/yexuelogo.png"></a><br>      <div class="content flex-col"><br>          <p><strong>马小峰</strong></p><br>          <p>夜雪剑辰</p><br>          <p><a href="http://blog.yexuejc.top/" target="_blank" rel="noopener">http://blog.yexuejc.top/</a></p><br>      </div><br>  </div>]]></content>
     
     <summary type="html">
     
@@ -506,11 +506,11 @@
       <category term="闲时" scheme="http://www.updatecg.xin/categories/%E9%97%B2%E6%97%B6/"/>
     
     
-      <category term="SpringBoot" scheme="http://www.updatecg.xin/tags/SpringBoot/"/>
-    
       <category term="Kafka" scheme="http://www.updatecg.xin/tags/Kafka/"/>
     
       <category term="ELK" scheme="http://www.updatecg.xin/tags/ELK/"/>
+    
+      <category term="SpringBoot" scheme="http://www.updatecg.xin/tags/SpringBoot/"/>
     
   </entry>
   
