@@ -58,11 +58,11 @@
       <category term="闲时" scheme="http://www.updatecg.xin/categories/%E9%97%B2%E6%97%B6/"/>
     
     
+      <category term="Docker" scheme="http://www.updatecg.xin/tags/Docker/"/>
+    
       <category term="SpringCloud" scheme="http://www.updatecg.xin/tags/SpringCloud/"/>
     
       <category term="Consul" scheme="http://www.updatecg.xin/tags/Consul/"/>
-    
-      <category term="Docker" scheme="http://www.updatecg.xin/tags/Docker/"/>
     
   </entry>
   
@@ -271,28 +271,6 @@
   </entry>
   
   <entry>
-    <title>SpringBoot 【 第四章 】数据访问（Spring-data-jpa）</title>
-    <link href="http://www.updatecg.xin/2017/10/27/SpringBoot%20%E3%80%90%20%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E3%80%91%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%EF%BC%88Spring-data-jpa%EF%BC%89/"/>
-    <id>http://www.updatecg.xin/2017/10/27/SpringBoot 【 第四章 】数据访问（Spring-data-jpa）/</id>
-    <published>2017-10-27T07:23:02.000Z</published>
-    <updated>2018-07-25T03:35:00.014Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C18.jpg"><br><a id="more"></a></p><h2 id="Spring-data-jpa-让数据访问-so-easy"><a href="#Spring-data-jpa-让数据访问-so-easy" class="headerlink" title="Spring-data-jpa 让数据访问 so easy"></a>Spring-data-jpa 让数据访问 so easy</h2><blockquote><p>实际开发过程中，对数据库的操作无非是“增删改查”。语句几乎类似，最重要的就是开发人员需要些大量的业务逻辑。</p></blockquote><p>Spring-data-jpa的出现正可以让这样一个已经很“薄”的数据访问层变成只是一层接口的编写方式。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Created by cw on 2017/10/31. good day.</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span>: Chen Wu</span></span><br><span class="line"><span class="comment">* Blog: http://www.updatecg.xin</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BookRepositories</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Book</span>,<span class="title">Long</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>实现此应用类只需集成JpaRepository的接口就实现数据访问，由于Spring-data-jpa依赖Hibernate，所以建议你对Hibernate有一定的了解。</p><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>在pom.xml中添加依赖。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Spring Boot Spring-data-jpa 数据依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>在application.xml中配置数据库连接信息。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#MySQL数据源设定</span><br><span class="line">spring.datasource.url = jdbc:mysql://192.168.2.xxx:3306/itv_assistant?characterEncoding=utf8&amp;allowMultiQueries=true&amp;useSSL=false</span><br><span class="line">#JDBC驱动设定</span><br><span class="line">spring.datasource.driver-class-name = com.mysql.jdbc.Driver</span><br><span class="line">#数据库登陆用户账号设定</span><br><span class="line">spring.datasource.username = root</span><br><span class="line">#数据库登陆用户密码设定</span><br><span class="line">spring.datasource.password =123456</span><br><span class="line">#显示sql语句</span><br><span class="line">spring.jpa.show-sql= true</span><br></pre></td></tr></table></figure></p><p><strong>对应代码分享在 <a href="https://github.com/UpdateCw/SpringBoot" target="_blank" rel="noopener">[https://github.com/UpdateCw/SpringBoot]</a></strong></p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://ov84jkku0.bkt.clouddn.com/SC01C18.jpg&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="闲时" scheme="http://www.updatecg.xin/categories/%E9%97%B2%E6%97%B6/"/>
-    
-    
-      <category term="SpringBoot" scheme="http://www.updatecg.xin/tags/SpringBoot/"/>
-    
-  </entry>
-  
-  <entry>
     <title>SpringBoot 【 第三章 】定时管理</title>
     <link href="http://www.updatecg.xin/2017/10/27/SpringBoot%20%E3%80%90%20%E7%AC%AC%E4%B8%89%E7%AB%A0%20%E3%80%91%E5%AE%9A%E6%97%B6%E7%AE%A1%E7%90%86/"/>
     <id>http://www.updatecg.xin/2017/10/27/SpringBoot 【 第三章 】定时管理/</id>
@@ -304,6 +282,28 @@
     <summary type="html">
     
       &lt;p&gt;&lt;img src=&quot;http://ov84jkku0.bkt.clouddn.com/SC01C16.jpg&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="闲时" scheme="http://www.updatecg.xin/categories/%E9%97%B2%E6%97%B6/"/>
+    
+    
+      <category term="SpringBoot" scheme="http://www.updatecg.xin/tags/SpringBoot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot 【 第四章 】数据访问（Spring-data-jpa）</title>
+    <link href="http://www.updatecg.xin/2017/10/27/SpringBoot%20%E3%80%90%20%E7%AC%AC%E5%9B%9B%E7%AB%A0%20%E3%80%91%E6%95%B0%E6%8D%AE%E8%AE%BF%E9%97%AE%EF%BC%88Spring-data-jpa%EF%BC%89/"/>
+    <id>http://www.updatecg.xin/2017/10/27/SpringBoot 【 第四章 】数据访问（Spring-data-jpa）/</id>
+    <published>2017-10-27T07:23:02.000Z</published>
+    <updated>2018-07-25T03:35:00.014Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C18.jpg"><br><a id="more"></a></p><h2 id="Spring-data-jpa-让数据访问-so-easy"><a href="#Spring-data-jpa-让数据访问-so-easy" class="headerlink" title="Spring-data-jpa 让数据访问 so easy"></a>Spring-data-jpa 让数据访问 so easy</h2><blockquote><p>实际开发过程中，对数据库的操作无非是“增删改查”。语句几乎类似，最重要的就是开发人员需要些大量的业务逻辑。</p></blockquote><p>Spring-data-jpa的出现正可以让这样一个已经很“薄”的数据访问层变成只是一层接口的编写方式。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Created by cw on 2017/10/31. good day.</span></span><br><span class="line"><span class="comment">*</span></span><br><span class="line"><span class="comment">* <span class="doctag">@Author</span>: Chen Wu</span></span><br><span class="line"><span class="comment">* Blog: http://www.updatecg.xin</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BookRepositories</span> <span class="keyword">extends</span> <span class="title">JpaRepository</span>&lt;<span class="title">Book</span>,<span class="title">Long</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>实现此应用类只需集成JpaRepository的接口就实现数据访问，由于Spring-data-jpa依赖Hibernate，所以建议你对Hibernate有一定的了解。</p><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>在pom.xml中添加依赖。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Spring Boot Spring-data-jpa 数据依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>在application.xml中配置数据库连接信息。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#MySQL数据源设定</span><br><span class="line">spring.datasource.url = jdbc:mysql://192.168.2.xxx:3306/itv_assistant?characterEncoding=utf8&amp;allowMultiQueries=true&amp;useSSL=false</span><br><span class="line">#JDBC驱动设定</span><br><span class="line">spring.datasource.driver-class-name = com.mysql.jdbc.Driver</span><br><span class="line">#数据库登陆用户账号设定</span><br><span class="line">spring.datasource.username = root</span><br><span class="line">#数据库登陆用户密码设定</span><br><span class="line">spring.datasource.password =123456</span><br><span class="line">#显示sql语句</span><br><span class="line">spring.jpa.show-sql= true</span><br></pre></td></tr></table></figure></p><p><strong>对应代码分享在 <a href="https://github.com/UpdateCw/SpringBoot" target="_blank" rel="noopener">[https://github.com/UpdateCw/SpringBoot]</a></strong></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://ov84jkku0.bkt.clouddn.com/SC01C18.jpg&quot;&gt;&lt;br&gt;
     
     </summary>
     
@@ -450,9 +450,9 @@
     <link href="http://www.updatecg.xin/2017/10/01/chenwu/"/>
     <id>http://www.updatecg.xin/2017/10/01/chenwu/</id>
     <published>2017-09-30T16:00:00.000Z</published>
-    <updated>2018-09-12T01:18:09.614Z</updated>
+    <updated>2018-09-12T01:25:34.448Z</updated>
     
-    <content type="html"><![CDATA[<div class="card page-about-me flex-row"><br>     <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg"></a><br>     <div class="content flex-col"><br>         <p><strong>陈 武</strong></p><br>         <p>带着责任做事 带着稳重的心态处事</p><br>         <p>路漫漫兮。。。。</p><br>     </div><br> </div><pre><code>{  &quot;Name&quot;: &quot;ChenWu&quot;,  &quot;Age&quot;:&quot;24&quot;,  &quot;School&quot;:&quot;West Branch&quot;,  &quot;Address&quot;:&quot;ChengDu,China&quot;,  &quot;Email&quot;:&quot;chenwu_cg@126.com&quot;,  &quot;skill&quot;:[{    &quot;Spring-Cloud&quot;:&quot;40%&quot;,    &quot;Spring-Boot&quot;:&quot;60%&quot;,    &quot;Java&quot;:&quot;70%&quot;,    &quot;Linux&quot;:&quot;50%&quot;,    &quot;Docker&quot;:&quot;60%&quot;,    &quot;Mq&quot;:&quot;60%&quot;  }],  &quot;Blog&quot;:&quot;www.updatecg.xin&quot;}</code></pre><h3 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h3><div class="card page-about-me flex-row"><br>     <a href="http://yangxx.net/" class="avatar waves-effect waves-circle waves-light" target="_blank" rel="noopener"><img src="http://cn.gravatar.com/avatar/9922df889ae6b3dd2ce6e8bbcf1169e1?s=160&r=g"></a><br>     <div class="content flex-col"><br>         <p><strong>杨超</strong></p><br>         <p>木易博客</p><br>         <p><a href="http://yangxx.net/" target="_blank" rel="noopener">http://yangxx.net/</a></p><br>     </div><br>     <a href="http://blog.yexuejc.top/" class="avatar waves-effect waves-circle waves-light" target="_blank" rel="noopener"><img src="http://ov84jkku0.bkt.clouddn.com/yexuelogo.png"></a><br>     <div class="content flex-col"><br>         <p><strong>马小峰</strong></p><br>         <p>夜雪剑辰</p><br>         <p><a href="http://blog.yexuejc.top/" target="_blank" rel="noopener">http://blog.yexuejc.top/</a></p><br>     </div><br> </div>]]></content>
+    <content type="html"><![CDATA[<div class="card page-about-me flex-row"><br>     <a href="/" class="avatar waves-effect waves-circle waves-light"><img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg"></a><br>     <div class="content flex-col"><br>         <p><strong>陈 武</strong></p><br>         <p>带着责任做事 带着稳重的心态处事</p><br>         <p>路漫漫兮。。。。</p><br>     </div><br> </div><pre><code>{  &quot;Name&quot;: &quot;ChenWu&quot;,  &quot;Age&quot;:&quot;24&quot;,  &quot;School&quot;:&quot;West Branch&quot;,  &quot;Address&quot;:&quot;ChengDu,China&quot;,  &quot;Email&quot;:&quot;chenwu_cg@126.com&quot;,  &quot;skill&quot;:[{    &quot;Spring-Cloud&quot;:&quot;40%&quot;,    &quot;Spring-Boot&quot;:&quot;60%&quot;,    &quot;Java&quot;:&quot;70%&quot;,    &quot;Linux&quot;:&quot;50%&quot;,    &quot;Docker&quot;:&quot;60%&quot;,    &quot;Mq&quot;:&quot;60%&quot;  }],  &quot;Blog&quot;:&quot;www.updatecg.xin&quot;}</code></pre><h3 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h3><div class="card page-about-me flex-row"><br>     <a href="http://yangxx.net/" class="avatar waves-effect waves-circle waves-light" target="_blank" rel="noopener"><img src="http://cn.gravatar.com/avatar/9922df889ae6b3dd2ce6e8bbcf1169e1?s=160&r=g"></a><br>     <div class="content flex-col"><br>         <p><strong>杨超</strong></p><br>         <p>木易博客</p><br>         <p><a href="http://yangxx.net/" target="_blank" rel="noopener">http://yangxx.net/</a></p><br>     </div><br>     <a href="http://blog.yexuejc.top/" class="avatar waves-effect waves-circle waves-light" target="_blank" rel="noopener"><img src="http://ov84jkku0.bkt.clouddn.com/yexuelogo.png"></a><br>     <div class="content flex-col"><br>         <p><strong>马小锋</strong></p><br>         <p>夜雪剑辰</p><br>         <p><a href="http://blog.yexuejc.top/" target="_blank" rel="noopener">http://blog.yexuejc.top/</a></p><br>     </div><br> </div>]]></content>
     
     <summary type="html">
     
