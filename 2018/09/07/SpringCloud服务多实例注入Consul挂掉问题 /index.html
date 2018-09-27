@@ -170,7 +170,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Search">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -325,7 +325,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-09-07T10:11:21.324Z" itemprop="dateUpdated">2018-09-07 18:11:21</time>
+    最后更新：<time datetime="2018-09-07T10:11:21.324Z" itemprop="dateUpdated">2018-09-07 18:11:21</time>
 </span>
 
 
@@ -699,6 +699,12 @@ if (window.console && window.console.log) {
 var myChart = echarts.init(document.getElementById('echartID'));
 
 var data = [
+	   {name: '自贡', value: 90},
+	   {name: '都江堰', value: 58},
+	   {name: '九龙山', value: 58},
+	   {name: '什邡', value: 58},
+		 {name: '广汉', value: 58},
+		 {name: '德阳', value: 90},
 		 {name: '成都', value: 90},
 		 {name: '新都桥', value: 30},
 		 {name: '折多山', value: 30},
@@ -710,6 +716,12 @@ var data = [
 
 ];
 var geoCoordMap = {
+	  '自贡':[104.78,29.35],
+	  '都江堰':[103.64,30.98],
+	  '九龙山':[104.15,31.40],
+	  '什邡':[104.17,31.12],
+	  '广汉':[104.19,31.06],
+	  '德阳':[104.34,31.27],
 		'成都':[104.06,30.67],
 		'新都桥':[101.49,30.04],
 		'折多山':[101.48,30.06],
