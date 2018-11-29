@@ -2098,7 +2098,7 @@
 
 	#intro {
 		/*background: url("images/overlay.png"), url("../../images/intro.jpg");*/
-		background: url("images/overlay.png"), url("http://ov84jkku0.bkt.clouddn.com/wallhaven-53662.jpg");
+		background: url("images/overlay.png"), url("http://118.24.112.225:8000/img//wallhaven-53662.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, bottom center;
@@ -2109,7 +2109,7 @@
 
 	#one {
 		/*background: url("images/overlay.png"), url("../../images/one.jpg");*/
-		background: url("images/overlay.png"), url("http://ov84jkku0.bkt.clouddn.com/wallhaven-74216.jpg");
+		background: url("images/overlay.png"), url("http://118.24.112.225:8000/img//wallhaven-74216.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2119,7 +2119,7 @@
 
 	#two {
 		/*background: url("images/overlay.png"), url("../../images/two.jpg");*/
-		background: url("images/overlay.png"), url("http://ov84jkku0.bkt.clouddn.com/wallhaven-69123.jpg");
+		background: url("images/overlay.png"), url("http://118.24.112.225:8000/img//wallhaven-69123.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;

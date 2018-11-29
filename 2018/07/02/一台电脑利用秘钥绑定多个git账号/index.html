@@ -47,15 +47,15 @@
 <meta property="og:url" content="http://www.updatecg.xin/2018/07/02/一台电脑利用秘钥绑定多个git账号/index.html">
 <meta property="og:site_name" content="Update">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C20.jpg">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/rsa_gitHub.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/ssh.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/gitHub_key5.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/test_ssh.png">
-<meta property="og:updated_time" content="2018-07-25T03:35:00.028Z">
+<meta property="og:image" content="http://118.24.112.225:8000/img//SC01C20.jpg">
+<meta property="og:image" content="http://118.24.112.225:8000/img//rsa_gitHub.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//ssh.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//gitHub_key5.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//test_ssh.png">
+<meta property="og:updated_time" content="2018-11-29T01:04:14.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一台电脑利用秘钥绑定多个ssh-key账号">
-<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C20.jpg">
+<meta name="twitter:image" content="http://118.24.112.225:8000/img//SC01C20.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
     
@@ -78,7 +78,7 @@
     <div class="brand-wrap" >
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+          <img src="http://118.24.112.225:8000/img//timg.jpg" alt="avatar">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname" id="name">陈 武</h5>
@@ -240,15 +240,15 @@
             阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C20.jpg"><br><a id="more"></a></p>
+            <p><img src="http://118.24.112.225:8000/img//SC01C20.jpg"><br><a id="more"></a></p>
 <blockquote>
 <p>因新环境利用内部邮箱创建git账账号管理项目，自己玩时有一个git账号。公司绑定gitLab，自己绑定了git.coding.net以及gitHub.com。从而两则在提交代码时发生了权限问题以及冲突。</p>
 </blockquote>
 <p>本文在windows环境下配置Git多账号支持SSH-KEY。配置github.com、git.coding.net 、gitLab的SSH-KEY.</p>
 <p><span style="color:red">注意：因本已配置SSH-KEY，在此就不测试。发截图即可。</span></p>
-<h1 id="生成gitHub-com以及gitLab对应的私钥公钥（目录一般存在于C-Users-ssh）"><a href="#生成gitHub-com以及gitLab对应的私钥公钥（目录一般存在于C-Users-ssh）" class="headerlink" title="生成gitHub.com以及gitLab对应的私钥公钥（目录一般存在于C:\Users.ssh）"></a>生成gitHub.com以及gitLab对应的私钥公钥（目录一般存在于C:\Users.ssh）</h1><h2 id="执行命令-ssh-keygen-t-rsa-C-email-创建github对应的sshkey，命名为id-rsa-github"><a href="#执行命令-ssh-keygen-t-rsa-C-email-创建github对应的sshkey，命名为id-rsa-github" class="headerlink" title="执行命令 ssh-keygen -t rsa -C email 创建github对应的sshkey，命名为id_rsa_github"></a>执行命令 ssh-keygen -t rsa -C email 创建github对应的sshkey，命名为id_rsa_github</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/rsa_gitHub.png"></p>
-<h2 id="gitHub-com与coding所用秘钥相同，id-rsa-pub属于gitLab，id-rsa-github属于gitHub，coding"><a href="#gitHub-com与coding所用秘钥相同，id-rsa-pub属于gitLab，id-rsa-github属于gitHub，coding" class="headerlink" title="gitHub.com与coding所用秘钥相同，id_rsa.pub属于gitLab，id_rsa_github属于gitHub，coding"></a>gitHub.com与coding所用秘钥相同，id_rsa.pub属于gitLab，id_rsa_github属于gitHub，coding</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/ssh.png"></p>
-<h1 id="把github对应的公钥和coding对应的公钥上传到服务器"><a href="#把github对应的公钥和coding对应的公钥上传到服务器" class="headerlink" title="把github对应的公钥和coding对应的公钥上传到服务器"></a>把github对应的公钥和coding对应的公钥上传到服务器</h1><h2 id="分别在gitHub、coding、以及gitLab配置SSH-KEYS"><a href="#分别在gitHub、coding、以及gitLab配置SSH-KEYS" class="headerlink" title="分别在gitHub、coding、以及gitLab配置SSH-KEYS"></a>分别在gitHub、coding、以及gitLab配置SSH-KEYS</h2><p>在此举例gitHub如下:<br><img src="http://ov84jkku0.bkt.clouddn.com/gitHub_key5.png"></p>
+<h1 id="生成gitHub-com以及gitLab对应的私钥公钥（目录一般存在于C-Users-ssh）"><a href="#生成gitHub-com以及gitLab对应的私钥公钥（目录一般存在于C-Users-ssh）" class="headerlink" title="生成gitHub.com以及gitLab对应的私钥公钥（目录一般存在于C:\Users.ssh）"></a>生成gitHub.com以及gitLab对应的私钥公钥（目录一般存在于C:\Users.ssh）</h1><h2 id="执行命令-ssh-keygen-t-rsa-C-email-创建github对应的sshkey，命名为id-rsa-github"><a href="#执行命令-ssh-keygen-t-rsa-C-email-创建github对应的sshkey，命名为id-rsa-github" class="headerlink" title="执行命令 ssh-keygen -t rsa -C email 创建github对应的sshkey，命名为id_rsa_github"></a>执行命令 ssh-keygen -t rsa -C email 创建github对应的sshkey，命名为id_rsa_github</h2><p><img src="http://118.24.112.225:8000/img//rsa_gitHub.png"></p>
+<h2 id="gitHub-com与coding所用秘钥相同，id-rsa-pub属于gitLab，id-rsa-github属于gitHub，coding"><a href="#gitHub-com与coding所用秘钥相同，id-rsa-pub属于gitLab，id-rsa-github属于gitHub，coding" class="headerlink" title="gitHub.com与coding所用秘钥相同，id_rsa.pub属于gitLab，id_rsa_github属于gitHub，coding"></a>gitHub.com与coding所用秘钥相同，id_rsa.pub属于gitLab，id_rsa_github属于gitHub，coding</h2><p><img src="http://118.24.112.225:8000/img//ssh.png"></p>
+<h1 id="把github对应的公钥和coding对应的公钥上传到服务器"><a href="#把github对应的公钥和coding对应的公钥上传到服务器" class="headerlink" title="把github对应的公钥和coding对应的公钥上传到服务器"></a>把github对应的公钥和coding对应的公钥上传到服务器</h1><h2 id="分别在gitHub、coding、以及gitLab配置SSH-KEYS"><a href="#分别在gitHub、coding、以及gitLab配置SSH-KEYS" class="headerlink" title="分别在gitHub、coding、以及gitLab配置SSH-KEYS"></a>分别在gitHub、coding、以及gitLab配置SSH-KEYS</h2><p>在此举例gitHub如下:<br><img src="http://118.24.112.225:8000/img//gitHub_key5.png"></p>
 <h1 id="在-ssh目录创建config文本文件并完成相关配置-最核心的地方"><a href="#在-ssh目录创建config文本文件并完成相关配置-最核心的地方" class="headerlink" title="在.ssh目录创建config文本文件并完成相关配置(最核心的地方)"></a>在.ssh目录创建config文本文件并完成相关配置(最核心的地方)</h1><p>每个账号单独配置一个Host，每个Host要取一个别名，每个Host主要配置HostName和IdentityFile、User属性即可</p>
 <table>
 <thead>
@@ -281,7 +281,7 @@
 </tbody>
 </table>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># gitLab                                                                       </span><br><span class="line">Host chenwu@meillie.com</span><br><span class="line">HostName chenwu@meillie.com</span><br><span class="line">User chenwu</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line"></span><br><span class="line"># 配置github.com</span><br><span class="line">Host github.com                 </span><br><span class="line">HostName github.com</span><br><span class="line">IdentityFile ~/.ssh/id_ras_gitHub</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">User UpdateCw</span><br><span class="line"></span><br><span class="line"># 配置coding.net</span><br><span class="line">Host git.coding.net</span><br><span class="line">HostName git.coding.net</span><br><span class="line">IdentityFile ~/.ssh/id_ras_gitHub</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">User UpdateMe</span><br></pre></td></tr></table></figure>
-<h1 id="打开Git-Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在-ssh目录生成known-hosts文件把私钥配置进去）"><a href="#打开Git-Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在-ssh目录生成known-hosts文件把私钥配置进去）" class="headerlink" title="打开Git Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在.ssh目录生成known_hosts文件把私钥配置进去）"></a>打开Git Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在.ssh目录生成known_hosts文件把私钥配置进去）</h1><p><img src="http://ov84jkku0.bkt.clouddn.com/test_ssh.png"></p>
+<h1 id="打开Git-Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在-ssh目录生成known-hosts文件把私钥配置进去）"><a href="#打开Git-Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在-ssh目录生成known-hosts文件把私钥配置进去）" class="headerlink" title="打开Git Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在.ssh目录生成known_hosts文件把私钥配置进去）"></a>打开Git Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在.ssh目录生成known_hosts文件把私钥配置进去）</h1><p><img src="http://118.24.112.225:8000/img//test_ssh.png"></p>
 <h1 id="学习心得"><a href="#学习心得" class="headerlink" title="学习心得"></a>学习心得</h1><p>实践才是检验真理的源头</p>
 
         </div>
@@ -290,7 +290,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-07-25T03:35:00.028Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+    Last updated: <time datetime="2018-11-29T01:04:14.816Z" itemprop="dateUpdated">2018-11-29 09:04:14</time>
 </span>
 
 
@@ -300,7 +300,7 @@
     </div>
     <footer>
         <div onclick="location.href='http://www.updatecg.xin'">
-            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <img src="http://118.24.112.225:8000/img//timg.jpg" alt="陈 武">
             <a>陈 武</a>
         </div>
     </footer>
@@ -327,7 +327,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/07/02/一台电脑利用秘钥绑定多个git账号/&title=《一台电脑利用秘钥绑定多个ssh-key账号》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/07/02/一台电脑利用秘钥绑定多个git账号/&title=《一台电脑利用秘钥绑定多个ssh-key账号》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -474,12 +474,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+            <img id="rewardCode" data-img="http://118.24.112.225:8000/img//cgs.jpg" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+                data-wechat="http://118.24.112.225:8000/img//cgs.jpg" data-alipay="http://118.24.112.225:8000/img//zhifubao.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
                 <span class="reward-toggle-item alipayPay">支付宝</span>
@@ -500,7 +500,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/07/02/一台电脑利用秘钥绑定多个git账号/&title=《一台电脑利用秘钥绑定多个ssh-key账号》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/07/02/一台电脑利用秘钥绑定多个git账号/&title=《一台电脑利用秘钥绑定多个ssh-key账号》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -664,8 +664,8 @@ if (window.console && window.console.log) {
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//echarts.min.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//sichuan.js"></script>
 <!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
 <script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
 <script>

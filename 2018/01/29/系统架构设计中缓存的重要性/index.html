@@ -47,15 +47,15 @@
 <meta property="og:url" content="http://www.updatecg.xin/2018/01/29/系统架构设计中缓存的重要性/index.html">
 <meta property="og:site_name" content="Update">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C25.jpg">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/cache3.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/cache2.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/cache4.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/cache5.png">
-<meta property="og:updated_time" content="2018-07-25T03:35:00.025Z">
+<meta property="og:image" content="http://118.24.112.225:8000/img//SC01C25.jpg">
+<meta property="og:image" content="http://118.24.112.225:8000/img//cache3.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//cache2.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//cache4.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//cache5.png">
+<meta property="og:updated_time" content="2018-11-29T01:04:14.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="漫谈系统架构设计中的缓存">
-<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C25.jpg">
+<meta name="twitter:image" content="http://118.24.112.225:8000/img//SC01C25.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
     
@@ -78,7 +78,7 @@
     <div class="brand-wrap" >
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+          <img src="http://118.24.112.225:8000/img//timg.jpg" alt="avatar">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname" id="name">陈 武</h5>
@@ -240,7 +240,7 @@
             阅读本文可能花费您&nbsp;<span class="post-count">4</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C25.jpg"><br><a id="more"></a></p>
+            <p><img src="http://118.24.112.225:8000/img//SC01C25.jpg"><br><a id="more"></a></p>
 <blockquote>
 <p>还记着刚毕业的我，对于即将开发的系统没有什么概念，当时就是为了完成任务而去实现业务，一个功能一个业务。现在回想起来，真另那个系统担忧。</p>
 </blockquote>
@@ -253,7 +253,7 @@
 <h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>我们在项目中使用缓存通常是先检查缓存是否存在，如果存在直接返回缓存数据，如果不存在直接就直接查询数据库然后在缓存查询结果返回。当请求查询某一个数据返回null时，就会向DB发起连接。如果有人模拟请求1000万次、1亿次，内存就会压力变大，导致程序崩溃，业务崩塌。如果有人利用不存在的key频繁攻击我的的应用，这就是漏洞。</p>
 <h4 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h4><p>通过DB查询出来为null数据，也将其放入缓存。将一个不存在的key预设一个值，比如”update”。当根据key获取数据时，如果返回的是之前预设的null的值“update”时，就不需要去请求DB，不会对DB造成压力，进而避免了利用null值key频繁请求DB,从而造成压力的情景。</p>
 <p>如果保证缓存与数据库的一致性？</p>
-<p>这里我们利用定时任务器去执行。<br>流程图如下所示：：<br><img src="http://ov84jkku0.bkt.clouddn.com/cache3.png"></p>
+<p>这里我们利用定时任务器去执行。<br>流程图如下所示：：<br><img src="http://118.24.112.225:8000/img//cache3.png"></p>
 <h3 id="缓存热点数据"><a href="#缓存热点数据" class="headerlink" title="缓存热点数据"></a>缓存热点数据</h3><h4 id="问题描述-1"><a href="#问题描述-1" class="headerlink" title="问题描述"></a>问题描述</h4><p>对于冷数据而言，大部分数据可能还没有被再次访问就已经被挤出内存，不仅占用内存，而且价值不大。而对于热点数据，缓存以后可能读取数十万次，因此，对于热点数据，缓存才有价值。例如用户获取信息。</p>
 <ul>
 <li>大量相同用户重复获取数据。</li>
@@ -264,8 +264,8 @@
 <li>上诉第二场景可知道一些规律，那就是有大量相同用户重复访问。但是我们无法知道哪些用户重复访问过？</li>
 <li>如果一个用户频繁刷新读取数据，那么对数据本身也会造成较大压力。从这一点我想大家很快就会想到缓存，如果用缓存的话，如何来控制同一用户频繁获取用户信息？</li>
 </ul>
-<p>请看下图：<br><img src="http://ov84jkku0.bkt.clouddn.com/cache2.png"></p>
-<h3 id="缓存和数据库一致性"><a href="#缓存和数据库一致性" class="headerlink" title="缓存和数据库一致性"></a>缓存和数据库一致性</h3><h4 id="第一种方案，耦合性强"><a href="#第一种方案，耦合性强" class="headerlink" title="第一种方案，耦合性强"></a>第一种方案，耦合性强</h4><p>请看下图：<br><img src="http://ov84jkku0.bkt.clouddn.com/cache4.png"></p>
+<p>请看下图：<br><img src="http://118.24.112.225:8000/img//cache2.png"></p>
+<h3 id="缓存和数据库一致性"><a href="#缓存和数据库一致性" class="headerlink" title="缓存和数据库一致性"></a>缓存和数据库一致性</h3><h4 id="第一种方案，耦合性强"><a href="#第一种方案，耦合性强" class="headerlink" title="第一种方案，耦合性强"></a>第一种方案，耦合性强</h4><p>请看下图：<br><img src="http://118.24.112.225:8000/img//cache4.png"></p>
 <ul>
 <li>应用同时更新数据库和缓存</li>
 <li>如果数据库更新成功，则开始更新缓存，否则如果数据库更新失败，则整个更新过程失败。</li>
@@ -273,7 +273,7 @@
 <li>如果缓存没有更新成功，则将数据发到MQ中</li>
 <li>应用监控MQ通道，收到消息后继续更新Redis。</li>
 </ul>
-<h4 id="第二种方案，解耦"><a href="#第二种方案，解耦" class="headerlink" title="第二种方案，解耦"></a>第二种方案，解耦</h4><p>请看下图：<br><img src="http://ov84jkku0.bkt.clouddn.com/cache5.png"></p>
+<h4 id="第二种方案，解耦"><a href="#第二种方案，解耦" class="headerlink" title="第二种方案，解耦"></a>第二种方案，解耦</h4><p>请看下图：<br><img src="http://118.24.112.225:8000/img//cache5.png"></p>
 <ul>
 <li>应用直接写数据到数据库中。</li>
 <li>数据库更新binlog日志。</li>
@@ -296,7 +296,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-07-25T03:35:00.025Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+    Last updated: <time datetime="2018-11-29T01:04:14.718Z" itemprop="dateUpdated">2018-11-29 09:04:14</time>
 </span>
 
 
@@ -306,7 +306,7 @@
     </div>
     <footer>
         <div onclick="location.href='http://www.updatecg.xin'">
-            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <img src="http://118.24.112.225:8000/img//timg.jpg" alt="陈 武">
             <a>陈 武</a>
         </div>
     </footer>
@@ -333,7 +333,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/01/29/系统架构设计中缓存的重要性/&title=《漫谈系统架构设计中的缓存》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/01/29/系统架构设计中缓存的重要性/&title=《漫谈系统架构设计中的缓存》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -480,12 +480,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+            <img id="rewardCode" data-img="http://118.24.112.225:8000/img//cgs.jpg" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+                data-wechat="http://118.24.112.225:8000/img//cgs.jpg" data-alipay="http://118.24.112.225:8000/img//zhifubao.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
                 <span class="reward-toggle-item alipayPay">支付宝</span>
@@ -506,7 +506,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/01/29/系统架构设计中缓存的重要性/&title=《漫谈系统架构设计中的缓存》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/01/29/系统架构设计中缓存的重要性/&title=《漫谈系统架构设计中的缓存》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -670,8 +670,8 @@ if (window.console && window.console.log) {
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//echarts.min.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//sichuan.js"></script>
 <!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
 <script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
 <script>

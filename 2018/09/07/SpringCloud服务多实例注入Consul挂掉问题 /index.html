@@ -47,12 +47,12 @@
 <meta property="og:url" content="http://www.updatecg.xin/2018/09/07/SpringCloud服务多实例注入Consul挂掉问题 /index.html">
 <meta property="og:site_name" content="Update">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/consulId.gif">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/consulpic.png">
-<meta property="og:updated_time" content="2018-09-07T10:11:21.324Z">
+<meta property="og:image" content="http://118.24.112.225:8000/img//consulId.gif">
+<meta property="og:image" content="http://118.24.112.225:8000/img//consulpic.png">
+<meta property="og:updated_time" content="2018-11-29T01:04:14.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringCloud服务多实例注入Consul挂掉问题">
-<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/consulId.gif">
+<meta name="twitter:image" content="http://118.24.112.225:8000/img//consulId.gif">
     
         <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
     
@@ -75,7 +75,7 @@
     <div class="brand-wrap" >
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+          <img src="http://118.24.112.225:8000/img//timg.jpg" alt="avatar">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname" id="name">陈 武</h5>
@@ -237,14 +237,14 @@
             阅读本文可能花费您&nbsp;<span class="post-count">2</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><img src="http://ov84jkku0.bkt.clouddn.com/consulId.gif"><br><a id="more"></a></p>
+            <p><img src="http://118.24.112.225:8000/img//consulId.gif"><br><a id="more"></a></p>
 <blockquote>
 <p>相信大家在使用SpringCloud服务的发现与注册，都会对Eureka、Zookeeper、Consul熟悉吧。18年7月份爆出了Eureka2.0不在对外开源的消息。相信会有一部分程序猿逐渐往Consul发展。这其中也包含小生我。</p>
 </blockquote>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>SpringCloud+1.2.x时候最严重的一个问题，就是多实例注册的问题.</p>
 <h2 id="原因概述"><a href="#原因概述" class="headerlink" title="原因概述"></a>原因概述</h2><p>主要原因是SpringCloud中Consul在注册的时候实例名采用了：服务名-端口号{spring.application.name}-{server.port}）的值，可以看到这个实例名如果不改变端口号的情况下，实例名都是相同的。由于Consul对实例唯一性的判断标准也有改变，在老版本的Consul中，对于实例名相同，但是服务地址不同，依然会认为是不同的实例。在Consul 1.2.x中，服务实例名成为了集群中的唯一标识。</p>
 <h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>通过配置 spring.cloud.consul.discovery.instance-id 参数来实例命令规则。利用随机数来控制实例名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.cloud.consul.discovery.instance-id=$&#123;spring.application.name&#125;-$&#123;random.int[10000,99999]&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/consulpic.png"></p>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="http://118.24.112.225:8000/img//consulpic.png"></p>
 <p><span style="color:red;font-size:16px">! ! ! 效果图中的错误不必关注，那是因为外网问题</span></p>
 <h2 id="SpringCloud注入与注册类别简单介绍"><a href="#SpringCloud注入与注册类别简单介绍" class="headerlink" title="SpringCloud注入与注册类别简单介绍"></a>SpringCloud注入与注册类别简单介绍</h2><table>
 <thead>
@@ -325,7 +325,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-09-07T10:11:21.324Z" itemprop="dateUpdated">2018-09-07 18:11:21</time>
+    Last updated: <time datetime="2018-11-29T01:04:14.158Z" itemprop="dateUpdated">2018-11-29 09:04:14</time>
 </span>
 
 
@@ -335,7 +335,7 @@
     </div>
     <footer>
         <div onclick="location.href='http://www.updatecg.xin'">
-            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <img src="http://118.24.112.225:8000/img//timg.jpg" alt="陈 武">
             <a>陈 武</a>
         </div>
     </footer>
@@ -362,7 +362,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/09/07/SpringCloud服务多实例注入Consul挂掉问题 /&title=《SpringCloud服务多实例注入Consul挂掉问题》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/09/07/SpringCloud服务多实例注入Consul挂掉问题 /&title=《SpringCloud服务多实例注入Consul挂掉问题》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -501,12 +501,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+            <img id="rewardCode" data-img="http://118.24.112.225:8000/img//cgs.jpg" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+                data-wechat="http://118.24.112.225:8000/img//cgs.jpg" data-alipay="http://118.24.112.225:8000/img//zhifubao.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
                 <span class="reward-toggle-item alipayPay">支付宝</span>
@@ -527,7 +527,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/09/07/SpringCloud服务多实例注入Consul挂掉问题 /&title=《SpringCloud服务多实例注入Consul挂掉问题》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/09/07/SpringCloud服务多实例注入Consul挂掉问题 /&title=《SpringCloud服务多实例注入Consul挂掉问题》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -691,8 +691,8 @@ if (window.console && window.console.log) {
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//echarts.min.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//sichuan.js"></script>
 <!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
 <script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
 <script>

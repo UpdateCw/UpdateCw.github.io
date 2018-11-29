@@ -47,22 +47,22 @@
 <meta property="og:url" content="http://www.updatecg.xin/2017/09/03/kafka深度解析/index.html">
 <meta property="og:site_name" content="Update">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C10.jpg">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/kafka_1.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/topic-partition.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/partition_key.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/consumer_group_test.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/group1_consumer1.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/group1_consumer_1_2.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/group1_consumer_1_2_3.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/group1_consumer_1_2_3_4.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/group1_consumer_2_3_4.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/group1_consumer_3_4.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/group1_consumer_4.png">
-<meta property="og:updated_time" content="2018-07-25T03:35:00.019Z">
+<meta property="og:image" content="http://118.24.112.225:8000/img//SC01C10.jpg">
+<meta property="og:image" content="http://118.24.112.225:8000/img//kafka_1.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//topic-partition.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//partition_key.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//consumer_group_test.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//group1_consumer1.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//group1_consumer_1_2.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//group1_consumer_1_2_3.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//group1_consumer_1_2_3_4.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//group1_consumer_2_3_4.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//group1_consumer_3_4.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//group1_consumer_4.png">
+<meta property="og:updated_time" content="2018-11-29T01:04:14.842Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Apache Kafka 细节二】Kafka背景及架构介绍">
-<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C10.jpg">
+<meta name="twitter:image" content="http://118.24.112.225:8000/img//SC01C10.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
     
@@ -85,7 +85,7 @@
     <div class="brand-wrap" >
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+          <img src="http://118.24.112.225:8000/img//timg.jpg" alt="avatar">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname" id="name">陈 武</h5>
@@ -247,7 +247,7 @@
             阅读本文可能花费您&nbsp;<span class="post-count">32</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C10.jpg"></p>
+            <p><img src="http://118.24.112.225:8000/img//SC01C10.jpg"></p>
 <a id="more"></a>
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><blockquote>
 <p>摘要 ：KafKa是有LinkedIn开发并开源的分布式消息系统，因其分布式及高吐率而被广泛试用，现已与Cloudera Hadoop，Apache Storm，Apache Spark集成。本文介绍了Kafka的创建背景，设计目标，使用消息系统的优势以及目前流行的消息同对比。并介绍了Kafka的架构。Producer消息路由。Consumer Group以及由其实现的不同消息分布方式，Topic &amp; Partition，最后介绍了Kafka Consumer 为何试用pull模式以及Kafka提供的三种delivery guarantee.</p>
@@ -322,13 +322,13 @@
 <h1 id="Kafka架构"><a href="#Kafka架构" class="headerlink" title="Kafka架构"></a>Kafka架构</h1><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="http://ov84jkku0.bkt.clouddn.com/kafka_1.png" alt="jdk" title="">
+                    <img src="http://118.24.112.225:8000/img//kafka_1.png" alt="jdk" title="">
                 </div>
                 <div class="image-caption">jdk</div>
             </figure>
 <p>  &#160; &#160; &#160; &#160;如上图所示，一个典型的kafka集群中包含若干producer(可以是web前段产生的page view,或者是服务 器日志，系统CPU、存储memory)，若干broker（Kafka支持水平扩展，一般broker数量越多，集群吞吐率越高），若干consumer group，以及一个Zookeeper集群。Kafka通过Zookeeper管理集群配置，选举leader,以及在consumer group 发生变化时重新平衡(rebalance). producer使用push模式将消息发布到broker，consumer使用pull模式从broker订阅并消费消息.</p>
 <h2 id="Push-vs-Pull"><a href="#Push-vs-Pull" class="headerlink" title="Push vs Pull"></a>Push vs Pull</h2><p>  &#160; &#160; &#160; &#160;作为一个message system ，Kafka遵循了传统的方式，选择由producer向broker push 消息并由consumer从broker pull消息数据。一些logging-system(日志系统)，比如Facebook的Scrilbe和Cloudera的Flume，采用非常不同的push模式。事实上，push模式和pull模式各有优劣。<br>  &#160; &#160; &#160; &#160;push模式很难适应消费速率不同的消费者，因为消息发送速率是有broker决定的。push模式的目标是尽可能以最快速度传递消息，但是这样很容易造成consumer来不及出来消息，典型的表现就是拒绝服务以及网络阻塞。而pull模式可以根据consumer的消费能力以适当的速率消费消息。</p>
-<h2 id="Topic-amp-Partition"><a href="#Topic-amp-Partition" class="headerlink" title="Topic &amp; Partition"></a>Topic &amp; Partition</h2><p>  &#160; &#160; &#160; &#160;Topic的逻辑上可以被认为是一个queue。每条消费都必须指定它的topic，可以简单理解为必须指明把这条消息放进哪个queue里。为了使得Kafka的吞吐率可以水平扩展，物理上把topic分为一个或过个Partition,每个Partition在物理上对应一个文件夹，该文件夹下存储这个Partition的所有消息和索引文件。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/topic-partition.png" alt="jdk"></p>
+<h2 id="Topic-amp-Partition"><a href="#Topic-amp-Partition" class="headerlink" title="Topic &amp; Partition"></a>Topic &amp; Partition</h2><p>  &#160; &#160; &#160; &#160;Topic的逻辑上可以被认为是一个queue。每条消费都必须指定它的topic，可以简单理解为必须指明把这条消息放进哪个queue里。为了使得Kafka的吞吐率可以水平扩展，物理上把topic分为一个或过个Partition,每个Partition在物理上对应一个文件夹，该文件夹下存储这个Partition的所有消息和索引文件。<br>  <img src="http://118.24.112.225:8000/img//topic-partition.png" alt="jdk"></p>
 <p>  `&#160; &#160; &#160; &#160;每个日子文件都是“log entries”序列，每一个log entry 包含一个4字节整型数(值为N)，其后跟N个字节的消息体。每条消息都有一个当前Partition下唯一的64字节的offset，它指明了这条消息的起始位置。磁盘上存储的消息格式如下：</p>
 <pre><code>message length : 4bytes(values:1+4+n)
 &quot;magic&quot; value :1 byte
@@ -344,7 +344,7 @@ payload : n bytes
   <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> kafka.producer.Partitioner;</span><br><span class="line"><span class="keyword">import</span> kafka.utils.VerifiableProperties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JasonPartitioner</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">Partitioner</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">JasonPartitioner</span><span class="params">(VerifiableProperties verifiableProperties)</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(Object key, <span class="keyword">int</span> numPartitions)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> partitionNum = Integer.parseInt((String) key);</span><br><span class="line">            <span class="keyword">return</span> Math.abs(Integer.parseInt((String) key) % numPartitions);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            <span class="keyword">return</span> Math.abs(key.hashCode() % numPartitions);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>  &#160; &#160; &#160; &#160;如果将上例中的class作为partitioner.class，并通过如下代码发送20条消息（key分别为0，1，2，3）至topic2（包含4个partition）。</p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public void sendMessage() throws InterruptedException&#123;</span><br><span class="line">  　　      for(int i = 1; i &lt;= 5; i++)&#123;</span><br><span class="line">　　      List messageList = new ArrayList&lt;KeyedMessage&lt;String, String&gt;&gt;();</span><br><span class="line">　　      for(int j = 0; j &lt; 4; j++）&#123;</span><br><span class="line">          　　     messageList.add(new KeyedMessage&lt;String, String&gt;(&quot;topic2&quot;, j+&quot;&quot;, &quot;The &quot; + i + &quot; message for key &quot; + j));</span><br><span class="line">　　      &#125;</span><br><span class="line">　　      producer.send(messageList);</span><br><span class="line">      &#125;</span><br><span class="line">  　　producer.close();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>  &#160; &#160; &#160; &#160;则key相同的消息会被发送并存储到同一个partition里，而且key的序号正好和partition序号相同。（partition序号从0开始，本例中的key也正好从0开始）。如下图所示。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/partition_key.png" alt="jdk"></p>
+<p>  &#160; &#160; &#160; &#160;则key相同的消息会被发送并存储到同一个partition里，而且key的序号正好和partition序号相同。（partition序号从0开始，本例中的key也正好从0开始）。如下图所示。<br>  <img src="http://118.24.112.225:8000/img//partition_key.png" alt="jdk"></p>
 <p>  &#160; &#160; &#160; &#160;对于传统的message queue而言，一般会删除已经被消费的消息，而Kafka集群会保留所有的消息，无论其被消费与否。当然，因为磁盘限制，不可能永久保留所有数据（实际上也没必要），因此Kafka提供两种策略去删除旧数据。一是基于时间，二是基于partition文件大小。例如可以通过配置$KAFKA_HOME/config/server.properties，让Kafka删除一周前的数据，也可通过配置让Kafka在partition文件超过1GB时删除旧数据，如下所示。<br>  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>############################ Log Retention Policy #############################</span><br><span class="line"><span class="meta">#</span> The following configurations control the disposal of log segments. The policy can</span><br><span class="line"><span class="meta">#</span> be set to delete segments after a period of time, or after a given size has accumulated.</span><br><span class="line"><span class="meta">#</span> A segment will be deleted whenever *either* of these criteria are met. Deletion always happens</span><br><span class="line"><span class="meta">#</span> from the end of the log.</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> The minimum age of a log file to be eligible for deletion</span><br><span class="line">log.retention.hours=168</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> A size-based retention policy for logs. Segments are pruned from the log as long as the remaining</span><br><span class="line"><span class="meta">#</span> segments don't drop below log.retention.bytes.</span><br><span class="line"><span class="meta">#</span>log.retention.bytes=1073741824</span><br><span class="line"><span class="meta">#</span> The maximum size of a log segment file. When this size is reached a new log segment will be created.</span><br><span class="line">log.segment.bytes=1073741824</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> The interval at which log segments are checked to see if they can be deleted according</span><br><span class="line"><span class="meta">#</span> to the retention policies</span><br><span class="line">log.retention.check.interval.ms=300000</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> By default the log cleaner is disabled and the log retention policy will default to</span><br><span class="line"><span class="meta">#</span>just delete segments after their retention expires.</span><br><span class="line"><span class="meta">#</span> If log.cleaner.enable=true is set the cleaner will be enabled and individual logs</span><br><span class="line"><span class="meta">#</span>can then be marked for log compaction.</span><br><span class="line">log.cleaner.enable=false</span><br></pre></td></tr></table></figure></p>
 <p>  &#160; &#160; &#160; &#160;这里要注意，因为Kafka读取特定消息的时间复杂度为O(1)，即与文件大小无关，所以这里删除文件与Kafka性能无关，选择怎样的删除策略只与磁盘以及具体的需求有关。另外，Kafka会为每一个consumer group保留一些metadata信息–当前消费的消息的position，也即offset。这个offset由consumer控制。正常情况下consumer会在消费完一条消息后线性增加这个offset。当然，consumer也可将offset设成一个较小的值，重新消费一些消息。因为offet由consumer控制，所以Kafka broker是无状态的，它不需要标记哪些消息被哪些consumer过，不需要通过broker去保证同一个consumer group只有一个consumer能消费某一条消息，因此也就不需要锁机制，这也为Kafka的高吞吐率提供了有力保障。</p>
 <h2 id="Replication-amp-Leader-election"><a href="#Replication-amp-Leader-election" class="headerlink" title="Replication &amp; Leader election"></a>Replication &amp; Leader election</h2><p>  &#160; &#160; &#160; &#160;Kafka从0.8开始提供partition级别的replication，replication的数量可在$KAFKA_HOME/config/server.properties中配置。<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">default.replication.factor = 1</span><br></pre></td></tr></table></figure></p>
@@ -359,12 +359,12 @@ payload : n bytes
 <p>&#160; &#160; &#160; &#160;这就需要在可用性和一致性当中作出一个简单的平衡。如果一定要等待ISR中的replica“活”过来，那不可用的时间就可能会相对较长。而且如果ISR中的所有replica都无法“活”过来了，或者数据都丢失了，这个partition将永远不可用。选择第一个“活”过来的replica作为leader，而这个replica不是ISR中的replica，那即使它并不保证已经包含了所有已commit的消息，它也会成为leader而作为consumer的数据源（前文有说明，所有读写都由leader完成）。Kafka0.8.*使用了第二种方式。根据Kafka的文档，在以后的版本中，Kafka支持用户通过配置选择这两种方式中的一种，从而根据不同的使用场景选择高可用性还是强一致性。</p>
 <p>&#160; &#160; &#160; &#160;上文说明了一个parition的replication过程，然尔Kafka集群需要管理成百上千个partition，Kafka通过round-robin的方式来平衡partition从而避免大量partition集中在了少数几个节点上。同时Kafka也需要平衡leader的分布，尽可能的让所有partition的leader均匀分布在不同broker上。另一方面，优化leadership election的过程也是很重要的，毕竟这段时间相应的partition处于不可用状态。一种简单的实现是暂停宕机的broker上的所有partition，并为之选举leader。实际上，Kafka选举一个broker作为controller，这个controller通过watch Zookeeper检测所有的broker failure，并负责为所有受影响的parition选举leader，再将相应的leader调整命令发送至受影响的broker，过程如下图所示。<br>  //图片<br>&#160; &#160; &#160; &#160;这样做的好处是，可以批量的通知leadership的变化，从而使得选举过程成本更低，尤其对大量的partition而言。如果controller失败了，幸存的所有broker都会尝试在Zookeeper中创建/controller-&gt;{this broker id}，如果创建成功（只可能有一个创建成功），则该broker会成为controller，若创建不成功，则该broker会等待新controller的命令。<br>  //图片</p>
 <h2 id="Consumer-group"><a href="#Consumer-group" class="headerlink" title="Consumer group"></a>Consumer group</h2><p>  &#160; &#160; &#160; &#160;（本节所有描述都是基于consumer hight level API而非low level API）。<br>  &#160; &#160; &#160; &#160;每一个consumer实例都属于一个consumer group，每一条消息只会被同一个consumer group里的一个consumer实例消费。（不同consumer group可以同时消费同一条消息）<br>  //图片</p>
-<p>  &#160; &#160; &#160; &#160;很多传统的message queue都会在消息被消费完后将消息删除，一方面避免重复消费，另一方面可以保证queue的长度比较少，提高效率。而如上文所将，Kafka并不删除已消费的消息，为了实现传统message queue消息只被消费一次的语义，Kafka保证保证同一个consumer group里只有一个consumer会消费一条消息。与传统message queue不同的是，Kafka还允许不同consumer group同时消费同一条消息，这一特性可以为消息的多元化处理提供了支持。实际上，Kafka的设计理念之一就是同时提供离线处理和实时处理。根据这一特性，可以使用Storm这种实时流处理系统对消息进行实时在线处理，同时使用Hadoop这种批处理系统进行离线处理，还可以同时将数据实时备份到另一个数据中心，只需要保证这三个操作所使用的consumer在不同的consumer group即可。下图展示了Kafka在Linkedin的一种简化部署。<br>  //图片<br>  &#160; &#160; &#160; &#160;为了更清晰展示Kafka consumer group的特性，笔者作了一项测试。创建一个topic (名为topic1)，创建一个属于group1的consumer实例，并创建三个属于group2的consumer实例，然后通过producer向topic1发送key分别为1，2，3r的消息。结果发现属于group1的consumer收到了所有的这三条消息，同时group2中的3个consumer分别收到了key为1，2，3的消息。如下图所示。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/consumer_group_test.png" alt="jdk"></p>
-<h2 id="Consumer-Rebalance"><a href="#Consumer-Rebalance" class="headerlink" title="Consumer Rebalance"></a>Consumer Rebalance</h2><p>  &#160; &#160; &#160; &#160;Kafka保证同一consumer group中只有一个consumer会消费某条消息，实际上，Kafka保证的是稳定状态下每一个consumer实例只会消费某一个或多个特定partition的数据，而某个partition的数据只会被某一个特定的consumer实例所消费。这样设计的劣势是无法让同一个consumer group里的consumer均匀消费数据，优势是每个consumer不用都跟大量的broker通信，减少通信开销，同时也降低了分配难度，实现也更简单。另外，因为同一个partition里的数据是有序的，这种设计可以保证每个partition里的数据也是有序被消费。<br>  &#160; &#160; &#160; &#160;如果某consumer group中consumer数量少于partition数量，则至少有一个consumer会消费多个partition的数据，如果consumer的数量与partition数量相同，则正好一个consumer消费一个partition的数据，而如果consumer的数量多于partition的数量时，会有部分consumer无法消费该topic下任何一条消息。<br>  &#160; &#160; &#160; &#160;如下例所示，如果topic1有0，1，2共三个partition，当group1只有一个consumer(名为consumer1)时，该 consumer可消费这3个partition的所有数据。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/group1_consumer1.png" alt="jdk"><br>  &#160; &#160; &#160; &#160;增加一个consumer(consumer2)后，其中一个consumer（consumer1）可消费2个partition的数据，另外一个consumer(consumer2)可消费另外一个partition的数据。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/group1_consumer_1_2.png" alt="jdk"><br>  &#160; &#160; &#160; &#160;再增加一个consumer(consumer3)后，每个consumer可消费一个partition的数据。consumer1消费partition0，consumer2消费partition1，consumer3消费partition2<br>  <img src="http://ov84jkku0.bkt.clouddn.com/group1_consumer_1_2_3.png" alt="jdk"></p>
-<p>  #160; &#160; &#160; &#160;再增加一个consumer（consumer4）后，其中3个consumer可分别消费一个partition的数据，另外一个consumer（consumer4）不能消费topic1任何数据。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/group1_consumer_1_2_3_4.png" alt="jdk"></p>
-<p>  #160; &#160; &#160; &#160;此时关闭consumer1，剩下的consumer可分别消费一个partition的数据。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/group1_consumer_2_3_4.png" alt="jdk"></p>
-<p>  #160; &#160; &#160; &#160;接着关闭consumer2，剩下的consumer3可消费2个partition，consumer4可消费1个partition。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/group1_consumer_3_4.png" alt="jdk"></p>
-<p>  #160; &#160; &#160; &#160;再关闭consumer3，剩下的consumer4可同时消费topic1的3个partition。<br>  <img src="http://ov84jkku0.bkt.clouddn.com/group1_consumer_4.png" alt="jdk"></p>
+<p>  &#160; &#160; &#160; &#160;很多传统的message queue都会在消息被消费完后将消息删除，一方面避免重复消费，另一方面可以保证queue的长度比较少，提高效率。而如上文所将，Kafka并不删除已消费的消息，为了实现传统message queue消息只被消费一次的语义，Kafka保证保证同一个consumer group里只有一个consumer会消费一条消息。与传统message queue不同的是，Kafka还允许不同consumer group同时消费同一条消息，这一特性可以为消息的多元化处理提供了支持。实际上，Kafka的设计理念之一就是同时提供离线处理和实时处理。根据这一特性，可以使用Storm这种实时流处理系统对消息进行实时在线处理，同时使用Hadoop这种批处理系统进行离线处理，还可以同时将数据实时备份到另一个数据中心，只需要保证这三个操作所使用的consumer在不同的consumer group即可。下图展示了Kafka在Linkedin的一种简化部署。<br>  //图片<br>  &#160; &#160; &#160; &#160;为了更清晰展示Kafka consumer group的特性，笔者作了一项测试。创建一个topic (名为topic1)，创建一个属于group1的consumer实例，并创建三个属于group2的consumer实例，然后通过producer向topic1发送key分别为1，2，3r的消息。结果发现属于group1的consumer收到了所有的这三条消息，同时group2中的3个consumer分别收到了key为1，2，3的消息。如下图所示。<br>  <img src="http://118.24.112.225:8000/img//consumer_group_test.png" alt="jdk"></p>
+<h2 id="Consumer-Rebalance"><a href="#Consumer-Rebalance" class="headerlink" title="Consumer Rebalance"></a>Consumer Rebalance</h2><p>  &#160; &#160; &#160; &#160;Kafka保证同一consumer group中只有一个consumer会消费某条消息，实际上，Kafka保证的是稳定状态下每一个consumer实例只会消费某一个或多个特定partition的数据，而某个partition的数据只会被某一个特定的consumer实例所消费。这样设计的劣势是无法让同一个consumer group里的consumer均匀消费数据，优势是每个consumer不用都跟大量的broker通信，减少通信开销，同时也降低了分配难度，实现也更简单。另外，因为同一个partition里的数据是有序的，这种设计可以保证每个partition里的数据也是有序被消费。<br>  &#160; &#160; &#160; &#160;如果某consumer group中consumer数量少于partition数量，则至少有一个consumer会消费多个partition的数据，如果consumer的数量与partition数量相同，则正好一个consumer消费一个partition的数据，而如果consumer的数量多于partition的数量时，会有部分consumer无法消费该topic下任何一条消息。<br>  &#160; &#160; &#160; &#160;如下例所示，如果topic1有0，1，2共三个partition，当group1只有一个consumer(名为consumer1)时，该 consumer可消费这3个partition的所有数据。<br>  <img src="http://118.24.112.225:8000/img//group1_consumer1.png" alt="jdk"><br>  &#160; &#160; &#160; &#160;增加一个consumer(consumer2)后，其中一个consumer（consumer1）可消费2个partition的数据，另外一个consumer(consumer2)可消费另外一个partition的数据。<br>  <img src="http://118.24.112.225:8000/img//group1_consumer_1_2.png" alt="jdk"><br>  &#160; &#160; &#160; &#160;再增加一个consumer(consumer3)后，每个consumer可消费一个partition的数据。consumer1消费partition0，consumer2消费partition1，consumer3消费partition2<br>  <img src="http://118.24.112.225:8000/img//group1_consumer_1_2_3.png" alt="jdk"></p>
+<p>  #160; &#160; &#160; &#160;再增加一个consumer（consumer4）后，其中3个consumer可分别消费一个partition的数据，另外一个consumer（consumer4）不能消费topic1任何数据。<br>  <img src="http://118.24.112.225:8000/img//group1_consumer_1_2_3_4.png" alt="jdk"></p>
+<p>  #160; &#160; &#160; &#160;此时关闭consumer1，剩下的consumer可分别消费一个partition的数据。<br>  <img src="http://118.24.112.225:8000/img//group1_consumer_2_3_4.png" alt="jdk"></p>
+<p>  #160; &#160; &#160; &#160;接着关闭consumer2，剩下的consumer3可消费2个partition，consumer4可消费1个partition。<br>  <img src="http://118.24.112.225:8000/img//group1_consumer_3_4.png" alt="jdk"></p>
+<p>  #160; &#160; &#160; &#160;再关闭consumer3，剩下的consumer4可同时消费topic1的3个partition。<br>  <img src="http://118.24.112.225:8000/img//group1_consumer_4.png" alt="jdk"></p>
 <h2 id="消息Deliver-guarantee"><a href="#消息Deliver-guarantee" class="headerlink" title="消息Deliver guarantee"></a>消息Deliver guarantee</h2><p>  &#160; &#160; &#160; &#160;通过上文介绍，想必读者已经明白了producer和consumer是如何工作的，以及Kafka是如何做replication的，接下来要讨论的是Kafka如何确保消息在producer和consumer之间传输。有这么几种可能的delivery guarantee：</p>
 <ul>
 <li>At most once 消息可能会丢，但绝不会重复传输</li>
@@ -386,7 +386,7 @@ payload : n bytes
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-07-25T03:35:00.019Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+    Last updated: <time datetime="2018-11-29T01:04:14.842Z" itemprop="dateUpdated">2018-11-29 09:04:14</time>
 </span>
 
 
@@ -396,7 +396,7 @@ payload : n bytes
     </div>
     <footer>
         <div onclick="location.href='http://www.updatecg.xin'">
-            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <img src="http://118.24.112.225:8000/img//timg.jpg" alt="陈 武">
             <a>陈 武</a>
         </div>
     </footer>
@@ -423,7 +423,7 @@ payload : n bytes
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/03/kafka深度解析/&title=《【Apache Kafka 细节二】Kafka背景及架构介绍》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/03/kafka深度解析/&title=《【Apache Kafka 细节二】Kafka背景及架构介绍》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -570,12 +570,12 @@ payload : n bytes
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+            <img id="rewardCode" data-img="http://118.24.112.225:8000/img//cgs.jpg" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+                data-wechat="http://118.24.112.225:8000/img//cgs.jpg" data-alipay="http://118.24.112.225:8000/img//zhifubao.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
                 <span class="reward-toggle-item alipayPay">支付宝</span>
@@ -596,7 +596,7 @@ payload : n bytes
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/03/kafka深度解析/&title=《【Apache Kafka 细节二】Kafka背景及架构介绍》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/03/kafka深度解析/&title=《【Apache Kafka 细节二】Kafka背景及架构介绍》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -760,8 +760,8 @@ if (window.console && window.console.log) {
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//echarts.min.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//sichuan.js"></script>
 <!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
 <script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
 <script>

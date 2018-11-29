@@ -47,20 +47,20 @@
 <meta property="og:url" content="http://www.updatecg.xin/2017/09/23/mongo索引优化/index.html">
 <meta property="og:site_name" content="Update">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C09.jpg">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/zongshuju.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/one.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/two.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/three.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/four.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/five.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/explain.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/six.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/sevent.png">
-<meta property="og:updated_time" content="2018-07-25T03:35:00.020Z">
+<meta property="og:image" content="http://118.24.112.225:8000/img//SC01C09.jpg">
+<meta property="og:image" content="http://118.24.112.225:8000/img//zongshuju.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//one.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//two.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//three.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//four.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//five.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//explain.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//six.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//sevent.png">
+<meta property="og:updated_time" content="2018-11-29T01:04:14.132Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="monggo索引优化">
-<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC01C09.jpg">
+<meta name="twitter:image" content="http://118.24.112.225:8000/img//SC01C09.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
     
@@ -83,7 +83,7 @@
     <div class="brand-wrap" >
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+          <img src="http://118.24.112.225:8000/img//timg.jpg" alt="avatar">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname" id="name">陈 武</h5>
@@ -245,7 +245,7 @@
             阅读本文可能花费您&nbsp;<span class="post-count">5</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC01C09.jpg"><br><a id="more"></a></p>
+            <p><img src="http://118.24.112.225:8000/img//SC01C09.jpg"><br><a id="more"></a></p>
 <h2 id="mongodb索引规则"><a href="#mongodb索引规则" class="headerlink" title="mongodb索引规则"></a>mongodb索引规则</h2><blockquote>
 <p>mongodb索引规则基本上与传统的关系库一样，大部分优化MySQL/Oracle/SQLite索引的技巧也适用于mongodb。</p>
 </blockquote>
@@ -254,17 +254,17 @@
 <li>数据量多且查询多余更新时，可以用索引提高查询速度。</li>
 </ul>
 <h2 id="废话不多说，先上图，后再说"><a href="#废话不多说，先上图，后再说" class="headerlink" title="废话不多说，先上图，后再说"></a>废话不多说，先上图，后再说</h2><ul>
-<li><p>表总数据2000万+<br><img src="http://ov84jkku0.bkt.clouddn.com/zongshuju.png" alt="jdk"></p>
+<li><p>表总数据2000万+<br><img src="http://118.24.112.225:8000/img//zongshuju.png" alt="jdk"></p>
 </li>
-<li><p>查询表索引情况<br><img src="http://ov84jkku0.bkt.clouddn.com/one.png" alt="jdk"></p>
+<li><p>查询表索引情况<br><img src="http://118.24.112.225:8000/img//one.png" alt="jdk"></p>
 </li>
-<li><p>查询在没有建立索引情况下执行<br><img src="http://ov84jkku0.bkt.clouddn.com/two.png" alt="jdk"></p>
+<li><p>查询在没有建立索引情况下执行<br><img src="http://118.24.112.225:8000/img//two.png" alt="jdk"></p>
 </li>
-<li><p>对需要过滤字段建立索引(此时数据库拥有2000万+数据，执行时间89s)<br><img src="http://ov84jkku0.bkt.clouddn.com/three.png" alt="jdk"></p>
+<li><p>对需要过滤字段建立索引(此时数据库拥有2000万+数据，执行时间89s)<br><img src="http://118.24.112.225:8000/img//three.png" alt="jdk"></p>
 </li>
-<li><p>查询表索引情况(已建立)<br><img src="http://ov84jkku0.bkt.clouddn.com/four.png" alt="jdk"></p>
+<li><p>查询表索引情况(已建立)<br><img src="http://118.24.112.225:8000/img//four.png" alt="jdk"></p>
 </li>
-<li><p>查询在建立了索引情况下执行<br><img src="http://ov84jkku0.bkt.clouddn.com/five.png" alt="jdk"></p>
+<li><p>查询在建立了索引情况下执行<br><img src="http://118.24.112.225:8000/img//five.png" alt="jdk"></p>
 <font color="red" size="3" face="微软雅黑">(<em>^▽^</em>)建立了索引查询2000万数据速度从30秒减少到1毫秒，这效率牛逼了！<br></font><br><font color="red" size="3" face="微软雅黑">注意：建立索引尽量在创建表时创建，不然当表数据过大，创建索引会消耗大量时间和cpu<br></font>
 
 </li>
@@ -278,7 +278,7 @@
 <h2 id="使用explain"><a href="#使用explain" class="headerlink" title="使用explain"></a>使用explain</h2><p>explain是非常有用的工具，会帮助你获得查询方面诸多有用的信息。只要对游标调用该方法，就可以得到查询细节。explain会返回一个文档，而不是游标本身。如：<br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="http://ov84jkku0.bkt.clouddn.com/explain.png" alt="jdk" title="">
+                    <img src="http://118.24.112.225:8000/img//explain.png" alt="jdk" title="">
                 </div>
                 <div class="image-caption">jdk</div>
             </figure><br>explain会返回查询使用的索引情况，耗时和扫描文档数的统计信息。</p>
@@ -295,7 +295,7 @@
 <figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="http://ov84jkku0.bkt.clouddn.com/six.png" alt="jdk" title="">
+                    <img src="http://118.24.112.225:8000/img//six.png" alt="jdk" title="">
                 </div>
                 <div class="image-caption">jdk</div>
             </figure>
@@ -306,7 +306,7 @@
 <p><font color="red" size="3" face="微软雅黑">注意：在测试创建索引是否成功我手动去删了库，然后执行创建索引就创建无效。但是如果新创建表为其创建索引的，就会生成索引值。<br></font><br><figure class="image-bubble">
                 <div class="img-lightbox">
                     <div class="overlay"></div>
-                    <img src="http://ov84jkku0.bkt.clouddn.com/sevent.png" alt="jdk" title="">
+                    <img src="http://118.24.112.225:8000/img//sevent.png" alt="jdk" title="">
                 </div>
                 <div class="image-caption">jdk</div>
             </figure></p>
@@ -319,7 +319,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-07-25T03:35:00.020Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+    Last updated: <time datetime="2018-11-29T01:04:14.132Z" itemprop="dateUpdated">2018-11-29 09:04:14</time>
 </span>
 
 
@@ -329,7 +329,7 @@
     </div>
     <footer>
         <div onclick="location.href='http://www.updatecg.xin'">
-            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <img src="http://118.24.112.225:8000/img//timg.jpg" alt="陈 武">
             <a>陈 武</a>
         </div>
     </footer>
@@ -356,7 +356,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/23/mongo索引优化/&title=《monggo索引优化》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/23/mongo索引优化/&title=《monggo索引优化》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -503,12 +503,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+            <img id="rewardCode" data-img="http://118.24.112.225:8000/img//cgs.jpg" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+                data-wechat="http://118.24.112.225:8000/img//cgs.jpg" data-alipay="http://118.24.112.225:8000/img//zhifubao.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
                 <span class="reward-toggle-item alipayPay">支付宝</span>
@@ -529,7 +529,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/23/mongo索引优化/&title=《monggo索引优化》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2017/09/23/mongo索引优化/&title=《monggo索引优化》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -693,8 +693,8 @@ if (window.console && window.console.log) {
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//echarts.min.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//sichuan.js"></script>
 <!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
 <script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
 <script>

@@ -47,13 +47,13 @@
 <meta property="og:url" content="http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/index.html">
 <meta property="og:site_name" content="Update">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/SC02C03A.jpg">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/fenxi.png">
-<meta property="og:image" content="http://ov84jkku0.bkt.clouddn.com/Statistics.png">
-<meta property="og:updated_time" content="2018-07-25T03:35:00.023Z">
+<meta property="og:image" content="http://118.24.112.225:8000/img//SC02C03A.jpg">
+<meta property="og:image" content="http://118.24.112.225:8000/img//fenxi.png">
+<meta property="og:image" content="http://118.24.112.225:8000/img//Statistics.png">
+<meta property="og:updated_time" content="2018-11-29T01:04:14.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用HDFS、RabbitMQ、MongoDB实现统计">
-<meta name="twitter:image" content="http://ov84jkku0.bkt.clouddn.com/SC02C03A.jpg">
+<meta name="twitter:image" content="http://118.24.112.225:8000/img//SC02C03A.jpg">
     
         <link rel="alternate" type="application/atom+xml" title="Update" href="/atom.xml">
     
@@ -76,7 +76,7 @@
     <div class="brand-wrap" >
       <div class="brand">
         <a href="/" class="avatar waves-effect waves-circle waves-light">
-          <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="avatar">
+          <img src="http://118.24.112.225:8000/img//timg.jpg" alt="avatar">
         </a>
         <hgroup class="introduce">
           <h5 class="nickname" id="name">陈 武</h5>
@@ -238,11 +238,11 @@
             阅读本文可能花费您&nbsp;<span class="post-count">5</span>&nbsp;分钟
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p><img src="http://ov84jkku0.bkt.clouddn.com/SC02C03A.jpg"><br><a id="more"></a></p>
+            <p><img src="http://118.24.112.225:8000/img//SC02C03A.jpg"><br><a id="more"></a></p>
 <h2 id="业务分析"><a href="#业务分析" class="headerlink" title="业务分析"></a>业务分析</h2><blockquote>
 <p>IPTV行业桌面数据分析，分析用户行为数据。每天数据量可达3000万。统计用户访问量（PV）、UV（独立用户）、VV（视频播放次数）、<br>DAU（日活）、WAU（周活）、MAU（月活）、月开机率、点击次数、排行榜数据等等。</p>
 </blockquote>
-<h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><p><img src="http://ov84jkku0.bkt.clouddn.com/fenxi.png"></p>
+<h2 id="架构设计"><a href="#架构设计" class="headerlink" title="架构设计"></a>架构设计</h2><p><img src="http://118.24.112.225:8000/img//fenxi.png"></p>
 <ul>
 <li>client上报数据存入缓存中</li>
 <li>定时将缓存的字符流刷新到文件，并将文件上传到hdfs</li>
@@ -258,7 +258,7 @@
 <h3 id="mq服务端监听到hdfs进行处理"><a href="#mq服务端监听到hdfs进行处理" class="headerlink" title="mq服务端监听到hdfs进行处理"></a>mq服务端监听到hdfs进行处理</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 提取command放入线程对象 */</span></span><br><span class="line">  Consumer consumer = <span class="keyword">new</span> DefaultConsumer(channel) &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleDelivery</span><span class="params">(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, <span class="keyword">byte</span>[] body)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">          logger.info(<span class="string">"Router ["</span> + SystemConstant.NEW_FILE_QUEUE + <span class="string">"] received new file"</span>);</span><br><span class="line">          FileStruct fileStruct = (FileStruct) SerializingUtil.deserialize(body);</span><br><span class="line">          factory.createNewTask(fileStruct);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  channel.basicConsume(SystemConstant.NEW_FILE_QUEUE, <span class="keyword">true</span>, consumer);</span><br></pre></td></tr></table></figure>
 <h3 id="数据入mongo"><a href="#数据入mongo" class="headerlink" title="数据入mongo"></a>数据入mongo</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">for</span> (HashMap aMap : parsedDatas) &#123;</span><br><span class="line">    <span class="comment">// 预置的默认时间列</span></span><br><span class="line">    aMap.put(DataTable.DEFAUL_TTIMECOLUMN, now);</span><br><span class="line"></span><br><span class="line">    dataTable.genId(aMap);</span><br><span class="line">    String tableName = dataTable.getSplitTableName(aMap);</span><br><span class="line">    Document doc = <span class="keyword">new</span> Document(aMap);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (dataTable.hasIdentify()) &#123;</span><br><span class="line">        mongoConnector.insertSingle(tableName, doc);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        List&lt;Document&gt; list = tableToDatasMap.get(tableName);</span><br><span class="line">        <span class="keyword">if</span> (list == <span class="keyword">null</span>) &#123;</span><br><span class="line">            list = <span class="keyword">new</span> ArrayList&lt;Document&gt;(parsedDatas.size() / <span class="number">2</span>);</span><br><span class="line">            tableToDatasMap.put(tableName, list);</span><br><span class="line">        &#125;</span><br><span class="line">        list.add(doc);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (String key : tableToDatasMap.keySet()) &#123;</span><br><span class="line">    mongoConnector.insert(key, tableToDatasMap.get(key));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="聚合分析"><a href="#聚合分析" class="headerlink" title="聚合分析"></a>聚合分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;Map&lt;String, Object&gt;&gt; getExhibitionCount(Date start , Date end ) <span class="keyword">throws</span> ParseException &#123;</span><br><span class="line">     List&lt;Map&lt;String, Object&gt;&gt; map = <span class="keyword">new</span> ArrayList&lt;Map&lt;String, Object&gt;&gt;();</span><br><span class="line">      <span class="comment">//获取区间日期天数</span></span><br><span class="line">     <span class="keyword">int</span> days = differentDaysByMillisecond(start, end);</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; days + <span class="number">1</span> ; i++)&#123;</span><br><span class="line">         Aggregation aggregation = <span class="keyword">null</span>;</span><br><span class="line">         aggregation = Aggregation.newAggregation(</span><br><span class="line">                 Aggregation.group(<span class="string">"templateCode"</span>,<span class="string">"columnId"</span>,<span class="string">"positionId"</span>).sum(<span class="string">"duration"</span>).as(<span class="string">"duration"</span>),</span><br><span class="line">                 Aggregation.project(<span class="string">"templateCode"</span>,<span class="string">"columnId"</span>,<span class="string">"positionId"</span>,<span class="string">"duration"</span>)</span><br><span class="line">         );</span><br><span class="line">         String tableName = <span class="keyword">this</span>.getTableName(start);</span><br><span class="line">         AggregationResults&lt;HashMap&gt; aggregate = mongoTemplate.aggregate(aggregation, tableName, HashMap.class);</span><br><span class="line">         <span class="comment">//key 日期  value 当天数据</span></span><br><span class="line">         List&lt;HashMap&gt; mappedResults = aggregate.getMappedResults();</span><br><span class="line">         System.out.print(<span class="string">"处理后数据："</span> + mappedResults);</span><br><span class="line">         <span class="keyword">for</span> (Map adCountDtoMap:mappedResults) &#123;</span><br><span class="line">             String json = JsonUtils.obj2Str(adCountDtoMap);</span><br><span class="line">             AdCountDto adCountDto = JsonUtils.str2Obj(json, AdCountDto.class);</span><br><span class="line">             adCountDto.setDate(dateFormatCheck.format(<span class="keyword">new</span> Date()));</span><br><span class="line">             createIndex(COL_NAME);</span><br><span class="line">             mongoTemplate.insert(adCountDto,COL_NAME);</span><br><span class="line">         &#125;</span><br><span class="line">         start = dataPlus(start ,<span class="number">1</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> map;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p><img src="http://ov84jkku0.bkt.clouddn.com/Statistics.png"></p>
+<h3 id="展示"><a href="#展示" class="headerlink" title="展示"></a>展示</h3><p><img src="http://118.24.112.225:8000/img//Statistics.png"></p>
 
         </div>
 
@@ -266,7 +266,7 @@
     <div class="content">
         
 <span class="post-time">
-    Last updated: <time datetime="2018-07-25T03:35:00.023Z" itemprop="dateUpdated">2018-07-25 11:35:00</time>
+    Last updated: <time datetime="2018-11-29T01:04:14.516Z" itemprop="dateUpdated">2018-11-29 09:04:14</time>
 </span>
 
 
@@ -276,7 +276,7 @@
     </div>
     <footer>
         <div onclick="location.href='http://www.updatecg.xin'">
-            <img src="http://ov84jkku0.bkt.clouddn.com/timg.jpg" alt="陈 武">
+            <img src="http://118.24.112.225:8000/img//timg.jpg" alt="陈 武">
             <a>陈 武</a>
         </div>
     </footer>
@@ -303,7 +303,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -450,12 +450,12 @@
     <div class="reward-content">
         
         <div class="reward-code">
-            <img id="rewardCode" data-img="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" alt="打赏二维码">
+            <img id="rewardCode" data-img="http://118.24.112.225:8000/img//cgs.jpg" alt="打赏二维码">
         </div>
         
         <label class="reward-toggle">
             <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
-                data-wechat="http://ov84jkku0.bkt.clouddn.com/cgs.jpg" data-alipay="http://ov84jkku0.bkt.clouddn.com/zhifubao.png">
+                data-wechat="http://118.24.112.225:8000/img//cgs.jpg" data-alipay="http://118.24.112.225:8000/img//zhifubao.png">
             <div class="reward-toggle-ctrol">
                 <span class="reward-toggle-item wechatPay">&nbsp;&nbsp;微信&nbsp;&nbsp;</span>
                 <span class="reward-toggle-item alipayPay">支付宝</span>
@@ -476,7 +476,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&pic=http://ov84jkku0.bkt.clouddn.com/timg.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://www.updatecg.xin/2018/06/20/利用HDFS、RabbitMq、MongoDB实现统计/&title=《利用HDFS、RabbitMQ、MongoDB实现统计》 — Update&pic=http://118.24.112.225:8000/img//timg.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -640,8 +640,8 @@ if (window.console && window.console.log) {
 
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
 
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/echarts.min.js"></script>
-<script type="text/javascript" src="http://ov84jkku0.bkt.clouddn.com/sichuan.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//echarts.min.js"></script>
+<script type="text/javascript" src="http://118.24.112.225:8000/img//sichuan.js"></script>
 <!--<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
 <script>AV.initialize("{{theme.leancloud_visitors.app_id}}", "{{theme.leancloud_visitors.app_key}}");</script>-->
 <script>
