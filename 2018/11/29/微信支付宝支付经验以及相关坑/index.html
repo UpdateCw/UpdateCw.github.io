@@ -50,7 +50,7 @@
 <meta property="og:image" content="http://118.24.112.225:8000/img//SC01C04.jpg">
 <meta property="og:image" content="http://118.24.112.225:8000/img//ali.jpg">
 <meta property="og:image" content="http://118.24.112.225:8000/img//wx.png">
-<meta property="og:updated_time" content="2018-11-29T07:13:19.943Z">
+<meta property="og:updated_time" content="2018-11-29T07:19:42.736Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="微信支付宝支付经验以及相关坑">
 <meta name="twitter:image" content="http://118.24.112.225:8000/img//SC01C04.jpg">
@@ -171,7 +171,7 @@
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
                 <i class="icon icon-lg icon-chevron-left"></i>
             </a>
-            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="Zoeken">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
                 <i class="icon icon-lg icon-search"></i>
             </a>
@@ -322,17 +322,18 @@
 </tr>
 </tbody>
 </table>
-<h2 id="一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？"><a href="#一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？" class="headerlink" title="一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？"></a>一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？</h2><p>“验证签名错误”第一反应肯定是检测签名是正确，<a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=20_1" target="_blank" rel="noopener">[官方验证签名地址]</a>。<br>然而，这才刚刚开始，签名正确了还是特么的报“验证签名错误”。上面说了<span color="red">签名验证有两次</span>,然后继续“验证签名错误”。特么的把以上几点全部检测了“有萝卜有坑”，然并卵。最后发现<span color="red">【传入微信端的时间戳参数 ios需要32位 安卓需要10位】</span>，笑哭。首先看见“验证签名错误”，肯定是服务端问题，然而呢。。。</p>
+<h2 id="一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？"><a href="#一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？" class="headerlink" title="一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？"></a>一句签名错误概括全部错误信息，我就弱弱的问句错误码有用么？</h2><p>“验证签名错误”第一反应肯定是检测签名是否正确，<a href="https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=20_1" target="_blank" rel="noopener">[官方验证签名地址]</a>。<br>然而，这才刚刚开始，签名正确了还是特么的报“验证签名错误”。特么的把以上几点全部检测了“有萝卜有坑”，然并卵。上面说了<span style="color:red">签名验证有两次，这是第二次验证错误</span>,最后发现<span style="color:red">【传入微信端的时间戳参数 ios需要32位 安卓需要10位】</span>，笑哭。首先看见“验证签名错误”，肯定是服务端问题，然而呢。。。</p>
 <h2 id="签名两次重要参数"><a href="#签名两次重要参数" class="headerlink" title="签名两次重要参数"></a>签名两次重要参数</h2><h3 id="第一次签名参数"><a href="#第一次签名参数" class="headerlink" title="第一次签名参数"></a>第一次签名参数</h3><p>得到sign并赋值pay.setSign(sign) ；接下来就是将pay对象转换成xml，调用统一下单接口进行统一支付，并将统一支付返回的xml转换成bean。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">notify_url //回调地址</span><br><span class="line">time_start //交易起始时间</span><br><span class="line">time_expire //交易结束时间</span><br><span class="line">spbill_create_ip //IP地址</span><br><span class="line">trade_type //交易类型</span><br><span class="line">limit_pay //no_credit--指定不能使用信用卡支付</span><br><span class="line">appid //微信开放平台审核通过的应用APPID</span><br><span class="line">mch_id //微信支付分配的商户号</span><br><span class="line">nonce_str //随机字符串，不长于32位。</span><br><span class="line">sign_type //签名类型，目前支持HMAC-SHA256和MD5，默认为MD5</span><br><span class="line">body //商品描述交易字段格式根据不同的应用场景按照以下格式：APP——需传入应用市场上的APP名字-实际商品名称，天天爱消除-游戏充值。</span><br><span class="line">out_trade_no //订单号</span><br><span class="line">total_fee //交易金额默认为人民币交易，接口中参数支付金额单位为【分】，参数值不能带小数。</span><br><span class="line">sign //根据以上数据生成签名</span><br></pre></td></tr></table></figure></p>
 <h3 id="第二次签名参数"><a href="#第二次签名参数" class="headerlink" title="第二次签名参数"></a>第二次签名参数</h3><p>统一下单成功会返回微信预支付订单号prepay_id，我们需要根据这个prepay_id进行二次签名，二次签名所用参数如下（不包括paySign）。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">noncestr //随机字符串</span><br><span class="line">appid //微信开放平台审核通过的应用APPID</span><br><span class="line">timestamp //就是这B,传入微信端的时间戳参数 ios需要32位 安卓需要10位</span><br><span class="line">partnerid //商户号</span><br><span class="line">package //Sign=WXPay</span><br><span class="line">prepayid //微信预支付订单号prepay_id</span><br><span class="line">sign //根据以上数据生成签名</span><br></pre></td></tr></table></figure></p>
-<h3 id="实例代码后续上传GitHub"><a href="#实例代码后续上传GitHub" class="headerlink" title="实例代码后续上传GitHub"></a>实例代码后续上传GitHub</h3>
+<h3 id="实例代码后续上传GitHub"><a href="#实例代码后续上传GitHub" class="headerlink" title="实例代码后续上传GitHub"></a>实例代码后续上传GitHub</h3><p>第三方文档能不能写专业第一，之前和中兴、华为对接一样，特么的文档写的一塌糊涂。</p>
+
         </div>
 
         <blockquote class="post-copyright">
     <div class="content">
         
 <span class="post-time">
-    最后更新：<time datetime="2018-11-29T07:13:19.943Z" itemprop="dateUpdated">2018-11-29 15:13:19</time>
+    Laatste update: <time datetime="2018-11-29T07:19:42.736Z" itemprop="dateUpdated">2018-11-29 15:19:42</time>
 </span>
 
 
