@@ -80,11 +80,11 @@
       <category term="闲时" scheme="http://www.updatecg.xin/categories/%E9%97%B2%E6%97%B6/"/>
     
     
-      <category term="Docker" scheme="http://www.updatecg.xin/tags/Docker/"/>
-    
       <category term="SpringCloud" scheme="http://www.updatecg.xin/tags/SpringCloud/"/>
     
       <category term="Consul" scheme="http://www.updatecg.xin/tags/Consul/"/>
+    
+      <category term="Docker" scheme="http://www.updatecg.xin/tags/Docker/"/>
     
   </entry>
   
