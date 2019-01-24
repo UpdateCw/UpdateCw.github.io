@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[性能调优参数]]></title>
+    <url>%2F2019%2F01%2F24%2F%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E5%8F%82%E6%95%B0%2F</url>
+    <content type="text"><![CDATA[堆内存性能优化参数 参数 含义 案例 -Xmx 设置JVM 最大堆内存 -Xmx3550m -Xms 设置JVM 初始堆内存,此值可以设置与-Xmx相同,以避免每次垃圾回收完成后JVM重新分配内存 -Xms3550m -Xss 设置每个线程的栈大小.JDK5.0以后每个线程栈大小为1M，之前每个线程栈大小为256K应当根据应用的线程所需内存大小进行调整在相同物理内存下。减小这个值能生成更多的线程但是操作系统对一个进程内的线程数还是有限制的，不能无限生成，经验值在3000~5000左右需要注意的是：当这个值被设置的较大（例如&gt; 2MB）时将会在很大程度上降低系统的性能 -Xss128k -Xmn 设置年轻代。大小为2G在整个堆内存大小确定的情况下，增大年轻代将会减小年老代，反之亦然此值关系到JVM垃圾回收，对系统性能影响较大，官方推荐配置为整个堆大小的3/8 -Xmn2g -XX 设置年轻代初始值为1024M -XX -XX：MaxNewSize 设置年轻代最大值 -XX：MaxNewSize = 1024 -XX：PermSize 设置持久代初始值 -XX：PermSize = 256 -XX：MaxPermSize 设置持久代最大值 -XX：MaxPermSize = 256 -XX：NewRatio 设置年轻代（包括1个伊甸和2个幸存者区）与年老代的比值 -XX：NewRatio = 4(表示1:4) -XX：SurvivorRatio 设置年轻代中伊甸区与幸存者区的比值。表示2个幸存者区（JVM堆内存年轻代中默认有2个大小相等的幸存者区）与1个伊甸区的比值为2:4，即1个幸存者区占整个年轻代大小的1/6 -XX：SurvivorRatio = 4 -XX：MaxTenuringThreshold 表示一个对象如果在幸存者区（救助空间）移动了7次还没有被垃圾回收就进入年老代如果设置为0的话，则年轻代对象不经过幸存者区，直接进入年老代，对于需要大量常驻内存的应用，这样做可以提高效率。如果将此值设置为一个较大值，则年轻代对象会在幸存者区进行多次复制，这样可以增加对象在年轻代存活时间，增加对象在年轻代被垃圾回收的概率，减少Full GC的频率，这样做可以在某种程度上提高服务稳定性。 -XX：MaxTenuringThreshold = 7 垃圾回收性能优化参数 参数 含义 案例 -XX：+ UseSerialGC 设置串行收集器 -XX：+ UseSerialGC -XX：+ UseParallelGC 置为并行收集器此配置仅对年轻代有效即年轻代使用并行收集，而年老代仍使用串行收集。 -XX：+ UseParallelGC -XX：ParallelGCThreads 配置并行收集器的线程数，即：同时有多少个线程一起进行垃圾回收此值建议配置与CPU数目相等。 -XX：ParallelGCThreads = 20 -XX：+ UseParallelOldGC 配置年老代垃圾收集方式为并行收集.JDK6.0开始支持对年老代并行收集。 -XX：+ UseParallelOldGC -XX：MaxGCPauseMillis 设置每次年轻代代垃圾回收的最长时间（单位毫秒）如果无法满足此时间，JVM会自动调整年轻代大小，以满足此时间。 -XX：MaxGCPauseMillis = 100 -XX：+ UseAdaptiveSizePolicy 设置此选项后，并行收集器会自动调整年轻代伊甸区大小和幸存者区大小的比例，以达成目标系统规定的最低响应时间或者收集频率等指标此参数建议在使用并行收集器时，一直打开。 -XX：+ UseAdaptiveSizePolicy -XX：+ UseConcMarkSweepGC 即CMS收集，设置年老代为并发收集的.cms收集是JDK1.4后期版本开始引入的新GC算法它的主要适合场景是对响应时间的重要性需求大于对吞吐量的需求，能够承受垃圾回收线程和应用线程共享CPU资源，并且应用中存在比较多的长生命周期对象的的的.cms收集的目标是尽量减少应用的暂停时间，减少全GC发生的几率，利用和应用程序线程并发的垃圾回收线程来标记清除年老代内存。 -XX：+ UseConcMarkSweepGC -XX：+ UseParNewGC 设置年轻代为并发收集可与CMS收集同时使用.JDK5.0以上，JVM会根据系统配置自行设置，所以无需再设置此参数。 -XX：+ UseSerialGC -XX：CMSFullGCsBeforeCompaction 由于并发收集器不对内存空间进行压缩和整理，所以运行一段时间并行收集以后会产生内存碎片，内存使用效率降低。此参数设置运行0次Full GC后对内存空间进行压缩和整理，即每次Full GC后立刻开始压缩和整理内存。 -XX：CMSFullGCsBeforeCompaction = 0 -XX：+ UseCMSCompactAtFullCollection 打开内存空间的压缩和整理，在Full GC后执行。可能会影响性能，但可以消除内存碎片。 -XX：+ UseCMSCompactAtFullCollection -XX：+ CMSIncrementalMode 设置为增量收集模式一般适用于单CPU情况。 -XX：+ CMSIncrementalMode -XX：CMSInitiatingOccupancyFraction 表示年老代内存空间使用到70％时就开始执行CMS收集，以确保年老代有足够的空间接纳来自年代代的对象，避免Full GC的发生。 -XX：CMSInitiatingOccupancyFraction = 70 JVM服务参数调优实战服务器配置：8 CPU，8G MEM，JDK 1.6.X参数方案：-server -Xmx3550m -Xms3550m -Xmn1256m -Xss128k -XX：SurvivorRatio = 6 -XX：MaxPermSize = 256m -XX：ParallelGCThreads = 8 -XX：MaxTenuringThreshold = 0 -XX：+ UseConcMarkSweepGC调优说明： -Xmx与-Xms相同以避免JVM反复重新申请内存。-XMX的大小约等于系统内存大小的一半，即充分利用系统资源，又给予系统安全运行的空间。 -Xmn1256m设置年轻代大小为1256MB。此值对系统性能影响较大，太阳官方推荐配置年轻代大小为整个堆的3/8。 -Xss128k设置较小的线程栈以支持创建更多的线程，支持海量访问，并提升系统性能。 -XX：SurvivorRatio = 6设置年轻代中Eden区与Survivor区的比值。系统默认是8，根据经验设置为6，则2个幸存者区与1个Eden区的比值为2：6，一个幸存者区占整个年轻代的1/8。 -XX：ParallelGCThreads = 8配置并行收集器的线程数，即同时8个线程一起进行垃圾回收。此值一般配置为与CPU数目相等。 -XX：MaxTenuringThreshold = 0设置垃圾最大年龄（在年轻代的存活次数）。如果设置为0的话，则年轻代对象不经过Survivor区直接进入年老代。对于年老代比较多的应用，可以提高效率;如果将此值设置为一个较大值，则年轻代对象会在幸存者区进行多次复制，这样可以增加对象再年轻代的存活时间，增加在年轻代即被回收的概率根据被海量访问的动态网络应用之特点，其内存要么被缓存起来以减少直接访问数据库，要么被快速回收以支持高并发海量请求，因此其内存对象在年轻代存活多次意义不大，可以直接进入年老代，根据实际应用效果，在这里设置此值为0。 -XX：+ UseConcMarkSweepGC设置年老代为并发收集.CMS（ConcMarkSweepGC）收集的目标是尽量减少应用的暂停时间，减少完全GC发生的几率，利用和应用程序线程并发的垃圾回收线程来标记清除年老代内存，适用于应用中存在比较多的长生命周期对象的情况。]]></content>
+      <categories>
+        <category>闲时</category>
+      </categories>
+      <tags>
+        <tag>架构师</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[2019架构师之路正式开启]]></title>
     <url>%2F2019%2F01%2F04%2F2019%E6%9E%B6%E6%9E%84%E5%B8%88%E4%B9%8B%E8%B7%AF%E6%AD%A3%E5%BC%8F%E5%BC%80%E5%90%AF%2F</url>
     <content type="text"><![CDATA[需要掌握的技能。 #开源框架解析篇 To Be One ~ Spring什么是Spring框架？Spring框架有哪些主要模块？答：1、为了解决企业应用开发的复杂性而创建的.2、主要包括7中模块：spring core、spring aop、spring context、spring web、spring web mvc、spring orm、spring dao. Spring框架带来哪些好处？答：1、最大优点就是开发中无需关注原始技术上的问题，只需关注核心业务。2、Spring能降低不同模块之间的耦合度，不同模块之间信息的沟通是通过对象传递完成的，而对象能否顺利传递就是要合理的构建好对象，而管理好对象的构建方式就能管理好对象传递。 什么是控制反转（IOC）？什么是依赖注入？答：1、最大优点就是开发中无需关注原始技术上的问题，只需关注核心业务。2、Spring能降低不同模块之间的耦合度，不同模块之间信息的沟通是通过对象传递完成的，而对象能否顺利传递就是要合理的构建好对象，而管理好对象的构建方式就能管理好对象传递。 等待。。。]]></content>
@@ -236,9 +247,9 @@
         <category>闲时</category>
       </categories>
       <tags>
-        <tag>SpringBoot</tag>
         <tag>Kafka</tag>
         <tag>ELK</tag>
+        <tag>SpringBoot</tag>
       </tags>
   </entry>
   <entry>
