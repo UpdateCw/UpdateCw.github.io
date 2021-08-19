@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>docker命令大全 | 我的学习记录</title><meta name="description" content="docker命令大全"><meta name="keywords" content="架构师"><meta name="author" content="陈 武"><meta name="copyright" content="陈 武"><meta name="format-detection" content="telephone=no"><link rel="shortcut icon" href="https://updatecg.oss-cn-beijing.aliyuncs.com/msofficexp.png"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="canonical" href="http://www.updatecg.xin/2019/05/20/docker命令大全/"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="docker命令大全"><meta name="twitter:description" content="docker命令大全"><meta name="twitter:image" content="https://updatecg.oss-cn-beijing.aliyuncs.com/timg.jpg"><meta property="og:type" content="article"><meta property="og:title" content="docker命令大全"><meta property="og:url" content="http://www.updatecg.xin/2019/05/20/docker命令大全/"><meta property="og:site_name" content="我的学习记录"><meta property="og:description" content="docker命令大全"><meta property="og:image" content="https://updatecg.oss-cn-beijing.aliyuncs.com/timg.jpg"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="prev" title="liunx常用命令" href="http://www.updatecg.xin/2019/05/30/liunx常用命令/"><link rel="next" title="Nginx参数配置说明" href="http://www.updatecg.xin/2019/04/15/Nginx参数配置说明/"><meta name="baidu-site-verification" content="2zNdXBNuWf"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"cookieDomain":"http://www.updatecg.xin/","msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简"},
+  highlight_copy: 'true',
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  bookmark: {
+    title: '添加书签',
+    message_prev: '按',
+    message_next: '键将本页加入书签'
+  },
+  runtime_unit: '天'
+
+  
+}</script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#查看镜像"><span class="toc-number">1.</span> <span class="toc-text">查看镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查看容器"><span class="toc-number">2.</span> <span class="toc-text">查看容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动容器"><span class="toc-number">3.</span> <span class="toc-text">启动容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何在docker容器和宿主机之间复制文件"><span class="toc-number">4.</span> <span class="toc-text">如何在docker容器和宿主机之间复制文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#删除容器"><span class="toc-number">5.</span> <span class="toc-text">删除容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通过容器生成新的镜像"><span class="toc-number">6.</span> <span class="toc-text">通过容器生成新的镜像</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#持久化容器"><span class="toc-number">7.</span> <span class="toc-text">持久化容器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#特殊命令"><span class="toc-number">8.</span> <span class="toc-text">特殊命令</span></a></li></ol></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-2k3k39.jpg)"><div id="page-header"><span class="pull-left"> <a class="blog_title" id="site-name" href="/">我的学习记录</a></span><div class="open toggle-menu pull-right"><div class="menu-icon-first"></div><div class="menu-icon-second"></div><div class="menu-icon-third"></div></div><span class="pull-right menus"><div class="mobile_author_icon"><img class="lozad" src="https://updatecg.oss-cn-beijing.aliyuncs.com/timg.jpg" onerror="onerror=null;src='/img/friend_404.gif'"><div class="mobile_author-info__description">决定一个人有多优秀的，并不是看他有多努力，而是看这个人的思维模式。</div></div><hr><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 主页</span></a><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 归档</span></a><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a><a class="site-page" href="/2016/10/01/chenwu/"><i class="fa-fw fa fa-smile-o"></i><span> 关于</span></a><a class="site-page" href="/messageBoard/"><i class="fa-fw fa fa-coffee"></i><span> 留言板</span></a><a class="site-page" href="/2017/08/25/路上/"><i class="fa-fw fa fa-globe"></i><span> 旅行</span></a><a class="site-page" href="https://www.toolfk.com/"><i class="fa-fw fa fa-ambulance"></i><span> 工具库</span></a><script>document.body.addEventListener('touchstart', function(){ });</script></div></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title"><div class="posttitle">docker命令大全</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 发表于 2019-05-20<span class="post-meta__separator">|</span><i class="fa fa-history" aria-hidden="true"></i> 更新于 2020-05-28</time><span class="post-meta__separator mobile_hidden">|</span><span class="mobile_hidden"><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/闲时/">闲时</a></span><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">615</span><span class="post-meta__separator">|</span><span>阅读时长: 2 分钟</span><span class="post-meta__separator">|</span><span>阅读量: </span><span id="busuanzi_value_page_pv"></span></div></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><blockquote>
+<p>docker 必须掌握得命令</p>
+</blockquote>
+<h1 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker images</td>
+<td>列出所有镜像文件</td>
+</tr>
+<tr>
+<td>docker images -a</td>
+<td>列出所有得镜像文件-包括历史</td>
+</tr>
+<tr>
+<td>docker rmi <image id></image></td>
+<td>删除一个或多个镜像</td>
+</tr>
+</tbody>
+</table>
+<h1 id="查看容器"><a href="#查看容器" class="headerlink" title="查看容器"></a>查看容器</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker ps</td>
+<td>列出当前所有正在运行得容器</td>
+</tr>
+<tr>
+<td>docker ps -l</td>
+<td>列出最近一次启动得容器</td>
+</tr>
+<tr>
+<td>docker ps -a</td>
+<td>列出所有容器（包括历史，即运行过得容器）</td>
+</tr>
+<tr>
+<td>docker ps -q</td>
+<td>列出最近一次运行得容器ID</td>
+</tr>
+</tbody>
+</table>
+<h1 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker start/stop/restart <container></container></td>
+<td>开启/停止/重启container</td>
+</tr>
+<tr>
+<td>docker start [container_id]</td>
+<td>再次运行某个container （包括历史container）</td>
+</tr>
+<tr>
+<td>docker attach [container_id]</td>
+<td>连接一个正在运行的container实例（即实例必须为start状态，可以多个窗口同时attach 一个container实例）</td>
+</tr>
+<tr>
+<td>docker exec -it &lt;container_id&gt; /bin/bash</td>
+<td>进入容器</td>
+</tr>
+<tr>
+<td>docker start -i <container></container></td>
+<td>启动一个container并进入交互模式（相当于先start，在attach）</td>
+</tr>
+<tr>
+<td>docker run -i -t <image> /bin/bash</image></td>
+<td>使用image创建container并进入交互模式, login shell是/bin/bash</td>
+</tr>
+<tr>
+<td>docker run -i -t -p &lt;host_port:contain_port&gt;</td>
+<td>映射 HOST 端口到容器，方便外部访问容器内服务，host_port 可以省略，省略表示把 container_port 映射到一个动态端口。</td>
+</tr>
+</tbody>
+</table>
+<p>注：使用start是启动已经创建过得container，使用run则通过image开启一个新的container。</p>
+<h1 id="如何在docker容器和宿主机之间复制文件"><a href="#如何在docker容器和宿主机之间复制文件" class="headerlink" title="如何在docker容器和宿主机之间复制文件"></a>如何在docker容器和宿主机之间复制文件</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sudo docker cp host_path containerID:container_path</td>
+<td>从主机复制到容器</td>
+</tr>
+<tr>
+<td>sudo docker cp containerID:container_path host_path</td>
+<td>从容器复制到主机</td>
+</tr>
+<tr>
+<td>docker run –name cloud1 -h cloud1 -it jchubby/spark:1.0</td>
+<td>利用镜像启用容器</td>
+</tr>
+</tbody>
+</table>
+<h1 id="删除容器"><a href="#删除容器" class="headerlink" title="删除容器"></a>删除容器</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker rm &lt;container…&gt;</td>
+<td>删除一个或多个container</td>
+</tr>
+<tr>
+<td>docker rm <code>docker ps -a -q</code></td>
+<td>删除所有的container</td>
+</tr>
+<tr>
+<td>docker ps -a -q</td>
+<td>xargs docker rm</td>
+<td>同上, 删除所有的container</td>
+</tr>
+</tbody>
+</table>
+<h1 id="通过容器生成新的镜像"><a href="#通过容器生成新的镜像" class="headerlink" title="通过容器生成新的镜像"></a>通过容器生成新的镜像</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker commit <container-id> <image-name></image-name></container-id></td>
+<td>把一个容器转变为一个新的镜像</td>
+</tr>
+</tbody>
+</table>
+<h1 id="持久化容器"><a href="#持久化容器" class="headerlink" title="持久化容器"></a>持久化容器</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker export <container id> &gt; /tmp/export.tar</container></td>
+<td>export命令用于持久化容器</td>
+</tr>
+</tbody>
+</table>
+<h1 id="特殊命令"><a href="#特殊命令" class="headerlink" title="特殊命令"></a>特殊命令</h1><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>docker logs $CONTAINER_ID</td>
+<td>查看docker实例运行日志，确保正常运行</td>
+</tr>
+<tr>
+<td>docker inspect $CONTAINER_ID docker inspect &lt;image或者container&gt;</td>
+<td>查看image或container的底层信息</td>
+</tr>
+<tr>
+<td>docker build <path></path></td>
+<td>寻找path路径下名为的Dockerfile的配置文件，使用此配置生成新的image</td>
+</tr>
+<tr>
+<td>docker build -t repo[:tag]</td>
+<td>同上，可以指定repo和可选的tag</td>
+</tr>
+<tr>
+<td>docker build -f <dockerfile></dockerfile></td>
+<td>使用指定的dockerfile配置文件，docker以stdin方式获取内容，使用此配置生成新的image</td>
+</tr>
+<tr>
+<td>docker port <container> <container port></container></container></td>
+<td>查看本地哪个端口映射到container的指定端口，其实用docker ps 也可以看到</td>
+</tr>
+</tbody>
+</table>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">陈 武</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.updatecg.xin/2019/05/20/docker命令大全/">http://www.updatecg.xin/2019/05/20/docker命令大全/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.updatecg.xin">我的学习记录</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/架构师/">架构师    </a></div><div class="post_share"><div class="social-share" data-image="https://updatecg.oss-cn-beijing.aliyuncs.com/timg.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script></div></div><div class="post-reward"><a class="reward-buttom"><i class="fa fa-qrcode"></i> 打赏<div class="reward-main"><ul class="reward-all"><li class="reward-item"><img class="lozad post-qr-code__img" src="img/cgs.jpg"><div class="post-qr-code__desc">微信</div></li><li class="reward-item"><img class="lozad post-qr-code__img" src="img/zhifubao.png"><div class="post-qr-code__desc">支付寶</div></li></ul></div></a></div><nav class="pagination_post" id="pagination"><div class="prev-post pull-left"><a href="/2019/05/30/liunx常用命令/"><img class="prev_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">上一篇</div><div class="prev_info"><span>liunx常用命令</span></div></a></div><div class="next-post pull-right"><a href="/2019/04/15/Nginx参数配置说明/"><img class="next_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg" onerror="onerror=null;src='/img/404.jpg'"><div class="label">下一篇</div><div class="next_info"><span>Nginx参数配置说明</span></div></a></div></nav><div class="relatedPosts"><div class="relatedPosts_headline"><i class="fa fa-fw fa-thumbs-up" aria-hidden="true"></i><span> Recommend</span></div><div class="relatedPosts_list"><div class="relatedPosts_item"><a href="/2019/01/24/性能调优参数/" title="性能调优参数"><img class="relatedPosts_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg"><div class="relatedPosts_title">性能调优参数</div></a></div><div class="relatedPosts_item"><a href="/2021/08/06/服务器load average异常/" title="服务器load average异常"><img class="relatedPosts_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg"><div class="relatedPosts_title">服务器load average异常</div></a></div><div class="relatedPosts_item"><a href="/2020/06/20/服务无缘无故宕机/" title="服务无缘无故宕机"><img class="relatedPosts_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg"><div class="relatedPosts_title">服务无缘无故宕机</div></a></div><div class="relatedPosts_item"><a href="/2020/01/20/ConcurrentHashMap/" title="ConcurrentHashMap详解"><img class="relatedPosts_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg"><div class="relatedPosts_title">ConcurrentHashMap详解</div></a></div><div class="relatedPosts_item"><a href="/2019/12/20/JAVA锁/" title="JAVA锁"><img class="relatedPosts_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg"><div class="relatedPosts_title">JAVA锁</div></a></div><div class="relatedPosts_item"><a href="/2019/05/30/liunx常用命令/" title="liunx常用命令"><img class="relatedPosts_cover lozad" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/wallhaven-gj2j2l.jpg"><div class="relatedPosts_title">liunx常用命令</div></a></div></div><div class="clear_both"></div></div><hr><div id="post-comment"><div class="comment_headling"><i class="fa fa-comments fa-fw" aria-hidden="true"></i><span> 评论</span></div><div class="vcomment" id="vcomment"></div><script src="https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js"></script><script>var notify = 'false' == true ? true : false;
+var verify = 'false' == true ? true : false;
+var GUEST_INFO = ['nick','mail','link'];
+var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+
+window.valine = new Valine({
+  el:'#vcomment',
+  notify:notify,
+  verify:verify,
+  appId:'QWEsCLTRaW2S9rUPn8Mq28CU-gzGzoHsz',
+  appKey:'0b5xzRKTdodumxJJ1wYXcLWe',
+  placeholder:'欢迎建议留言...',
+  avatar:'monsterid',
+  guest_info:guest_info,
+  pageSize:'10',
+  lang:'zh-cn',
+  recordIP: true
+});</script></div></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2017 - 2021 By 陈 武</div><div class="icp"><a href="http://www.beian.miit.gov.cn/state/outPortal/loginPortal.action" target="_blank"><img class="lozad" data-src="https://www.larscheng.com/img/beian.png" onerror="onerror=null;src='https://www.larscheng.com/img/beian.png'" style="padding:0px;vertical-align: text-bottom;"><span>蜀ICP备19024604号</span></a></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><section class="rightside" id="rightside"><i class="fa fa-book" id="readmode" title="阅读模式"> </i><i class="fa fa-plus" id="font_plus" title="放大字体"></i><i class="fa fa-minus" id="font_minus" title="缩小字体"></i><a class="translate_chn_to_cht" id="translateLink" href="javascript:translatePage();" title="简繁转换">繁</a><i class="fa fa-moon-o nightshift" id="nightshift" title="夜间模式"></i></section><div id="post_bottom"><div id="post_bottom_items"><a id="to_comment" href="#post-comment"><i class="scroll_to_comment fa fa-comments"></i></a><i class="fa fa-list" id="mobile_toc"></i><div id="toc_mobile"><div class="toc_mobile_headline">目录</div><ol class="toc_mobile_items"><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#查看镜像"><span class="toc_mobile_items-number">1.</span> <span class="toc_mobile_items-text">查看镜像</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#查看容器"><span class="toc_mobile_items-number">2.</span> <span class="toc_mobile_items-text">查看容器</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#启动容器"><span class="toc_mobile_items-number">3.</span> <span class="toc_mobile_items-text">启动容器</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#如何在docker容器和宿主机之间复制文件"><span class="toc_mobile_items-number">4.</span> <span class="toc_mobile_items-text">如何在docker容器和宿主机之间复制文件</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#删除容器"><span class="toc_mobile_items-number">5.</span> <span class="toc_mobile_items-text">删除容器</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#通过容器生成新的镜像"><span class="toc_mobile_items-number">6.</span> <span class="toc_mobile_items-text">通过容器生成新的镜像</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#持久化容器"><span class="toc_mobile_items-number">7.</span> <span class="toc_mobile_items-text">持久化容器</span></a></li><li class="toc_mobile_items-item toc_mobile_items-level-1"><a class="toc_mobile_items-link" href="#特殊命令"><span class="toc_mobile_items-number">8.</span> <span class="toc_mobile_items-text">特殊命令</span></a></li></ol></div></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="/js/third-party/fireworks.js"></script><script src="/js/nightshift.js"></script><script id="ribbon" src="/js/third-party/canvas-ribbon.js" size="150" alpha="0.6" zindex="-1" data-click="false"></script><script id="ribbon" src="https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/js/piao.js"></script><script src="/js/baidupush.js"> </script><script src="/js/tw_cn.js"></script><script>translateInitilization()
+
+</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@1.2.2/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script><script>const observer = lozad(); // lazy loads elements with default selector as '.lozad'
+observer.observe();</script></body></html>
