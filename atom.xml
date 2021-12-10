@@ -73,6 +73,39 @@
   </entry>
   
   <entry>
+    <title>jenkins+docker+rancher+k8s实现自动化部署</title>
+    <link href="http://www.updatecg.xin/2021/08/27/jenkins+docker+rancher+k8s%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%8C%96%E9%83%A8%E7%BD%B2/"/>
+    <id>http://www.updatecg.xin/2021/08/27/jenkins+docker+rancher+k8s实现自动化部署/</id>
+    <published>2021-08-27T07:18:00.000Z</published>
+    <updated>2021-12-10T06:32:03.949Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="话不多说直接上架构图"><a href="#话不多说直接上架构图" class="headerlink" title="话不多说直接上架构图"></a>话不多说直接上架构图</h2><p><img alt="devops" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/devops.png" class="lozad"></p><h2 id="涉及软件及版本"><a href="#涉及软件及版本" class="headerlink" title="涉及软件及版本"></a>涉及软件及版本</h2><table><thead><tr><th>软件</th><th>版本</th><th>性能要求（内存/cpu）</th><th>概述</th></tr></thead><tbody><tr><td>Linux</td><td>RHEL 8</td><td></td><td>操作系统</td></tr><tr><td>gitLab</td><td></td><td></td><td>代码管理工具</td></tr><tr><td>jenkins</td><td>V2.277.2 LTS</td><td>16% (2核8G)</td><td>代码编译工具</td></tr><tr><td>harbor</td><td>v2.3.2</td><td>内存占用不大，磁盘占用大，因为image文件</td><td>镜像管理仓库</td></tr><tr><td>rancher</td><td>V2.4.4</td><td></td><td>K8S集群管理工具</td></tr><tr><td>docker</td><td>V20.10.7</td><td></td><td>容器技术</td></tr><tr><td>docker-compose</td><td>V1.28.3</td><td></td><td>容器工具</td></tr><tr><td>k8s</td><td>v1.17.17</td><td></td><td>容器管理工具</td></tr><tr><td>maven</td><td>v3.8.2</td><td></td><td>代码编译类</td></tr><tr><td>JDK</td><td>v1.8</td><td></td><td>Java开发工具包</td></tr><tr><td>git</td><td>v2.2.1</td><td></td><td>分布式版本控制系统</td></tr></tbody></table><h2 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h2><blockquote><p>官网地址 <a href="https://www.jenkins.io/" target="_blank" rel="noopener">https://www.jenkins.io/</a></p><p>安装jenkins就不过多讲了，网上安装文档很多。</p></blockquote><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p><img alt="jenkins" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/jenkins.gif" class="lozad"></p><h2 id="rancher"><a href="#rancher" class="headerlink" title="rancher"></a>rancher</h2><blockquote><p>官网地址 <a href="https://docs.rancher.cn/rancher2/" target="_blank" rel="noopener">https://docs.rancher.cn/rancher2/</a></p><p>安装jenkins就不过多讲了，网上安装文档很多。</p><p>需要注意rancher2.6.x版本是最新版，会篡改iptables规则，尽量采用2.4.x版本</p></blockquote><h3 id="配置-1"><a href="#配置-1" class="headerlink" title="配置"></a>配置</h3><p><img alt="rancher" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/rancher2.gif" class="lozad"></p><h3 id="jenkins中配置rancher地址对应的查看方式"><a href="#jenkins中配置rancher地址对应的查看方式" class="headerlink" title="jenkins中配置rancher地址对应的查看方式"></a>jenkins中配置rancher地址对应的查看方式</h3><p><img alt="rancherJenkins" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/jenkins-rancher-properties.gif" class="lozad"></p><h2 id="k8s部署成功"><a href="#k8s部署成功" class="headerlink" title="k8s部署成功"></a>k8s部署成功</h2><p><img alt="kubectl" data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/kubectl.png" class="lozad"></p><p>注：只讲了大方向，细节不懂的话，加我QQ-969310256</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;话不多说直接上架构图&quot;&gt;&lt;a href=&quot;#话不多说直接上架构图&quot; class=&quot;headerlink&quot; title=&quot;话不多说直接上架构图&quot;&gt;&lt;/a&gt;话不多说直接上架构图&lt;/h2&gt;&lt;p&gt;&lt;img alt=&quot;devops&quot; data-src=&quot;https://up
+      
+    
+    </summary>
+    
+      <category term="K8S" scheme="http://www.updatecg.xin/categories/K8S/"/>
+    
+    
+      <category term="devOps" scheme="http://www.updatecg.xin/tags/devOps/"/>
+    
+      <category term="K8S" scheme="http://www.updatecg.xin/tags/K8S/"/>
+    
+      <category term="jenkins" scheme="http://www.updatecg.xin/tags/jenkins/"/>
+    
+      <category term="docker" scheme="http://www.updatecg.xin/tags/docker/"/>
+    
+      <category term="rancher" scheme="http://www.updatecg.xin/tags/rancher/"/>
+    
+  </entry>
+  
+  <entry>
     <title>部署一套单Master的K8s集群</title>
     <link href="http://www.updatecg.xin/2021/08/19/%E9%83%A8%E7%BD%B2%E4%B8%80%E5%A5%97%E5%8D%95Master%E7%9A%84K8s%E9%9B%86%E7%BE%A4/"/>
     <id>http://www.updatecg.xin/2021/08/19/部署一套单Master的K8s集群/</id>
@@ -566,34 +599,6 @@
     
     
       <category term="IM" scheme="http://www.updatecg.xin/tags/IM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>一台电脑利用秘钥绑定多个ssh-key账号</title>
-    <link href="http://www.updatecg.xin/2018/07/02/%E4%B8%80%E5%8F%B0%E7%94%B5%E8%84%91%E5%88%A9%E7%94%A8%E7%A7%98%E9%92%A5%E7%BB%91%E5%AE%9A%E5%A4%9A%E4%B8%AAssh-key%E8%B4%A6%E5%8F%B7/"/>
-    <id>http://www.updatecg.xin/2018/07/02/一台电脑利用秘钥绑定多个ssh-key账号/</id>
-    <published>2018-07-02T06:07:02.000Z</published>
-    <updated>2020-05-28T04:03:09.574Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>因新环境利用内部邮箱创建git账账号管理项目，自己玩时有一个git账号。公司绑定gitLab，自己绑定了git.coding.net以及gitHub.com。从而两则在提交代码时发生了权限问题以及冲突。</p></blockquote><p>本文在windows环境下配置Git多账号支持SSH-KEY。配置github.com、git.coding.net 、gitLab的SSH-KEY.</p><p><span style="color:red">注意：因本已配置SSH-KEY，在此就不测试。发截图即可。</span></p><h1 id="生成gitHub-com以及gitLab对应的私钥公钥（目录一般存在于C-Users-ssh）"><a href="#生成gitHub-com以及gitLab对应的私钥公钥（目录一般存在于C-Users-ssh）" class="headerlink" title="生成gitHub.com以及gitLab对应的私钥公钥（目录一般存在于C:\Users.ssh）"></a>生成gitHub.com以及gitLab对应的私钥公钥（目录一般存在于C:\Users.ssh）</h1><h2 id="执行命令-ssh-keygen-t-rsa-C-email-创建github对应的sshkey，命名为id-rsa-github"><a href="#执行命令-ssh-keygen-t-rsa-C-email-创建github对应的sshkey，命名为id-rsa-github" class="headerlink" title="执行命令 ssh-keygen -t rsa -C email 创建github对应的sshkey，命名为id_rsa_github"></a>执行命令 ssh-keygen -t rsa -C email 创建github对应的sshkey，命名为id_rsa_github</h2><p><img data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/rsa_gitHub.png" class="lozad"></p><h2 id="gitHub-com与coding所用秘钥相同，id-rsa-pub属于gitLab，id-rsa-github属于gitHub，coding"><a href="#gitHub-com与coding所用秘钥相同，id-rsa-pub属于gitLab，id-rsa-github属于gitHub，coding" class="headerlink" title="gitHub.com与coding所用秘钥相同，id_rsa.pub属于gitLab，id_rsa_github属于gitHub，coding"></a>gitHub.com与coding所用秘钥相同，id_rsa.pub属于gitLab，id_rsa_github属于gitHub，coding</h2><p><img data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/ssh.png" class="lozad"></p><h1 id="把github对应的公钥和coding对应的公钥上传到服务器"><a href="#把github对应的公钥和coding对应的公钥上传到服务器" class="headerlink" title="把github对应的公钥和coding对应的公钥上传到服务器"></a>把github对应的公钥和coding对应的公钥上传到服务器</h1><h2 id="分别在gitHub、coding、以及gitLab配置SSH-KEYS"><a href="#分别在gitHub、coding、以及gitLab配置SSH-KEYS" class="headerlink" title="分别在gitHub、coding、以及gitLab配置SSH-KEYS"></a>分别在gitHub、coding、以及gitLab配置SSH-KEYS</h2><p>在此举例gitHub如下:<br><img data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/gitHub_key5.png" class="lozad"></p><h1 id="在-ssh目录创建config文本文件并完成相关配置-最核心的地方"><a href="#在-ssh目录创建config文本文件并完成相关配置-最核心的地方" class="headerlink" title="在.ssh目录创建config文本文件并完成相关配置(最核心的地方)"></a>在.ssh目录创建config文本文件并完成相关配置(最核心的地方)</h1><p>每个账号单独配置一个Host，每个Host要取一个别名，每个Host主要配置HostName和IdentityFile、User属性即可</p><table><thead><tr><th>参数名</th><th>描述</th></tr></thead><tbody><tr><td>Host</td><td>设想名称</td></tr><tr><td>HostName</td><td>这个是真实的域名地址</td></tr><tr><td>IdentityFile</td><td>这里是id_rsa的地址</td></tr><tr><td>PreferredAuthentications</td><td>配置登录时用什么权限认证–可设为publickey,password publickey,keyboard-interactive等</td></tr><tr><td>User</td><td>配置使用用户名</td></tr></tbody></table><figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"># gitLab                                                                       </span><br><span class="line">Host chenwu@meillie.com</span><br><span class="line">HostName chenwu@meillie.com</span><br><span class="line">User chenwu</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line"></span><br><span class="line"># 配置github.com</span><br><span class="line">Host github.com                 </span><br><span class="line">HostName github.com</span><br><span class="line">IdentityFile ~/.ssh/id_ras_gitHub</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">User UpdateCw</span><br><span class="line"></span><br><span class="line"># 配置coding.net</span><br><span class="line">Host git.coding.net</span><br><span class="line">HostName git.coding.net</span><br><span class="line">IdentityFile ~/.ssh/id_ras_gitHub</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">User UpdateMe</span><br></pre></td></tr></table></figure><h1 id="打开Git-Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在-ssh目录生成known-hosts文件把私钥配置进去）"><a href="#打开Git-Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在-ssh目录生成known-hosts文件把私钥配置进去）" class="headerlink" title="打开Git Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在.ssh目录生成known_hosts文件把私钥配置进去）"></a>打开Git Bash客户端（管理员身份运行）执行测试命令测试是否配置成功（会自动在.ssh目录生成known_hosts文件把私钥配置进去）</h1><p><img data-src="https://updatecg.oss-cn-beijing.aliyuncs.com/test_ssh.png" class="lozad"></p><h1 id="学习心得"><a href="#学习心得" class="headerlink" title="学习心得"></a>学习心得</h1><p>实践才是检验真理的源头</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;因新环境利用内部邮箱创建git账账号管理项目，自己玩时有一个git账号。公司绑定gitLab，自己绑定了git.coding.net以及gitHub.com。从而两则在提交代码时发生了权限问题以及冲突。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;本
-      
-    
-    </summary>
-    
-      <category term="闲时" scheme="http://www.updatecg.xin/categories/%E9%97%B2%E6%97%B6/"/>
-    
-    
-      <category term="Git" scheme="http://www.updatecg.xin/tags/Git/"/>
     
   </entry>
   
